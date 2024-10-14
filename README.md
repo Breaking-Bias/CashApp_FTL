@@ -19,7 +19,23 @@ Attributes:
 
 
 # Installation??
+Requirements:
+- git
+- node.js
+- Python
+- mySQL
 
+To run the front end:
+'cd frontend'
+'npm install'
+'npm run dev'
+
+To run server:
+TO RUN SERVER:
+
+'cd backend'
+'pip install -r requirements.txt'
+'python server.py' (or click the play button)
 
 # License
 The project is licensed under the ??MIT License??
