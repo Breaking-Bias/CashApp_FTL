@@ -1,1 +1,1 @@
-web: gunicorn backend.server:app
+web: gunicorn backend.app:app
