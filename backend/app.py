@@ -12,3 +12,8 @@ def getinfo():
 
 if __name__ == '__main__':
     app.run()
+
+# This is to test that CI/CD pipeline is working. Delete later.
+def cicd_test():
+    print("CI/CD is cooking")
+    return None
