@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'  # Updated to a more compatible Node.js version
 
       - name: Install dependencies
         run: |
@@ -35,6 +35,6 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          cd .github/workflow
-          npm install -g netlify-cli
-          netlify deploy --prod --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir=build  # Make sure this path matches your build output directory
+          npm install -g netlify-cli  # Install Netlify CLI globally
+          cd frontend  # Change to the frontend directory
+          netlify deploy --prod --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir=build  # Adjust this to the build output directory
