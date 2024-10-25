@@ -1,0 +1,39 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          cd frontend  # Change to your frontend directory
+          npm install  # Install dependencies
+
+      - name: Build the project
+        run: |
+          cd frontend  # Change to your frontend directory
+          npm run build  # Build the project (make sure your build script is set up in package.json)
+
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Use a secret for your Netlify token
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}  # Use a secret for your Netlify site ID
+        run: |
+          cd frontend  # Change to your frontend directory
+          npm install netlify-cli -g  # Install Netlify CLI globally
+          netlify deploy --prod --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir=build  # Deploy to Netlify
