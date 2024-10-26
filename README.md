@@ -14,11 +14,13 @@ Click the button on the interactive dashboard to get the visualization with diff
 
 Attributes:
 - Gender
-- Location
+- Age
+- Race
+- State
 - ...
 
 
-# Installation??
+# Installation
 Requirements:
 - git
 - node.js
