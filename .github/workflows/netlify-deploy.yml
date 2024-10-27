@@ -1,13 +1,12 @@
+name: CI
+
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,20 +22,7 @@ jobs:
           cd frontend
           npm install
 
-      - name: Build the project
+      - name: Run unit tests
         run: |
           cd frontend
-          npm run build  
-
-      - name: Check build output
-        run: |
-          cd frontend
-          ls -la dist
-
-      - name: Deploy to Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          cd frontend/dist
-          npx netlify deploy --prod --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
+          npm test
