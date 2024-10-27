@@ -35,7 +35,7 @@ const endDate = series.slice(-1)[0].data.slice(-1)[0].date; // gets the last dat
 
 const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
-export default function App() {
+function Graph() {
   const [knownData, setKnownData] = useState([]);
 
   async function getKnownData() {
@@ -96,3 +96,5 @@ export default function App() {
     </LineChart>
   );
 }
+
+export default Graph;
