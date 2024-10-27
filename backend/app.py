@@ -1,10 +1,5 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import sys
-import os
-
-sys.path.append(os.path.join(os.path.dirname(__file__), 'data'))
-
 from data.arima_test import create_sample_data
 from data.read_data import create_formatted_data
 
