@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-  const serverURL = `http://${window.location.hostname}:5000`;
+  const serverURL = process.env.SERVER_URL;
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
