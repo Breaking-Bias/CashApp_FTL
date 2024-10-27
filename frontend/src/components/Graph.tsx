@@ -17,8 +17,8 @@ interface DataSeries {
 
 const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
-export default function App() {
-  const [knownData, setKnownData] = useState<DataSeries[]>([]);
+function Graph() {
+  const [knownData, setKnownData] = useState([]);
 
   async function getKnownData() {
     const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -93,3 +93,5 @@ export default function App() {
     </div>
   );
 }
+
+export default Graph;
