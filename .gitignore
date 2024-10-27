@@ -35,3 +35,6 @@ frontend/coverage/
 # Optional: Miscellaneous
 frontend/.turbo/
 frontend/.cache/
+
+#.env file
+frontend/.env
