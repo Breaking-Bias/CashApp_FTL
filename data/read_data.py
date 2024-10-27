@@ -1,8 +1,15 @@
 import pandas as pd
 
-PATH = 'data/'
-file_names = ['customers_data', 'synthetic_data', 'transaction_data']
+# Read the raw dataset from the csv
+def read_dataset():
+    # Temporary
+    return {"data": "yes"}
 
-for file_name in file_names:
-    dataframe = pd.read_parquet(PATH + file_name + '.pq')
-    dataframe.to_csv(PATH + file_name + '.csv')
+# Creates the data in the format that VISX needs
+def create_formatted_data():
+    raw_data = read_dataset()
+
+    # Temporary
+    formatted_data = raw_data
+    
+    return formatted_data
