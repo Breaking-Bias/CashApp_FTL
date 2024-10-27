@@ -1,7 +1,8 @@
 import "./App.css";
+// import Graph from "./components/Graph";
 
 function App() {
-  const serverURL = process.env.SERVER_URL;
+  const serverURL = import.meta.env.VITE_SERVER_URL;
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
@@ -30,6 +31,8 @@ function App() {
       <button onClick={makeTestGetRequest}>
         Click me to get some info from the back end
       </button>
+
+      {/*<Graph/>*/}
     </>
   );
 }
