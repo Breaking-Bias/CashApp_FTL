@@ -5,6 +5,7 @@ from statsmodels.tsa.stattools import adfuller, acf, pacf
 import plotly.express as px
 import plotly.graph_objects as go
 
+
 TARGET_VAR = 'Transactions_Per_Day'
 
 def generate_arima(data):
@@ -33,6 +34,7 @@ def generate_arima(data):
 
     d = 0
     print('.\n.\n.\n.\n.\nStationarity:')
+
     data_diff = data_daily
     # while not adf_test(data_diff) and d < 2:
     #     data_diff = data_diff.diff().dropna()
@@ -42,6 +44,7 @@ def generate_arima(data):
     # Plot ACF and PACF for Order Selection
     sample_size = len(data_diff)
     nlags = sample_size // 2
+
     acf_values = acf(data_diff, nlags)
     pacf_values = pacf(data_diff, nlags)
 
@@ -56,10 +59,12 @@ def generate_arima(data):
     # q = determine_lag(acf_values)
     p = q = 10
     d = 2
+
     print(p, d, q)
 
     # Fit the ARIMA model
     print('.\n.\n.\n.\n.\nARIMA Model:')
+
     model = ARIMA(data_diff, order=(p, d, q))
     fitted_model = model.fit()
     print(fitted_model.summary())
@@ -70,6 +75,7 @@ def generate_arima(data):
     data['Forecast'] = fitted_model.predict(start=1, end=len(data_daily), dynamic=False)
     # Out-of-sample forecast for the next 12 months
     forecast_steps = 30
+
     forecast = fitted_model.get_forecast(steps=forecast_steps)
     forecast_df = forecast.summary_frame(alpha=0.05)  # 95% confidence interval
     print(forecast_df[['mean', 'mean_ci_lower', 'mean_ci_upper']])
@@ -82,11 +88,13 @@ def generate_arima(data):
     ))
     # Plot the in-sample forecast
     fig.add_trace(go.Scatter(
+
         x=data.index, y=data[TARGET_VAR],
         mode='lines+markers', name='In-sample Forecast'
     ))
     # Plot the out-of-sample forecast
     future_dates = pd.date_range(start=data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
+
     fig.add_trace(go.Scatter(
         x=future_dates, y=forecast_df['mean'],
         mode='lines+markers', name='Out-of-sample Forecast'
@@ -103,14 +111,17 @@ def generate_arima(data):
     ))
     fig.update_layout(
         title='ARIMA Model Forecast (Monthly Data)',
+
         xaxis_title='Date (YYYY-MM-DD)',
         yaxis_title=TARGET_VAR,
+
         template='plotly_white',
         width=800, height=400
     )
     fig.show()
 
 # Load the dataset.
+
 original_data = pd.read_csv('synthetic_data.csv')
 print('Data loaded.')
 # Temporary. Should implement data retriever.
@@ -127,4 +138,5 @@ generate_arima(data)
 
 # Mitigate bias.
 data_unbiased = original_data.copy()[data['Is_Action_Biased'] != 'approve']
+
 generate_arima(data_unbiased)
