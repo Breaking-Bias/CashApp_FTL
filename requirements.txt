@@ -5,3 +5,5 @@ gunicorn
 numpy
 matplotlib
 statsmodels
+plotly
+scikit-learn
