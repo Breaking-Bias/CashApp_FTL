@@ -5,5 +5,8 @@ gunicorn
 numpy
 matplotlib
 statsmodels
+pytest
 plotly
 scikit-learn
+faker
+datetime
