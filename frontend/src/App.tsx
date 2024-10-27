@@ -1,5 +1,5 @@
 import "./App.css";
-// import Graph from "./components/Graph";
+import Graph from "./components/Graph";
 
 function App() {
   const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -32,7 +32,7 @@ function App() {
         Click me to get some info from the back end
       </button>
 
-      {/*<Graph/>*/}
+      <Graph />
     </>
   );
 }
