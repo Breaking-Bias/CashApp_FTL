@@ -2,3 +2,6 @@ Flask==2.3.2
 flask-cors
 pandas==2.2.3
 gunicorn
+numpy
+matplotlib
+statsmodels
