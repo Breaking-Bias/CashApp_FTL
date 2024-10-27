@@ -31,9 +31,9 @@ def create_sample_data() -> pd.DataFrame:
 def fit_arima_model(df: pd.DataFrame) -> any:
 
     # Fine tune these values based on the real data
-    AUTO_REGRESSIVE_ORDER = 10
+    AUTO_REGRESSIVE_ORDER = 30
     DIFFERENCING_ORDER = 2
-    MOVING_AVERAGE_ORDER = 5
+    MOVING_AVERAGE_ORDER = 30
 
     model = ARIMA(df['TransactionFrequency'], order=(AUTO_REGRESSIVE_ORDER, DIFFERENCING_ORDER, MOVING_AVERAGE_ORDER))
     model = model.fit()
