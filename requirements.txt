@@ -1,6 +1,6 @@
-Flask==2.3.2
+Flask
 flask-cors
-pandas==2.2.3
+pandas
 gunicorn
 numpy
 matplotlib
