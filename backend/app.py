@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from data import arima_test, read_data
 
-app = Flask('server')
+app = Flask('app')
 CORS(app)
 
 # Example of an endpoint that returns test data
