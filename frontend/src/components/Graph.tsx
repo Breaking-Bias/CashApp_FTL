@@ -79,7 +79,7 @@ function Graph() {
             tickFormatter={dateFormatter}
             domain={[
               knownData[0].data[0].date.getTime(),
-              knownData[0].data[knownData[0].data.length - 1].date.getTime(),
+              knownData.slice(-1)[0].data.slice(-1)[0].date.getTime(),
             ]}
           />
           <YAxis dataKey="value" />
