@@ -23,12 +23,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use the version your project requires
+          node-version: '18'
 
       - name: Install dependencies
         run: |
           npm install
           npm install --save-dev jest typescript ts-jest @types/jest
 
+      - name: Build TypeScript
+        run: npm run build
+
       - name: Run tests
-        run: npm run test
+        run: npm test
