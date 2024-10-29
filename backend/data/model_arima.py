@@ -137,6 +137,6 @@ data = original_data.copy()
 generate_arima(data)
 
 # Mitigate bias.
-data_unbiased = original_data.copy()[data['Is_Action_Biased'] != 'approve']
+data_unbiased = original_data.copy()[data['Is_Action_Biased'] == 'approve']
 
 generate_arima(data_unbiased)
