@@ -30,7 +30,7 @@ def predictValues():
 @app.route('/getDummyData')
 def getDummyData():
     data = arima_test.create_sample_data().to_json()
-    return data
+    return jsonify(data)
 
 # This is to test that CI/CD pipeline is working. Delete later.
 @app.route('/cicd_test')
