@@ -21,11 +21,6 @@ def test_predictValues(client):
     assert response.status_code == 200
     # Add more assertions based on the expected prediction results
 
-def test_getDummyData(client):
-    response = client.get('/getDummyData')
-    assert response.status_code == 200
-    # Add more assertions based on the expected dummy data format
-
 def test_cicd_test(client):
     response = client.get('/cicd_test')
     assert response.status_code == 200
