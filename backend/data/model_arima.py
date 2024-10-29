@@ -117,5 +117,6 @@ data = data.set_index('date') # ?
 generate_arima(data)
 
 # Mitigate bias.
-data_unbiased = data.copy()[data['Is_Action_Biased'] != 'approve']
+data_unbiased = original_data.copy()[data['Is_Action_Biased'] == 'approve']
+
 generate_arima(data_unbiased)
