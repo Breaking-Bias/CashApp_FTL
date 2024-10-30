@@ -272,7 +272,7 @@ generate_arima(data_unbiased)
         fig.show()
 
 if __name__ == '__main__':
-    original_data = pd.read_csv('transaction_data.csv')
+    original_data = pd.read_csv('data/transaction_data.csv')
     Model(original_data.copy()).visualize()
     data_unbiased = original_data.copy()[original_data['Bias'] == 1]
     Model(data_unbiased).visualize()
