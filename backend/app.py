@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from data import arima_test, read_data
+from data import arima_test
+import read_data
 
 app = Flask('app')
 CORS(app)
@@ -19,7 +20,7 @@ def getOriginalData():
 @app.route('/predictValues', methods=['POST'])
 def predictValues():
     data = request.get_json()
-    num_points = data['numPoints']
+    num_points = data['numPoints'] # forecast steps
 
     # Replace with actual predict function
     # new_values = predict(num_points)
