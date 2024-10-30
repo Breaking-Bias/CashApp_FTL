@@ -116,15 +116,48 @@ print('Data loaded.')
 # Temporary. Should implement data retriever.
 original_data = original_data.dropna(axis=1)
 
-# Some adjustment on dataset to comform the date format for the model.
-# Convert 'Timestamp' to datetime format if it's not already
-original_data['Timestamp'] = pd.to_datetime(original_data['Timestamp'])
-original_data['Date'] = original_data['Timestamp'].dt.date
-original_data['idx'] = original_data['Timestamp']
-original_data = original_data.set_index('idx')
-data = original_data.copy()
-generate_arima(data)
+    # Some adjustment on dataset to comform the date format for the model.
+    # Convert 'Timestamp' to datetime format if it's not already
+    original_data['Timestamp'] = pd.to_datetime(original_data['Timestamp'])
+    original_data['Date'] = original_data['Timestamp'].dt.date
+    original_data['idx'] = original_data['Timestamp']
+    original_data = original_data.set_index('idx')
+    data = original_data.copy()
+    generate_arima(data)
 
+<<<<<<< HEAD
 # Mitigate bias.
 data_unbiased = original_data.copy()[data['Is_Action_Biased'] != 'approve']
 generate_arima(data_unbiased)
+=======
+    # TODO: There may be issues with 'Other' since it exists in both race and gender/
+    if bias == 'Female' or bias == 'Male' or bias == 'Non-Binary' or bias == 'Other':
+        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Gender'] == bias))]
+    elif bias == 'Black' or bias == 'White' or bias == 'Asian' or bias == 'Hispanic' or bias == 'Mixed' or bias == 'Other':
+        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Race'] == bias))]
+    elif isinstance(bias, int):
+        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Age'] == bias))]
+    else:
+        pass
+    generate_arima(data_gen)
+
+# # Load the dataset.
+# original_data = pd.read_csv('synthetic_data.csv')
+# print('Data loaded.')
+# # Temporary. Should implement data retriever.
+# original_data = original_data.dropna(axis=1)
+
+# # Some adjustment on dataset to comform the date format for the model.
+# # Convert 'Timestamp' to datetime format if it's not already
+# original_data['Timestamp'] = pd.to_datetime(original_data['Timestamp'])
+# original_data['Date'] = original_data['Timestamp'].dt.date
+# original_data['idx'] = original_data['Timestamp']
+# original_data = original_data.set_index('idx')
+# data = original_data.copy()
+# generate_arima(data)
+
+# # Mitigate bias.
+# data_unbiased = original_data.copy()[data['Is_Action_Biased'] == 'approve']
+
+# generate_arima(data_unbiased)
+>>>>>>> 91d8432 (created women-specific bias dataset and implemented bias filter)
