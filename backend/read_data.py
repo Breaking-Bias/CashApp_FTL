@@ -1,11 +1,12 @@
 import pandas as pd
+import os
 from Model import TARGET_VAR, Model
 
 # Read the raw dataset from the csv
 def read_dataset():
     # Temporary
     # return {"data": "yes"}
-    return pd.read_csv("data/transaction_data.csv")
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "transaction_data.csv"))
 
 # Creates the data in the format that VISX needs
 def create_formatted_data():
