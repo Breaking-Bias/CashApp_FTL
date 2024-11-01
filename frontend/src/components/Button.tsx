@@ -10,6 +10,7 @@ import React from 'react';
 type ButtonProps = {
     backgroundColor : string;
     fontSize: number;
+    label: string;
 };
 
 export default function Button({

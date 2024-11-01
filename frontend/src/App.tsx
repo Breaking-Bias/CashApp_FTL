@@ -1,5 +1,6 @@
 import "./App.css";
 import Graph from "./components/Graph";
+import Button from './components/Button';
 
 function App() {
   const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -31,6 +32,12 @@ function App() {
       <button onClick={makeTestGetRequest}>
         Click me to get some info from the back end
       </button>
+      <div style={{ display: 'flex', gap: '10px'}}>
+        <Button label="Age" backgroundColor="green" fontSize={14} />
+        <Button label="Gender" backgroundColor="green" fontSize={14} />
+        <Button label="Race" backgroundColor="green" fontSize={14} />
+        <Button label="Location" backgroundColor="green" fontSize={14} />
+      </div>
 
       <Graph />
     </>
