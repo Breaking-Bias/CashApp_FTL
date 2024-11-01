@@ -5,6 +5,9 @@ import uuid
 from faker import Faker
 from datetime import datetime, timedelta
 
+# This file generates transaction_data.csv. We are no longer using that dataset because it resulted in a linear graph.
+# Leave this for now, but we will delete this in the future.
+
 # Initialize Faker and set seed for reproducibility
 fake = Faker()
 random.seed(42)
