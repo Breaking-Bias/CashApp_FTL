@@ -1,8 +1,13 @@
+import { useState } from "react";
 import "./App.css";
 import Graph from "./components/Graph";
+import SelectForecastSize from "./components/SelectForecastSize";
+import { DataSeries } from "./types";
 
 function App() {
   const serverURL = import.meta.env.VITE_SERVER_URL;
+
+  const [predictedData, setPredictedData] = useState<DataSeries>();
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
@@ -32,7 +37,8 @@ function App() {
         Click me to get some info from the back end
       </button>
 
-      <Graph />
+      <Graph predictedData={predictedData} />
+      <SelectForecastSize setPredictedData={setPredictedData} />
     </>
   );
 }
