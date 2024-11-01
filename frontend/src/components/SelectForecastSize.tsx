@@ -54,9 +54,9 @@ function SelectForecastSize({ setPredictedData }: Props) {
   }
 
   function handleSliderChange(
-    event: Event,
+    _event: Event,
     value: number | number[] | null,
-    activeThumb: number
+    _activeThumb: number
   ) {
     setSliderValue(value as number);
   }
