@@ -8,24 +8,17 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
-interface DataEntry {
-  date: string; // THIS CAN BE CHANGED GUYS
-  value: number;
-}
-
-
-interface DataSeries {
-  name: string;
-  color: string;
-  data: { date: Date; value: number }[];
-}
+import { DataEntry, DataSeries } from "../types";
 
 const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
-function Graph() {
+interface Props {
+  predictedData: DataSeries | undefined;
+}
+
+function Graph({ predictedData }: Props) {
   // Explicitly set the type for knownData
-  const [knownData, setKnownData] = useState<DataSeries[]>([]);
+  const [knownData, setKnownData] = useState<DataSeries>();
 
   async function getKnownData() {
     const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -41,19 +34,21 @@ function Graph() {
 
       // Convert the data to JSON
       const data: DataEntry[] = await response.json();
-      const formattedData: { date: Date; value: number }[] = data.map(entry => ({
-        date: new Date(entry.date),
-        value: entry.value,
-      }));
+      const formattedData: { date: Date; value: number }[] = data.map(
+        (entry) => ({
+          date: new Date(entry.date),
+          value: entry.value,
+        })
+      );
 
-      const temp: DataSeries = {
+      const knownDataSeries: DataSeries = {
         name: "Known Data",
         color: "blue",
         data: formattedData,
       };
 
       // Ensure that temp is of type DataSeries[]
-      setKnownData([temp]);
+      setKnownData(knownDataSeries);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -63,9 +58,24 @@ function Graph() {
     getKnownData();
   }, []);
 
+  function getGraphDomain() {
+    if (knownData) {
+      const start = knownData.data[0].date.getTime();
+
+      let end;
+      if (predictedData) {
+        end = predictedData.data.slice(-1)[0].date.getTime();
+      } else {
+        end = knownData.data.slice(-1)[0].date.getTime();
+      }
+
+      return [start, end];
+    }
+  }
+
   return (
     <div>
-      {knownData.length === 0 ? (
+      {knownData == undefined ? (
         <h1>Loading...</h1>
       ) : (
         <LineChart width={800} height={500}>
@@ -77,24 +87,29 @@ function Graph() {
             scale="time"
             type="number"
             tickFormatter={dateFormatter}
-            domain={[
-              knownData[0].data[0].date.getTime(),
-              knownData.slice(-1)[0].data.slice(-1)[0].date.getTime(),
-            ]}
+            domain={getGraphDomain()}
           />
           <YAxis dataKey="value" />
           <Tooltip />
           <Legend />
-          {knownData.map((series) => (
+
+          <Line
+            type="monotone"
+            dataKey="value"
+            data={knownData.data}
+            name={knownData.name}
+            stroke={knownData.color}
+          />
+
+          {predictedData && (
             <Line
-              key={series.name}
               type="monotone"
               dataKey="value"
-              data={series.data}
-              name={series.name}
-              stroke={series.color}
+              data={predictedData.data}
+              name={predictedData.name}
+              stroke={predictedData.color}
             />
-          ))}
+          )}
         </LineChart>
       )}
     </div>
