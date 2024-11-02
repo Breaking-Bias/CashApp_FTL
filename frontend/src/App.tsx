@@ -1,9 +1,14 @@
+import { useState } from "react";
 import "./App.css";
 import Graph from "./components/Graph";
 import Button from './components/Button';
+import SelectForecastSize from "./components/SelectForecastSize";
+import { DataSeries } from "./types";
 
 function App() {
   const serverURL = import.meta.env.VITE_SERVER_URL;
+
+  const [predictedData, setPredictedData] = useState<DataSeries>();
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
@@ -39,7 +44,8 @@ function App() {
         <Button label="Location" backgroundColor="green" fontSize={14} />
       </div>
 
-      <Graph />
+      <Graph predictedData={predictedData} />
+      <SelectForecastSize setPredictedData={setPredictedData} />
     </>
   );
 }
