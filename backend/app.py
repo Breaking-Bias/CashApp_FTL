@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from data import arima_test
-import read_data
+import backend.read_data
 
 app = Flask('app')
 CORS(app)
@@ -14,7 +13,7 @@ def getinfo():
 
 @app.route('/getOriginalData')
 def getOriginalData():
-    data = read_data.create_formatted_data()
+    data = backend.read_data.create_formatted_data()
     return jsonify(data)
 
 @app.route('/predictValues', methods=['POST'])
@@ -29,8 +28,8 @@ def predictValues():
     return jsonify(new_values)
 
 @app.route('/getDummyData')
-def getDummyData():
-    data = arima_test.create_sample_data().to_json()
+def getFormattedData():
+    data = read_data.create_formatted_data().to_json()
     return jsonify(data)
 
 # This is to test that CI/CD pipeline is working. Delete later.
