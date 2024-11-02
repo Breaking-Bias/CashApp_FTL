@@ -5,7 +5,6 @@ from statsmodels.tsa.stattools import adfuller, acf, pacf
 import plotly.express as px
 import plotly.graph_objects as go
 
-FORECAST_STEPS = 30
 TARGET_VAR = 'Transactions_Per_Day'
 
 class Model:
@@ -16,12 +15,13 @@ class Model:
     fitted_model: ARIMAResults | None
     forecast_df: pd.DataFrame | None
 
-    def __init__(self, original_data: pd.DataFrame):
-        """Only initialize cleaned_data. Other fields are left None."""
+    def __init__(self, original_data: pd.DataFrame, forecast_steps=360*5):
+        """Only initialize cleaned_data. Other fields are left None.
+        Assume that the user only wants prediction data for less than 5 years."""
         self.cleaned_data = self.clean_data(original_data)
         self.data_diff = self.diff_data()
         self.fitted_model = self.fit_model(self.data_diff, self.p_d_q(self.data_diff))
-        self.forecast_df = self.make_forecast(self.data_diff, self.fitted_model)
+        self.forecast_df = self.make_forecast(self.data_diff, self.fitted_model, forecast_steps)
 
     def clean_data(self, original_data: pd.DataFrame) -> pd.DataFrame:
         """Adjust on original_data to comform the date format for the model."""
@@ -96,21 +96,24 @@ class Model:
         print(fitted_model.summary())
         return fitted_model
 
-    def make_forecast(self, data_diff, fitted_model) -> pd.DataFrame:
+    def make_forecast(self, data_diff, fitted_model, forecast_steps: int) -> pd.DataFrame:
         # In-sample forecast for the existing data
         self.cleaned_data['Forecast'] = fitted_model.predict(start=1, end=len(data_diff), dynamic=False)
         # Out-of-sample forecast for the next FORECAST_STEPS months
-        forecast = fitted_model.get_forecast(steps=FORECAST_STEPS)
+        forecast = fitted_model.get_forecast(steps=forecast_steps)
         forecast_df = forecast.summary_frame(alpha=0.05)  # 95% confidence interval
         print('.\n.\n.\nForecasting:')
         print(forecast_df[['mean', 'mean_ci_lower', 'mean_ci_upper']])
         return forecast_df
 
+    def get_cleaned_data(self) -> pd.DataFrame:
+        return self.cleaned_data
+
     def get_forecast(self) -> pd.DataFrame:
         return self.forecast_df
 
     # Currently this method is only for internal use.
-    def visualize(self):
+    def visualize(self, forecast_steps):
         """Visualize with Plotly."""
         fig = go.Figure()
         fig.add_trace(go.Scatter(
@@ -123,7 +126,7 @@ class Model:
             mode='lines+markers', name='In-sample Forecast'
         ))
         # Plot the out-of-sample forecast
-        future_dates = pd.date_range(start=self.cleaned_data.index[-1] + pd.DateOffset(months=0), periods=FORECAST_STEPS, freq='D')
+        future_dates = pd.date_range(start=self.cleaned_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
         fig.add_trace(go.Scatter(
             x=future_dates, y=self.forecast_df['mean'],
             mode='lines+markers', name='Out-of-sample Forecast'
@@ -148,8 +151,9 @@ class Model:
         fig.show()
 
 if __name__ == '__main__':
+    forecast_steps = 30
     original_data = pd.read_csv('data/transaction_data.csv')
-    Model(original_data.copy()).visualize()
+    Model(original_data.copy()).visualize(forecast_steps)
     data_unbiased = original_data.copy()[original_data['Bias'] == 1]
-    Model(data_unbiased).visualize()
+    Model(data_unbiased).visualize(forecast_steps)
 
