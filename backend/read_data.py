@@ -7,7 +7,7 @@ from backend.Model import TARGET_VAR, Model
 def read_dataset():
     # Temporary
     # return {"data": "yes"}
-    return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "transaction_data.csv"))
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "women_bias_data.csv"))
 
 def filter(raw_data, filtering_factor):
     ...

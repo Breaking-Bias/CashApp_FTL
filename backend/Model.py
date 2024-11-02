@@ -277,7 +277,7 @@ generate_arima(data_unbiased)
 
 if __name__ == '__main__':
     forecast_steps = 30
-    original_data = pd.read_csv('data/transaction_data.csv')
+    original_data = pd.read_csv('data/women_bias_data.csv')
     Model(original_data.copy()).visualize(forecast_steps)
     data_unbiased = original_data.copy()[original_data['Bias'] == 1]
     Model(data_unbiased).visualize(forecast_steps)
