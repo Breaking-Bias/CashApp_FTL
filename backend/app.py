@@ -20,7 +20,7 @@ def getOriginalData():
 def predictValues():
     data = request.get_json()
     forecast_steps = data['numPoints']
-    new_values = read_data.create_prediction_data('A', forecast_steps)
+    new_values = backend.read_data.create_prediction_data('A', forecast_steps)
 
     # # TEMPORARY FOR FRONTEND TESTING
     # new_values = [
