@@ -38,3 +38,7 @@ frontend/.cache/
 
 #.env file
 frontend/.env
+
+#pycache
+*/__pycache__/*
+*/.pytest_cache/*
