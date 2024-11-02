@@ -46,4 +46,3 @@ def create_prediction_data(dataset: str, bias: any):
     return data
 
 print(create_formatted_data())
-
