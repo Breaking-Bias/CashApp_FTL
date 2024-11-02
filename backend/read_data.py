@@ -9,23 +9,27 @@ def read_dataset():
     # return {"data": "yes"}
     return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "transaction_data.csv"))
 
-def create_model(filter):
+def filter(raw_data, filtering_factor):
+    ...
+    # To Carlos: please also enable the function calls on "filter" below after implementing this.
+
+def create_model(filtering_factor):
     raw_data = read_dataset()
     # filtered_data = filter(raw_data, filtering_factor)  # to be checked with Carlos
     filtered_data = raw_data  # temporary
     return Model(filtered_data)
 
 # Creates the data in the format that VISX needs
-def create_formatted_data(filter):
-    cleaned_data = create_model(filter).get_cleaned_data()
+def create_formatted_data(filtering_factor):
+    cleaned_data = create_model(filtering_factor).get_cleaned_data()
     formatted_data = [
         {'date': record['Date'].strftime('%Y-%m-%d'), 'value': record[TARGET_VAR]}
         for record in cleaned_data[['Date', TARGET_VAR]].drop_duplicates().to_dict(orient='records')
     ]
     return formatted_data
 
-def create_prediction_data(filter, forecast_steps: int):
-    model = create_model(filter)
+def create_prediction_data(filtering_factor, forecast_steps: int):
+    model = create_model(filtering_factor)
     forecast_df = model.get_forecast()
     forecast_values = forecast_df['mean']
     future_dates = pd.date_range(start=model.get_cleaned_data().index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
@@ -34,7 +38,7 @@ def create_prediction_data(filter, forecast_steps: int):
     prediction_data = [{'date': record['date'].strftime('%Y-%m-%d'), 'value': int(record['value'])} for record in prediction_unformatted]
     return prediction_data
 
-print(create_formatted_data('A'))
+print(create_formatted_data('female'))
 
 
 
