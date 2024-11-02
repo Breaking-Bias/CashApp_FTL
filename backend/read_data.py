@@ -9,40 +9,32 @@ def read_dataset():
     # return {"data": "yes"}
     return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "transaction_data.csv"))
 
-# Creates the data in the format that VISX needs
-# TODO: Indicate return type (pandas.DataFrame)
-def create_formatted_data():
+def create_model(filter):
     raw_data = read_dataset()
-    cleaned_data = Model(raw_data).cleaned_data
-    # formatted_data = cleaned_data[['Date', TARGET_VAR]].to_dict(orient='records')  # list of dicts
+    # filtered_data = filter(raw_data, filtering_factor)  # to be checked with Carlos
+    filtered_data = raw_data  # temporary
+    return Model(filtered_data)
+
+# Creates the data in the format that VISX needs
+def create_formatted_data(filter):
+    cleaned_data = create_model(filter).get_cleaned_data()
     formatted_data = [
         {'date': record['Date'].strftime('%Y-%m-%d'), 'value': record[TARGET_VAR]}
         for record in cleaned_data[['Date', TARGET_VAR]].drop_duplicates().to_dict(orient='records')
     ]
     return formatted_data
 
-# TODO: dataset: str is temporary; need to figure out the return type of create_formatted_data()
-def create_prediction_data(dataset: str, bias: any):
-    """This function filters the given dataset based on the given bias.
-    Returns a filtered dataset.
-    For example:
-    create_prediction_data(data, "Female")
-    returns:
-    data with all "Female" rows marked with bias removed.
+def create_prediction_data(filter, forecast_steps: int):
+    model = create_model(filter)
+    forecast_df = model.get_forecast()
+    forecast_values = forecast_df['mean']
+    future_dates = pd.date_range(start=model.get_cleaned_data().index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
+    prediction_unformatted =  [{'date': date, 'value': value}
+                        for date, value in zip(future_dates, forecast_values)]
+    prediction_data = [{'date': record['date'].strftime('%Y-%m-%d'), 'value': int(record['value'])} for record in prediction_unformatted]
+    return prediction_data
 
-    Precondition: dataset is already formatted and cleaned (i.e. dates are in datetime format, redundant rows have been deleted)
-    """
-    data = dataset.copy()
+print(create_formatted_data('A'))
 
-    # TODO: There may be issues with 'Other' since it exists in both race and gender/
-    if bias == 'Female' or bias == 'Male' or bias == 'Non-Binary' or bias == 'Other':
-        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Gender'] == bias))]
-    elif bias == 'Black' or bias == 'White' or bias == 'Asian' or bias == 'Hispanic' or bias == 'Mixed' or bias == 'Other':
-        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Race'] == bias))]
-    elif isinstance(bias, int):
-        data_gen = data[~((data['Is_Action_Biased'] == 'approve') & (data['Age'] == bias))]
-    else:
-        pass
-    return data
 
-print(create_formatted_data())
+
