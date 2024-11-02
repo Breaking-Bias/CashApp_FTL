@@ -29,7 +29,7 @@ def predictValues():
 
 @app.route('/getDummyData')
 def getFormattedData():
-    data = read_data.create_formatted_data().to_json()
+    data = backend.read_data.create_formatted_data().to_json()
     return jsonify(data)
 
 # This is to test that CI/CD pipeline is working. Delete later.
