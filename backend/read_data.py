@@ -17,7 +17,7 @@ def create_formatted_data():
     # formatted_data = cleaned_data[['Date', TARGET_VAR]].to_dict(orient='records')  # list of dicts
     formatted_data = [
         {'date': record['Date'].strftime('%Y-%m-%d'), 'value': record[TARGET_VAR]}
-        for record in cleaned_data[['Date', TARGET_VAR]].to_dict(orient='records')
+        for record in cleaned_data[['Date', TARGET_VAR]].drop_duplicates().to_dict(orient='records')
     ]
     return formatted_data
 
