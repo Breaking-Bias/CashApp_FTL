@@ -19,26 +19,24 @@ def getOriginalData():
 @app.route('/predictValues', methods=['POST'])
 def predictValues():
     data = request.get_json()
-    num_points = data['numPoints'] # forecast steps
+    forecast_steps = data['numPoints']
+    new_values = read_data.create_prediction_data('A', forecast_steps)
 
-    # Replace with actual predict function
-    # new_values = predict(num_points)
-
-    # TEMPORARY FOR FRONTEND TESTING
-    new_values = [
-        {
-            "date": "2024-08-05",
-            "value": 73
-        },
-        {
-            "date": "2024-08-06",
-            "value": 88
-        },
-        {
-            "date": "2024-08-07",
-            "value": 82
-        }
-    ]
+    # # TEMPORARY FOR FRONTEND TESTING
+    # new_values = [
+    #     {
+    #         "date": "2024-08-05",
+    #         "value": 73
+    #     },
+    #     {
+    #         "date": "2024-08-06",
+    #         "value": 88
+    #     },
+    #     {
+    #         "date": "2024-08-07",
+    #         "value": 82
+    #     }
+    # ]
 
     return jsonify(new_values)
 
