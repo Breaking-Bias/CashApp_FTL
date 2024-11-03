@@ -15,7 +15,7 @@ function SelectForecastSize({ setPredictedData }: Props) {
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
 
   async function getPredictedData() {
-    const serverURL = import.meta.env.VITE_SERVER_URL;
+    const serverURL = process.env.VITE_SERVER_URL;
     const endpoint = `${serverURL}/predictValues`;
 
     try {
@@ -27,12 +27,10 @@ function SelectForecastSize({ setPredictedData }: Props) {
         body: JSON.stringify({ numPoints: sliderValue }),
       });
 
-      // Catch errors in fetch response
       if (!response.ok) {
         throw new Error("Error in response: " + response.statusText);
       }
 
-      // Convert the data to JSON
       const data: DataEntry[] = await response.json();
       const formattedData: { date: Date; value: number }[] = data.map(
         (entry) => ({
@@ -68,18 +66,27 @@ function SelectForecastSize({ setPredictedData }: Props) {
 
   return (
     <div>
-      <Slider
-        defaultValue={50}
-        min={MIN_SLIDER_VAL}
-        max={MAX_SLIDER_VAL}
-        aria-label="Default"
-        valueLabelDisplay="auto"
-        value={sliderValue}
-        onChange={handleSliderChange}
-      />
-      <Button variant="contained" onClick={handleButtonPress}>
-        Make Forecast
-      </Button>
+      <div title="slider-container">
+        <Slider
+          data-testid="forecast-slider"
+          defaultValue={50}
+          min={MIN_SLIDER_VAL}
+          max={MAX_SLIDER_VAL}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          value={sliderValue}
+          onChange={handleSliderChange}
+        />
+      </div>
+      <div title="button-container">
+        <Button
+          variant="contained"
+          data-testid="forecast-button"
+          onClick={handleButtonPress}
+        >
+          Make Forecast
+        </Button>
+      </div>
     </div>
   );
 }
