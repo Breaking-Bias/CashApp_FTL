@@ -13,52 +13,50 @@ def getinfo():
 
 @app.route('/getOriginalData')
 def getOriginalData():
-    data = backend.read_data.create_formatted_data()
+    data = backend.read_data.create_formatted_data('female')  # Filter is temporarily hardcoded.
 
-    # TEMPORARY FOR FRONTEND TESTING
-    data = [
-        {
-            "date": "2024-08-01",
-            "value": 50
-        },
-        {
-            "date": "2024-08-02",
-            "value": 55
-        },
-        {
-            "date": "2024-08-03",
-            "value": 70
-        },
-        {
-            "date": "2024-08-04",
-            "value": 60
-        },
-    ]
+    # # TEMPORARY FOR FRONTEND TESTING
+    # data = [
+    #     {
+    #         "date": "2024-08-01",
+    #         "value": 50
+    #     },
+    #     {
+    #         "date": "2024-08-02",
+    #         "value": 55
+    #     },
+    #     {
+    #         "date": "2024-08-03",
+    #         "value": 70
+    #     },
+    #     {
+    #         "date": "2024-08-04",
+    #         "value": 60
+    #     },
+    # ]
     return jsonify(data)
 
 @app.route('/predictValues', methods=['POST'])
 def predictValues():
     data = request.get_json()
-    num_points = data['numPoints'] # forecast steps
+    forecast_steps = data['numPoints']
+    new_values = backend.read_data.create_prediction_data('A', forecast_steps)
 
-    # Replace with actual predict function
-    # new_values = predict(num_points)
-
-    # TEMPORARY FOR FRONTEND TESTING
-    new_values = [
-        {
-            "date": "2024-08-05",
-            "value": 73
-        },
-        {
-            "date": "2024-08-06",
-            "value": 88
-        },
-        {
-            "date": "2024-08-07",
-            "value": 82
-        }
-    ]
+    # # TEMPORARY FOR FRONTEND TESTING
+    # new_values = [
+    #     {
+    #         "date": "2024-08-05",
+    #         "value": 73
+    #     },
+    #     {
+    #         "date": "2024-08-06",
+    #         "value": 88
+    #     },
+    #     {
+    #         "date": "2024-08-07",
+    #         "value": 82
+    #     }
+    # ]
 
     return jsonify(new_values)
 
