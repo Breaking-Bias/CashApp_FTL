@@ -65,20 +65,28 @@ function SelectForecastSize({ setPredictedData }: Props) {
   }
 
   return (
-    <div title="slider-container">
-      <Slider
-        data-testid="forecast-slider"
-        defaultValue={50}
-        min={MIN_SLIDER_VAL}
-        max={MAX_SLIDER_VAL}
-        aria-label="Default"
-        valueLabelDisplay="auto"
-        value={sliderValue}
-        onChange={handleSliderChange}
-      />
-      <Button variant="contained" data-testid="forecast-button" onClick={handleButtonPress}>
-        Make Forecast
-      </Button>
+    <div>
+      <div title="slider-container">
+        <Slider
+          data-testid="forecast-slider"
+          defaultValue={50}
+          min={MIN_SLIDER_VAL}
+          max={MAX_SLIDER_VAL}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          value={sliderValue}
+          onChange={handleSliderChange}
+        />
+      </div>
+      <div title="button-container">
+        <Button
+          variant="contained"
+          data-testid="forecast-button"
+          onClick={handleButtonPress}
+        >
+          Make Forecast
+        </Button>
+      </div>
     </div>
   );
 }
