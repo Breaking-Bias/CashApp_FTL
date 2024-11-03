@@ -36,9 +36,14 @@ frontend/coverage/
 frontend/.turbo/
 frontend/.cache/
 
-#.env file
-frontend/.env
+# virtual environments
+env/
+venv/
+*.env
+*.venv
 
-#pycache
+# pycache
 */__pycache__/*
 */.pytest_cache/*
+__pycache__/
+*.pyc
