@@ -1,7 +1,7 @@
 import pytest
 import re
 from datetime import datetime
-from .. app import app
+from app import app
 
 @pytest.fixture
 def client():
