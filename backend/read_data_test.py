@@ -93,6 +93,30 @@ def test_unbias_does_not_mutate_original():
     # Call the unbias function
     unbiased_df = unbias(original_data)
 
+    # Mutate created df
+    unbiased_df['Transaction_Amount_USD'] = 0
+
+    # Assert that the original DataFrame is unchanged
+    pd.testing.assert_frame_equal(original_data, original_data_copy, check_dtype=True)
+
+def test_filter_for_valid_data_does_not_mutate_original():
+    """Test to ensure the original DataFrame is not mutated by the unbias function."""
+    original_data = pd.DataFrame({
+        'Customer_ID': ['C001', 'C002', 'C003', 'C004'],
+        'confusion_value': ['FP', 'TN', 'FP', 'TN'],
+        'Transaction_Amount_USD': [100.00, 150.00, 200.00, 250.00],
+        'was_biased': [1, 0, 1, 0]
+    })
+
+    # Create a copy of the original DataFrame for comparison
+    original_data_copy = original_data.copy()
+
+    # Call the unbias function
+    filtered_df = filter_for_valid_transactions(original_data)
+
+    # Mutate created df
+    filtered_df['Transaction_Amount_USD'] = 0
+
     # Assert that the original DataFrame is unchanged
     pd.testing.assert_frame_equal(original_data, original_data_copy, check_dtype=True)
     
