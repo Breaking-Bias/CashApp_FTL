@@ -77,3 +77,22 @@ def test_unbias_all_fp_values():
 #     all_female_data = test_data[test_data['Gender'] == 'Female']
 #     filtered_df = filter_by_factor(test_data, 'Gender', 'Female')
 #     pd.testing.assert_frame_equal(filtered_df, all_female_data) 
+
+def test_unbias_does_not_mutate_original():
+    """Test to ensure the original DataFrame is not mutated by the unbias function."""
+    original_data = pd.DataFrame({
+        'Customer_ID': ['C001', 'C002', 'C003', 'C004'],
+        'confusion_value': ['FP', 'TN', 'FP', 'TN'],
+        'Transaction_Amount_USD': [100.00, 150.00, 200.00, 250.00],
+        'was_biased': [1, 0, 1, 0]
+    })
+
+    # Create a copy of the original DataFrame for comparison
+    original_data_copy = original_data.copy()
+
+    # Call the unbias function
+    unbiased_df = unbias(original_data)
+
+    # Assert that the original DataFrame is unchanged
+    pd.testing.assert_frame_equal(original_data, original_data_copy, check_dtype=True)
+    
