@@ -9,27 +9,61 @@ def read_dataset():
     # return {"data": "yes"}
     return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "women_bias_data.csv"))
 
-def filter(raw_data, filtering_factor):
-    ...
-    # To Carlos: please also enable the function calls on "filter" below after implementing this.
+def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
+    """Returns a dataset of all the transactions from the given group in filtering_factor.  
+    Parameters:
+    - data: pd.DataFrame
+    - filtering_factor: str
+    Returns:
+    - displayed_data: pd.DataFrame
+    """
+    pass
 
-def create_model(filtering_factor):
+def unbias(display_data: pd.DataFrame):
+    """Filters out all the bias within a dataset.
+    It flips all the transactions that have been marked as biased to unbiased, and return a fully unbiased dataset.
+    Changes all the false positives to true negatives
+    Parameter:
+    - display_data: pd.DataFrame
+    Returns:
+    - unbiased_data: pd.DataFrame
+    """
+    pass
+
+def filter_for_valid_transactions():
+    """Creates a new dataset without any rows marked as blocked (i.e. False Positive (incorrectly blocked), True Positive (correctly blocked))
+    """
+    pass
+
+def create_model(filtering_factor, bias: bool):
+    """Creates an arima model for a given dataset.
+    Gives the option to create a model for a dataset with (True) or without bias (False).
+    """
     raw_data = read_dataset()
     # filtered_data = filter(raw_data, filtering_factor)  # to be checked with Carlos
     filtered_data = raw_data  # temporary
+
+    # displayed_data = display(raw_data, filtering_factor)
+    # if bias == False
+    #       unbiased_displayed_data = unbias(displayed_data)
+    # return Model(unbiased_displayed_data)
     return Model(filtered_data)
 
 # Creates the data in the format that VISX needs
-def create_formatted_data(filtering_factor):
-    cleaned_data = create_model(filtering_factor).get_cleaned_data()
+def create_formatted_data(filtering_factor, bias: bool):
+    """Formats the data to adhere to the frontend requirements.
+    """
+    cleaned_data = create_model(filtering_factor, bias).get_cleaned_data()
     formatted_data = [
         {'date': record['Date'].strftime('%Y-%m-%d'), 'value': record[TARGET_VAR]}
         for record in cleaned_data[['Date', TARGET_VAR]].drop_duplicates().to_dict(orient='records')
     ]
     return formatted_data
 
-def create_prediction_data(filtering_factor, forecast_steps: int):
-    model = create_model(filtering_factor)
+def create_prediction_data(filtering_factor, forecast_steps: int, bias: bool):
+    """Returns the data that the arima model predicts 
+    """
+    model = create_model(filtering_factor, bias)
     forecast_df = model.get_forecast()
     forecast_values = forecast_df['mean']
     future_dates = pd.date_range(start=model.get_cleaned_data().index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
@@ -37,8 +71,3 @@ def create_prediction_data(filtering_factor, forecast_steps: int):
                         for date, value in zip(future_dates, forecast_values)]
     prediction_data = [{'date': record['date'].strftime('%Y-%m-%d'), 'value': int(record['value'])} for record in prediction_unformatted]
     return prediction_data
-
-print(create_formatted_data('female'))
-
-
-
