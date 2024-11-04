@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import os
-from .. read_data import read_dataset, create_formatted_data
+from read_data import read_dataset, create_formatted_data
 
 # Note: This is specifc to the transaction_data.csv. Change it if we use a different csv later on.
 @pytest.fixture
