@@ -1,7 +1,11 @@
 import "./App.css";
+import { useState } from "react";
 import Graph from "./components/Graph";
+import { Desktop } from "./components/Desktop/Desktop";
+import { Button } from "@mui/material";
 
 function App() {
+  const [showGraph, setShowGraph] = useState(false);
   const serverURL = import.meta.env.VITE_SERVER_URL;
 
   async function makeTestGetRequest() {
@@ -24,15 +28,21 @@ function App() {
       console.error("Error:", error);
     }
   }
-
+  function handleLoginClick() {
+    setShowGraph(true);
+    console.log("Login clicked, showGraph set to:", showGraph); // Log state update
+    makeTestGetRequest(); // Optional: to make the GET request when Login is clicked
+  }
   return (
     <>
-      <h1>This is our front end</h1>
-      <button onClick={makeTestGetRequest}>
-        Click me to get some info from the back end
-      </button>
+      <Desktop />
+      <Button color="success" size="medium" onClick={handleLoginClick}>
+        Login
+      </Button>
 
-      <Graph />
+      <h1>This is our front end</h1>
+
+      {showGraph && <Graph />} {/* Render Graph conditionally */}
     </>
   );
 }
