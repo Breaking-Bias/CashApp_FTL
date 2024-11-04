@@ -7,7 +7,13 @@ from Model import TARGET_VAR, Model
 def read_dataset():
     # Temporary
     # return {"data": "yes"}
-    return pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "women_bias_data.csv"))
+    try:
+        file_path = os.path.join(os.path.dirname(__file__), "data", "women_bias_data.csv")
+        dataset = pd.read_csv(file_path)
+        return dataset
+    except FileNotFoundError:
+        print(f"Error: The file {file_path} does not exist.")
+        return None
 
 def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
     """Returns a dataset of all the transactions from the given group in filtering_factor.  
@@ -19,6 +25,7 @@ def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
     """
     pass
 
+
 def unbias(display_data: pd.DataFrame):
     """Filters out all the bias within a dataset.
     It flips all the transactions that have been marked as biased to unbiased, and return a fully unbiased dataset.
@@ -28,12 +35,25 @@ def unbias(display_data: pd.DataFrame):
     Returns:
     - unbiased_data: pd.DataFrame
     """
-    pass
+    new_dataframe=display_data.apply(apply_helper_for_unbias, axis=1)
+    return new_dataframe
 
-def filter_for_valid_transactions():
+
+def apply_helper_for_unbias(row):
+    if row['confusion_value']=='FP':
+        row['confusion_value']='TN'
+    return row
+
+
+
+def filter_for_valid_transactions(display_data: pd.DataFrame):
     """Creates a new dataset without any rows marked as blocked (i.e. False Positive (incorrectly blocked), True Positive (correctly blocked))
     """
-    pass
+    filtered_df = display_data[(display_data['confusion_value'] != 'FP') & (display_data['confusion_value'] != 'TP')]
+    return filtered_df
+
+
+    
 
 def create_model(filtering_factor, bias: bool):
     """Creates an arima model for a given dataset.
@@ -71,3 +91,4 @@ def create_prediction_data(filtering_factor, forecast_steps: int, bias: bool):
                         for date, value in zip(future_dates, forecast_values)]
     prediction_data = [{'date': record['date'].strftime('%Y-%m-%d'), 'value': int(record['value'])} for record in prediction_unformatted]
     return prediction_data
+
