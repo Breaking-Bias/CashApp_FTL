@@ -2,6 +2,11 @@
 
 Machine Learning Model Bias Visualization
 
+Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)
+
+Backend hosted with Heroku [here](https://damp-spire-04769-e45e2287cd24.herokuapp.com)
+
+
 
 # Project Overview
 
