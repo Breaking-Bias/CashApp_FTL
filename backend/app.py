@@ -20,7 +20,7 @@ def getOriginalData():
 def predictValues():
     data = request.get_json()
     forecast_steps = data['numPoints']
-    new_values = backend.read_data.create_prediction_data('A', forecast_steps)
+    new_values = read_data.create_prediction_data('A', forecast_steps)
 
     # # TEMPORARY FOR FRONTEND TESTING
     # new_values = [
@@ -42,7 +42,7 @@ def predictValues():
 
 @app.route('/getDummyData')
 def getFormattedData():
-    data = backend.read_data.create_formatted_data().to_json()
+    data = read_data.create_formatted_data().to_json()
     return jsonify(data)
 
 
