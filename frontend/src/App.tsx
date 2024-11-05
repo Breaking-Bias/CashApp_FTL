@@ -1,13 +1,17 @@
+import { useState } from "react";
 import "./App.css";
 import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
-import { useState } from "react";
 import Graph from "./components/Graph";
 import { Desktop } from "./components/Desktop/Desktop";
 import { Button } from "@mui/material";
+import SelectForecastSize from "./components/SelectForecastSize";
+import { DataSeries } from "./types";
 
 function App() {
   const [showGraph, setShowGraph] = useState(false);
   const serverURL = import.meta.env.VITE_SERVER_URL;
+
+  const [predictedData, setPredictedData] = useState<DataSeries>();
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
@@ -40,17 +44,17 @@ function App() {
       <Router>
       <Routes>
         <Route path="/" element={<Desktop />} />
-        <Route path="/graph" element={<Graph />} />
+        <Route path="/graph" element={<Graph predictedData={predictedData}} />
       </Routes>
+
+      <SelectForecastSize setPredictedData={setPredictedData} /> 
     </Router>
       {/* <Desktop />
       <Button color="success" size="medium" onClick={handleLoginClick}>
         Login
       </Button> */}
 
-      <h1>This is our front end</h1>
-
-      {showGraph && <Graph />} 
+      
     </>
   );
 }
