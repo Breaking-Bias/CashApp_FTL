@@ -44,11 +44,11 @@ function App() {
       <Router>
       <Routes>
         <Route path="/" element={<Desktop />} />
-        <Route path="/graph" element={<Graph predictedData={predictedData}} />
+        <Route path="/graph" element={<Graph predictedData={predictedData} />} />
       </Routes>
 
-      <SelectForecastSize setPredictedData={setPredictedData} /> 
-    </Router>
+      <SelectForecastSize setPredictedData={setPredictedData} />
+     </Router>
       {/* <Desktop />
       <Button color="success" size="medium" onClick={handleLoginClick}>
         Login
