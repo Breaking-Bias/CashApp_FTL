@@ -37,14 +37,20 @@ function App() {
   
   return (
     <>
-      <Desktop />
+      <Router>
+      <Routes>
+        <Route path="/" element={<Desktop />} />
+        <Route path="/graph" element={<Graph />} />
+      </Routes>
+    </Router>
+      {/* <Desktop />
       <Button color="success" size="medium" onClick={handleLoginClick}>
         Login
       </Button>
 
       <h1>This is our front end</h1>
 
-      {showGraph && <Graph />} {/* Render Graph conditionally */}
+      {showGraph && <Graph />} Render Graph conditionally */}
     </>
   );
 }
