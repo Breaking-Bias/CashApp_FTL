@@ -24,7 +24,7 @@ def predictValues():
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, True)
     return jsonify(new_values)
 
-@app.route('/getPastDataUnbiased')
+@app.route('/getOriginalDataUnbiased', methods=['POST'])
 def getOriginalDataUnbiased():
     filtering_factor = request.get_json()['filtering_factor']
     data = read_data.create_formatted_data(filtering_factor, False)
