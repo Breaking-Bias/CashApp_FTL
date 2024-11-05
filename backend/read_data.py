@@ -16,14 +16,39 @@ def read_dataset():
         return None
 
 def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
-    """Returns a dataset of all the transactions from the given group in filtering_factor.  
+    """Returns a dataset of only the transaction in the given group in filtering_factor.  
     Parameters:
     - data: pd.DataFrame
     - filtering_factor: str
     Returns:
     - displayed_data: pd.DataFrame
     """
-    pass
+    filtered_data = data.copy()
+    try: 
+        int_filtering_factor = int(filtering_factor)
+        if isinstance(int_filtering_factor, int):  # Check for Age
+            if 0 <= filtering_factor < 18:
+                filtered_data = filtered_data[(filtered_data['Age'] >= 0) & (filtered_data['Age'] < 18)]
+            elif 18 <= filtering_factor < 35:
+                filtered_data = filtered_data[(filtered_data['Age'] >= 18) & (filtered_data['Age'] < 35)]
+            elif 35 <= filtering_factor < 65:
+                filtered_data = filtered_data[(filtered_data['Age'] >= 35) & (filtered_data['Age'] < 65)]
+            elif 65 <= filtering_factor:
+                filtered_data = filtered_data[(filtered_data['Age'] >= 65)]
+            else:  # Negative number will raise error (this won't be the case, however we should keep it for clean code)
+                raise ValueError("Invalid filtering_factor: negative age is not allowed.")
+    except ValueError:
+        # TODO: having 'Other' categories in Gender and Race may cause bugs. We should rename one of these.
+        if filtering_factor in ['Female', 'Male', 'Non-Binary', 'Other']:  # Check for Gender
+            filtered_data = filtered_data[filtered_data['Gender'] == filtering_factor]
+        elif filtering_factor in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:  # Check for Race
+            filtered_data = filtered_data[filtered_data['Race'] == filtering_factor]
+        elif isinstance(filtering_factor, str) and len(filtering_factor) == 2 and filtering_factor.isupper():  # Check for State
+            filtered_data = filtered_data[filtered_data['State'] == filtering_factor]
+        else:
+            pass
+
+    return filtered_data
 
 
 def unbias(display_data: pd.DataFrame):
