@@ -11,10 +11,10 @@ def getinfo():
     info = {"name":'breaking bias', "score":"awesome"}
     return jsonify(info)
 
-@app.route('/getOriginalData', methods=['POST'])
-def getOriginalData():
-    filtering_factor = request.get_json()['filtering_factor']
-    data = read_data.create_formatted_data(filtering_factor, True)
+@app.route('/getPastData')  # , methods=['POST'])
+def getPastData():
+    # filtering_factor = request.get_json()['filtering_factor']
+    data = read_data.create_formatted_data('Female', True)  # currently hardcoded
     return jsonify(data)
 
 @app.route('/predictValues', methods=['POST'])
@@ -24,8 +24,8 @@ def predictValues():
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, True)
     return jsonify(new_values)
 
-@app.route('/getOriginalDataUnbiased', methods=['POST'])
-def getOriginalDataUnbiased():
+@app.route('/getPastDataUnbiased', methods=['POST'])
+def getPastDataUnbiased():
     filtering_factor = request.get_json()['filtering_factor']
     data = read_data.create_formatted_data(filtering_factor, False)
     return jsonify(data)

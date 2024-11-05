@@ -22,7 +22,7 @@ function Graph({ predictedData }: Props) {
 
   async function getKnownData() {
     const serverURL = import.meta.env.VITE_SERVER_URL;
-    const endpoint = `${serverURL}/getOriginalData`;
+    const endpoint = `${serverURL}/getPastData`;
 
     try {
       const response = await fetch(endpoint);

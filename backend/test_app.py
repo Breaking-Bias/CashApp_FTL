@@ -43,8 +43,9 @@ def test_getinfo(client):
     assert response.status_code == 200
     assert response.json == {"name": 'breaking bias', "score": "awesome"}
 
-def test_getOriginalData(client):
-    response = client.post('/getOriginalData', json={'filtering_factor': 'Female'})
+def test_getPastData(client):
+    # response = client.post('/getPastData', json={'filtering_factor': 'Female'})
+    response = client.get('/getPastData')
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
@@ -52,7 +53,7 @@ def test_getOriginalData(client):
     except ValueError:
         assert False, "Response is not valid JSON"
 
-    assert is_valid_format(data), "Original data is not in the expected format"
+    assert is_valid_format(data), "Past data is not in the expected format"
 
 def test_predictValues(client):
     response = client.post('/predictValues', json={'numPoints': 10, 'filtering_factor': 'Female'})
@@ -65,8 +66,8 @@ def test_predictValues(client):
 
     assert is_valid_format(data), "Predicted data is not in the expected format"
 
-def test_getOriginalDataUnbiased(client):
-    response = client.post('/getOriginalDataUnbiased', json={'filtering_factor': 'Female'}) # This should be unbiased data by default)
+def test_getPastDataUnbiased(client):
+    response = client.post('/getPastDataUnbiased', json={'filtering_factor': 'Female'}) # This should be unbiased data by default)
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
@@ -74,7 +75,7 @@ def test_getOriginalDataUnbiased(client):
     except ValueError:
         assert False, "Response is not valid JSON"
 
-    assert is_valid_format(data), "Original data is not in the expected format"
+    assert is_valid_format(data), "Past data is not in the expected format"
 
 def test_predictValuesUnbiased(client):
     response = client.post('/predictValuesUnbiased', json={'numPoints': 10, 'filtering_factor': 'Female'})
