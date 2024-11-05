@@ -3,6 +3,7 @@ import os
 from Model import TARGET_VAR, Model
 
 # Read the raw dataset from the csv
+# trivial
 # TODO: May need to change csv file depending on our final data file.
 def read_dataset():
     # Temporary
