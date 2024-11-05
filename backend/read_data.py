@@ -26,7 +26,7 @@ def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
     filtered_data = data.copy()
     try: 
         int_filtering_factor = int(filtering_factor)
-        if isinstance(filtering_factor, int):  # Check for Age
+        if isinstance(int_filtering_factor, int):  # Check for Age
             if 0 <= filtering_factor < 18:
                 filtered_data = filtered_data[(filtered_data['Age'] >= 0) & (filtered_data['Age'] < 18)]
             elif 18 <= filtering_factor < 35:
