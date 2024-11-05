@@ -16,7 +16,7 @@ def read_dataset():
         return None
 
 def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
-    """Returns a dataset of all the transactions from the given group in filtering_factor.  
+    """Returns a dataset of all the transactions from the given group in filtering_factor.
     Parameters:
     - data: pd.DataFrame
     - filtering_factor: str
@@ -53,20 +53,19 @@ def filter_for_valid_transactions(display_data: pd.DataFrame):
     return filtered_df
 
 
-    
+
 
 def create_model(filtering_factor, bias: bool):
     """Creates an arima model for a given dataset.
     Gives the option to create a model for a dataset with (True) or without bias (False).
     """
     raw_data = read_dataset()
-    # filtered_data = filter(raw_data, filtering_factor)  # to be checked with Carlos
     filtered_data = raw_data  # temporary
-
-    # displayed_data = display(raw_data, filtering_factor)
-    # if bias == False
-    #       unbiased_displayed_data = unbias(displayed_data)
-    # return Model(unbiased_displayed_data)
+    # TODO: Uncomment these lines when all functions above are implemented.
+    # if not bias:
+    #     filtered_data = unbias(raw_data)
+    # filtered_data = filter_for_valid_transactions(filtered_data)
+    # filtered_data = filter_by_factor(filtered_data, filtering_factor)
     return Model(filtered_data)
 
 # Creates the data in the format that VISX needs
@@ -81,7 +80,7 @@ def create_formatted_data(filtering_factor, bias: bool):
     return formatted_data
 
 def create_prediction_data(filtering_factor, forecast_steps: int, bias: bool):
-    """Returns the data that the arima model predicts 
+    """Returns the data that the arima model predicts
     """
     model = create_model(filtering_factor, bias)
     forecast_df = model.get_forecast()
