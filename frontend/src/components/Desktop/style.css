@@ -12,12 +12,16 @@
     overflow: hidden;
     position: relative;
     width: 1440px;
+    margin-top: 10px;
   }
   
   .desktop .overlap-group {
     height: 1000px;
     left: -720px;
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     top: -23px;
     width: 2253px;
   }
@@ -25,7 +29,7 @@
   .desktop .text-wrapper {
     color: #000000;
     font-family: "Emblema One-Regular", Helvetica;
-    font-size: 36px;
+    font-size: 96px;
     font-weight: 400;
     left: 1259px;
     letter-spacing: 0;
@@ -66,9 +70,13 @@
   
   .desktop .image {
     height: 91px;
-    left: -33px;
+    left: 30px;
     object-fit: cover;
     position: absolute;
     top: -370px;
     width: 88px;
   }
+
+  .desktop .login-button {
+    margin-top: 20px; 
+}

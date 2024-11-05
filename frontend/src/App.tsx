@@ -1,4 +1,5 @@
 import "./App.css";
+import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Graph from "./components/Graph";
 import { Desktop } from "./components/Desktop/Desktop";
@@ -31,8 +32,9 @@ function App() {
   function handleLoginClick() {
     setShowGraph(true);
     console.log("Login clicked, showGraph set to:", showGraph); // Log state update
-    makeTestGetRequest(); // Optional: to make the GET request when Login is clicked
+    makeTestGetRequest(); 
   }
+  
   return (
     <>
       <Desktop />
