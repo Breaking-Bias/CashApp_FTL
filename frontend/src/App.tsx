@@ -46,11 +46,11 @@ function App() {
       {/* <Desktop />
       <Button color="success" size="medium" onClick={handleLoginClick}>
         Login
-      </Button>
+      </Button> */}
 
       <h1>This is our front end</h1>
 
-      {showGraph && <Graph />} Render Graph conditionally */}
+      {showGraph && <Graph />} 
     </>
   );
 }
