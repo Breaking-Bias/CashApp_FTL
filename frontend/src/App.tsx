@@ -50,7 +50,7 @@ function App() {
       <SelectForecastSize setPredictedData={setPredictedData} />
      </Router>
       {/* <Desktop />
-      <Button color="success" size="medium" onClick={handleLoginClick}>
+      <Button color="success" size="medi`um" onClick={handleLoginClick}>
         Login
       </Button> */}
 
