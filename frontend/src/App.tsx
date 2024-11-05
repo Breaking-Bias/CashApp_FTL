@@ -1,9 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Graph from "./components/Graph";
 import { Desktop } from "./components/Desktop/Desktop";
-import { Button } from "@mui/material";
 import SelectForecastSize from "./components/SelectForecastSize";
 import { DataSeries } from "./types";
 
@@ -33,11 +32,7 @@ function App() {
       console.error("Error:", error);
     }
   }
-  function handleLoginClick() {
-    setShowGraph(true);
-    console.log("Login clicked, showGraph set to:", showGraph); // Log state update
-    makeTestGetRequest(); 
-  }
+ 
   
   return (
     <>
