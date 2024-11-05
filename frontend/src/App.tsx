@@ -3,6 +3,7 @@ import "./App.css";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Graph from "./components/Graph";
 import { Desktop } from "./components/Desktop/Desktop";
+import { Button } from "@mui/material";
 import SelectForecastSize from "./components/SelectForecastSize";
 import { DataSeries } from "./types";
 
@@ -32,7 +33,11 @@ function App() {
       console.error("Error:", error);
     }
   }
- 
+  function handleLoginClick() {
+    setShowGraph(true);
+    console.log("Login clicked, showGraph set to:", showGraph); // Log state update
+    makeTestGetRequest(); 
+  }
   
   return (
     <>
@@ -42,13 +47,11 @@ function App() {
         <Route path="/graph" element={<Graph predictedData={predictedData} />} />
       </Routes>
 
+      <Button color="success" size="medium" onClick={handleLoginClick}>
+        Login
+      </Button> 
       <SelectForecastSize setPredictedData={setPredictedData} />
      </Router>
-      {/* <Desktop />
-      <Button color="success" size="medi`um" onClick={handleLoginClick}>
-        Login
-      </Button> */}
-
       
     </>
   );
