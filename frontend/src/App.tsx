@@ -1,17 +1,25 @@
 import { useState } from "react";
 import "./App.css";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Graph from "./components/Graph";
 import { Desktop } from "./components/Desktop/Desktop";
 import { Button } from "@mui/material";
 import SelectForecastSize from "./components/SelectForecastSize";
 import { DataSeries } from "./types";
+import DropdownFilter from "./components/DropdownFilter";
 
 function App() {
   const [showGraph, setShowGraph] = useState(false);
   const serverURL = import.meta.env.VITE_SERVER_URL;
-
   const [predictedData, setPredictedData] = useState<DataSeries>();
+
+  // Dropdown Filter
+  const [, setSelectedDataType] = useState("");
+
+  const handleSelectChange = (value: string) => {
+    setSelectedDataType(value);
+  }
+
 
   async function makeTestGetRequest() {
     const endpoint = serverURL + "/getinfo";
@@ -44,13 +52,23 @@ function App() {
       <Router>
       <Routes>
         <Route path="/" element={<Desktop />} />
-        <Route path="/graph" element={<Graph predictedData={predictedData} />} />
-      </Routes>
+        <Route 
+          path="/graph" 
+          element={
+            <div>
+              
+              <DropdownFilter onSelectChange={handleSelectChange} />
+              <Graph predictedData={predictedData} />
+              <SelectForecastSize setPredictedData={setPredictedData} />
+            </div>
+          }
+        />
+         </Routes>
 
-      <Button color="success" size="medium" onClick={handleLoginClick}>
-        Login
-      </Button> 
-      <SelectForecastSize setPredictedData={setPredictedData} />
+        <Button color="success" size="medium" onClick={handleLoginClick}>
+          Login
+         </Button> 
+
      </Router>
       
     </>
@@ -58,3 +76,4 @@ function App() {
 }
 
 export default App;
+
