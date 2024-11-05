@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from data import arima_test, read_data
+import read_data
 
 app = Flask('app')
 CORS(app)
@@ -13,24 +13,52 @@ def getinfo():
 
 @app.route('/getOriginalData')
 def getOriginalData():
-    data = read_data.create_formatted_data()
+    data = read_data.create_formatted_data('female', True)  # Filter is temporarily hardcoded.
+
+    # # TEMPORARY FOR FRONTEND TESTING
+    # data = [
+    #     {
+    #         "date": "2024-08-01",
+    #         "value": 50
+    #     },
+    #     {
+    #         "date": "2024-08-02",
+    #         "value": 55
+    #     },
+    #     {
+    #         "date": "2024-08-03",
+    #         "value": 70
+    #     },
+    #     {
+    #         "date": "2024-08-04",
+    #         "value": 60
+    #     },
+    # ]
     return jsonify(data)
 
 @app.route('/predictValues', methods=['POST'])
 def predictValues():
     data = request.get_json()
-    num_points = data['numPoints']
+    forecast_steps = data['numPoints']
+    new_values = read_data.create_prediction_data('A', forecast_steps, True)
 
-    # Replace with actual predict function
-    # new_values = predict(num_points)
-    new_values = {}
+    # # TEMPORARY FOR FRONTEND TESTING
+    # new_values = [
+    #     {
+    #         "date": "2024-08-05",
+    #         "value": 73
+    #     },
+    #     {
+    #         "date": "2024-08-06",
+    #         "value": 88
+    #     },
+    #     {
+    #         "date": "2024-08-07",
+    #         "value": 82
+    #     }
+    # ]
 
     return jsonify(new_values)
-
-@app.route('/getDummyData')
-def getDummyData():
-    data = arima_test.create_sample_data().to_json()
-    return jsonify(data)
 
 # This is to test that CI/CD pipeline is working. Delete later.
 @app.route('/cicd_test')
