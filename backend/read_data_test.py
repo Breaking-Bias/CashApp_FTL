@@ -56,27 +56,28 @@ def test_unbias_all_fp_values():
     assert (unbiased_df['confusion_value'] == 'TN').all()
 
 
-#comment this in when you need to <3
-# def test_filter_by_factor():
-#     """Test the filter_by_factor function."""
-#     filtered_df = filter_by_factor(test_data, 'Gender', 'Female')
-#     assert len(filtered_df) == 3  
-#     assert (filtered_df['Gender'] == 'Female').all() 
+# comment this in when you need to <3
+def test_filter_by_factor():
+    """Test the filter_by_factor function."""
+    filtered_df = filter_by_factor(test_data, 'Female')
+    assert len(filtered_df) == 3  
+    assert (filtered_df['Gender'] == 'Female').all() 
+
 # def test_filter_by_factor_non_existent_column():
 #     """Edge case: Test filter_by_factor with a non-existent column."""
 #     with pytest.raises(KeyError):
 #         filter_by_factor(test_data, 'NonExistentColumn', 'SomeValue')
 
-# def test_filter_by_factor_no_matching_values():
-#     """Edge case: Test filter_by_factor with no matching values."""
-#     filtered_df = filter_by_factor(test_data, 'Gender', 'Nonexistent')
-#     assert filtered_df.empty  # Should be empty as there are no matches
+def test_filter_by_factor_no_matching_values():
+    """Edge case: Test filter_by_factor with no matching values."""
+    filtered_df = filter_by_factor(test_data, 'Nonexistent')
+    assert filtered_df.equals(test_data)  # Should return the original dataset
 
-# def test_filter_by_factor_all_rows_match():
-#     """Edge case: Test filter_by_factor where all rows match the value."""
-#     all_female_data = test_data[test_data['Gender'] == 'Female']
-#     filtered_df = filter_by_factor(test_data, 'Gender', 'Female')
-#     pd.testing.assert_frame_equal(filtered_df, all_female_data) 
+def test_filter_by_factor_all_rows_match():
+    """Edge case: Test filter_by_factor where all rows match the value."""
+    all_female_data = test_data[test_data['Gender'] == 'Female']
+    filtered_df = filter_by_factor(test_data, 'Female')
+    pd.testing.assert_frame_equal(filtered_df, all_female_data) 
 
 def test_unbias_does_not_mutate_original():
     """Test to ensure the original DataFrame is not mutated by the unbias function."""
