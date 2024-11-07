@@ -6,10 +6,9 @@ test("renders DropdownFilter", () => {
     render (<DropdownFilter onSelectChange={() => {}} />);
   
   // Check if the the Filter is in the document
-  const dropdownElement = screen.getByTitle("Gender");
+  const dropdownElement = screen.getByText("Gender");
   expect(dropdownElement).toBeInTheDocument();
 })
 
  
   // Check if the Filter is working with the graph
-

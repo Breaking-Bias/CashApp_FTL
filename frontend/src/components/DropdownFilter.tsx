@@ -1,8 +1,8 @@
-import {useState} from "react";
-import {Select, MenuItem, FormControl, InputLabel} from "@mui/material";
+import { useState } from "react";
+import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 
 interface DropdownFilterProps {
-  onSelectChange: (value: string) => void; // Function to handle changes in App.tsx
+  onSelectChange: (value: string) => void;
 }
 
 function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
@@ -11,26 +11,21 @@ function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
   const handleChange = (event: { target: { value: any; }; }) => {
     const value = event.target.value;
     setSelectedOption(value);
-    onSelectChange(value); // Pass the selected value back to the parent
+    onSelectChange(value);
   };
 
-  
-    return (
-        <div>
-            <FormControl fullWidth>
-                <InputLabel>Gender</InputLabel>
-                <Select
-                    value={selectedOption}
-                    onChange={handleChange}
-                    label="Gender"
-                >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                </Select>
-            </FormControl>
-
-        </div>
-    )
+  return (
+    <FormControl fullWidth>
+      <InputLabel>Gender</InputLabel>
+      <Select
+        value={selectedOption}
+        onChange={handleChange}
+      >
+        <MenuItem value="male">Male</MenuItem>
+        <MenuItem value="female">Female</MenuItem>
+      </Select>
+    </FormControl>
+  );
 }
 
 export default DropdownFilter;
