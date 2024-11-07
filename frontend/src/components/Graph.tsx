@@ -4,8 +4,8 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   Legend,
+  ReferenceLine,
 } from "recharts";
 import { DataSeries } from "../types";
 
@@ -44,7 +44,7 @@ function Graph({
       {pastData == undefined ? (
         <h1>Loading...</h1>
       ) : (
-        <LineChart width={800} height={500}>
+        <LineChart width={800} height={500} margin={{ bottom: 50 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             angle={-45}
@@ -56,10 +56,10 @@ function Graph({
             domain={getGraphDomain()}
           />
           <YAxis dataKey="value" />
-          <Tooltip />
-          <Legend />
+          <Legend layout="horizontal" verticalAlign="top" />
 
           <Line
+            dot={false}
             type="monotone"
             dataKey="value"
             data={pastData.data}
@@ -69,6 +69,7 @@ function Graph({
 
           {pastDataUnbiased && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={pastDataUnbiased.data}
@@ -79,6 +80,7 @@ function Graph({
 
           {predictedData && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={predictedData.data}
@@ -89,11 +91,24 @@ function Graph({
 
           {predictedDataUnbiased && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={predictedDataUnbiased.data}
               name={predictedDataUnbiased.name}
               stroke={predictedDataUnbiased.color}
+            />
+          )}
+
+          {predictedData && (
+            <ReferenceLine
+              x={predictedData.data[0].date.getTime()}
+              label={{
+                value: "Present",
+                position: "insideTopRight",
+                offset: 10,
+              }}
+              stroke="gray"
             />
           )}
         </LineChart>

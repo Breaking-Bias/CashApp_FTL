@@ -30,7 +30,7 @@ function MainPage() {
     if (formattedData) {
       setPastData({
         name: "Known Data",
-        color: "blue",
+        color: "#2933f2", //blue
         data: formattedData,
       });
     }
@@ -41,7 +41,7 @@ function MainPage() {
     if (formattedData) {
       setPastDataUnbiased({
         name: "Known Data (Unbiased)",
-        color: "red",
+        color: "#f72525", //red
         data: formattedData,
       });
     }
@@ -52,7 +52,7 @@ function MainPage() {
     if (formattedData) {
       setPredictedData({
         name: "Predicted Data",
-        color: "green",
+        color: "#030985", // dark blue
         data: formattedData,
       });
     }
@@ -66,7 +66,7 @@ function MainPage() {
     if (formattedData) {
       setPredictedDataUnbiased({
         name: "Predicted Data (Unbiased)",
-        color: "purple",
+        color: "#750101", // dark red
         data: formattedData,
       });
     }

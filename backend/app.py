@@ -11,11 +11,13 @@ def getinfo():
     info = {"name":'breaking bias', "score":"awesome"}
     return jsonify(info)
 
+
 @app.route('/getPastData', methods=['POST'])
 def getPastData():
     filtering_factor = request.get_json()['filtering_factor']
     data = read_data.create_formatted_data(filtering_factor, True)
     return jsonify(data)
+
 
 @app.route('/predictData', methods=['POST'])
 def predictValues():
@@ -24,11 +26,13 @@ def predictValues():
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, True)
     return jsonify(new_values)
 
+
 @app.route('/getPastDataUnbiased', methods=['POST'])
 def getPastDataUnbiased():
     filtering_factor = request.get_json()['filtering_factor']
     data = read_data.create_formatted_data(filtering_factor, False)
     return jsonify(data)
+
 
 @app.route('/predictDataUnbiased', methods=['POST'])
 def predictValuesUnbiased():
@@ -36,6 +40,7 @@ def predictValuesUnbiased():
     forecast_steps = request.get_json()['num_points']
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, False)
     return jsonify(new_values)
+
 
 # This is to test that CI/CD pipeline is working. Delete later.
 @app.route('/cicd_test')
