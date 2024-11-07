@@ -84,7 +84,12 @@ function MainPage() {
 
   return (
     <div>
-      {/* <Graph predictedData={}/> */}
+      <Graph
+        pastData={pastData}
+        pastDataUnbiased={pastDataUnbiased}
+        predictedData={predictedData}
+        predictedDataUnbiased={predictedDataUnbiased}
+      />
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
       <RadioButtons
         filterFactor={filterFactor}
