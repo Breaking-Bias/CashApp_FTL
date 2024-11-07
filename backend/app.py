@@ -11,53 +11,30 @@ def getinfo():
     info = {"name":'breaking bias', "score":"awesome"}
     return jsonify(info)
 
-@app.route('/getOriginalData')
-def getOriginalData():
-    data = read_data.create_formatted_data('female', True)  # Filter is temporarily hardcoded.
-
-    # # TEMPORARY FOR FRONTEND TESTING
-    # data = [
-    #     {
-    #         "date": "2024-08-01",
-    #         "value": 50
-    #     },
-    #     {
-    #         "date": "2024-08-02",
-    #         "value": 55
-    #     },
-    #     {
-    #         "date": "2024-08-03",
-    #         "value": 70
-    #     },
-    #     {
-    #         "date": "2024-08-04",
-    #         "value": 60
-    #     },
-    # ]
+@app.route('/getPastData', methods=['POST'])
+def getPastData():
+    filtering_factor = request.get_json()['filtering_factor']
+    data = read_data.create_formatted_data(filtering_factor, True)
     return jsonify(data)
 
-@app.route('/predictValues', methods=['POST'])
+@app.route('/predictData', methods=['POST'])
 def predictValues():
-    data = request.get_json()
-    forecast_steps = data['numPoints']
-    new_values = read_data.create_prediction_data('A', forecast_steps, True)
+    filtering_factor = request.get_json()['filtering_factor']
+    forecast_steps = request.get_json()['num_points']
+    new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, True)
+    return jsonify(new_values)
 
-    # # TEMPORARY FOR FRONTEND TESTING
-    # new_values = [
-    #     {
-    #         "date": "2024-08-05",
-    #         "value": 73
-    #     },
-    #     {
-    #         "date": "2024-08-06",
-    #         "value": 88
-    #     },
-    #     {
-    #         "date": "2024-08-07",
-    #         "value": 82
-    #     }
-    # ]
+@app.route('/getPastDataUnbiased', methods=['POST'])
+def getPastDataUnbiased():
+    filtering_factor = request.get_json()['filtering_factor']
+    data = read_data.create_formatted_data(filtering_factor, False)
+    return jsonify(data)
 
+@app.route('/predictDataUnbiased', methods=['POST'])
+def predictValuesUnbiased():
+    filtering_factor = request.get_json()['filtering_factor']
+    forecast_steps = request.get_json()['num_points']
+    new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, False)
     return jsonify(new_values)
 
 # This is to test that CI/CD pipeline is working. Delete later.
