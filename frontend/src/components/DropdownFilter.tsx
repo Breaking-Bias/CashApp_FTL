@@ -18,11 +18,11 @@ function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
     return (
         <div>
             <FormControl fullWidth>
-                <InputLabel>Gender Type</InputLabel>
+                <InputLabel>Gender</InputLabel>
                 <Select
                     value={selectedOption}
                     onChange={handleChange}
-                    label="Gender Type"
+                    label="Gender"
                 >
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
