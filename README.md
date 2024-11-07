@@ -45,7 +45,7 @@ TO RUN SERVER:
 'python server.py' (or click the play button)
 
 # License
-The project is licensed under the ??MIT License??
+The project is licensed under the ??MIT License?
 
 
 # Acknowledgments
