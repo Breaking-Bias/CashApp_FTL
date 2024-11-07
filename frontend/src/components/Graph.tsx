@@ -40,7 +40,7 @@ function Graph({
   }
 
   return (
-    <div>
+    <div id="graph-canvas">
       {pastData == undefined ? (
         <h1>Loading...</h1>
       ) : (
