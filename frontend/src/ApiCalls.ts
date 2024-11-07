@@ -2,16 +2,16 @@ import { FormattedDataEntry, RawDataEntry } from "./types";
 
 const SERVER_URL = process.env.VITE_SERVER_URL;
 
-export async function getPastDataAPICall(filterFactor: string) {
-    const endpoint = `${SERVER_URL}/getPastData`;
+async function genericPostCall(endpoint: string, params: object) {
+    const fullEndpoint = `${SERVER_URL}${endpoint}`;
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await fetch(fullEndpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ filtering_factor: filterFactor }),
+            body: JSON.stringify(params),
         });
 
         if (!response.ok) {
@@ -35,104 +35,18 @@ export async function getPastDataAPICall(filterFactor: string) {
     }
 }
 
+export async function getPastDataAPICall(filterFactor: string) {
+    return await genericPostCall("/getPastData", { filtering_factor: filterFactor })
+}
 
 export async function getPastDataUnbiasedAPICall(filterFactor: string) {
-    const endpoint = `${SERVER_URL}/getPastDataUnbiased`;
-
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ filtering_factor: filterFactor }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error in response: " + response.statusText);
-        }
-
-        const data: RawDataEntry[] = await response.json();
-
-        // Turns the ISO dates into JavaScript date objects   
-        const formattedData: FormattedDataEntry[] = data.map(
-            (entry) => ({
-                date: new Date(entry.date),
-                value: entry.value,
-            })
-        );
-
-        return formattedData      
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
+    return await genericPostCall("/getPastDataUnbiased", { filtering_factor: filterFactor })
 }
-
 
 export async function predictDataAPICall(filterFactor: string, numPoints: number) {
-    const endpoint = `${SERVER_URL}/predictData`;
-
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ filtering_factor: filterFactor, num_points: numPoints }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error in response: " + response.statusText);
-        }
-
-        const data: RawDataEntry[] = await response.json();
-
-        // Turns the ISO dates into JavaScript date objects   
-        const formattedData: FormattedDataEntry[] = data.map(
-            (entry) => ({
-                date: new Date(entry.date),
-                value: entry.value,
-            })
-        );
-
-        return formattedData      
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
+    return await genericPostCall("/predictData", { filtering_factor: filterFactor, num_points: numPoints })
 }
 
-
 export async function predictDataUnbiasedAPICall(filterFactor: string, numPoints: number) {
-    const endpoint = `${SERVER_URL}/predictDataUnbiased`;
-
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ filtering_factor: filterFactor, num_points: numPoints }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error in response: " + response.statusText);
-        }
-
-        const data: RawDataEntry[] = await response.json();
-
-        // Turns the ISO dates into JavaScript date objects   
-        const formattedData: FormattedDataEntry[] = data.map(
-            (entry) => ({
-                date: new Date(entry.date),
-                value: entry.value,
-            })
-        );
-
-        return formattedData      
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
+    return await genericPostCall("/predictDataUnbiased", { filtering_factor: filterFactor, num_points: numPoints })
 }
