@@ -1,12 +1,4 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
 import { DataSeries } from "../types";
 
 const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
@@ -44,7 +36,7 @@ function Graph({
       {pastData == undefined ? (
         <h1>Loading...</h1>
       ) : (
-        <LineChart width={800} height={500}>
+        <LineChart width={800} height={500} margin={{ bottom: 50 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             angle={-45}
@@ -56,10 +48,10 @@ function Graph({
             domain={getGraphDomain()}
           />
           <YAxis dataKey="value" />
-          <Tooltip />
-          <Legend />
+          <Legend layout="horizontal" verticalAlign="top" />
 
           <Line
+            dot={false}
             type="monotone"
             dataKey="value"
             data={pastData.data}
@@ -69,6 +61,7 @@ function Graph({
 
           {pastDataUnbiased && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={pastDataUnbiased.data}
@@ -79,6 +72,7 @@ function Graph({
 
           {predictedData && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={predictedData.data}
@@ -89,6 +83,7 @@ function Graph({
 
           {predictedDataUnbiased && (
             <Line
+              dot={false}
               type="monotone"
               dataKey="value"
               data={predictedDataUnbiased.data}
