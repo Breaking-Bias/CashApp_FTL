@@ -9,6 +9,13 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     define: {
       'process.env.VITE_SERVER_URL': JSON.stringify(env.VITE_SERVER_URL || ''),
+      
+    },
+    build: {
+      rollupOptions: {
+        // Exclude jsPDF from the bundle
+        external: ['jspdf']
+      }
     }
   };
 });
