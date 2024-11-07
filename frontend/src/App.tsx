@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
 import Graph from "./components/Graph";
-import SelectForecastSize from "./components/SelectForecastSize";
 import { DataSeries } from "./types";
 
 function App() {
@@ -37,8 +36,8 @@ function App() {
         Click me to get some info from the back end
       </button>
 
-      <Graph predictedData={predictedData} />
-      <SelectForecastSize setPredictedData={setPredictedData} />
+      {/* <Graph predictedData={predictedData} />
+      <SelectForecastSize setPredictedData={setPredictedData} /> */}
     </>
   );
 }
