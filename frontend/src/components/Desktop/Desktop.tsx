@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import logo from "./logo.png";
-import greenBlob from "./greenBlob.svg";
+// import greenBlob from "./greenBlob.svg";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
