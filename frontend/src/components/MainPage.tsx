@@ -11,7 +11,7 @@ import {
   predictDataUnbiasedAPICall,
 } from "../ApiCalls";
 import { DataSeries } from "../types";
-import { ExportService }from "../services/ExportService";
+import ExportGraphButton from "./ExportGraphButton";
 
 function MainPage() {
   // Component State Variables
@@ -79,9 +79,6 @@ function MainPage() {
     predictData();
     predictDataUnbiased();
   }
-  const handleExport = () => {
-    ExportService.exportGraphToPDF("graph-canvas"); // Call the export service
-  };
 
   useEffect(() => {
     getPastData();
@@ -100,8 +97,10 @@ function MainPage() {
         filterFactor={filterFactor}
         setFilterFactor={setFilterFactor}
       />
-      <PredictButton onPress={updatePrediction} />
-      <button onClick={handleExport}>Export Graph to PDF</button>
+      <PredictButton onClick={updatePrediction} />
+      <br />
+      <br />
+      <ExportGraphButton />
     </div>
   );
 }
