@@ -1,12 +1,12 @@
 import { Button } from "@mui/material";
 
 interface Props {
-  predict: () => void;
+  onPress: () => void;
 }
 
-function PredictButton({ predict }: Props) {
+function PredictButton({ onPress }: Props) {
   return (
-    <Button variant="contained" data-testid="forecast-button" onClick={predict}>
+    <Button variant="contained" data-testid="forecast-button" onClick={onPress}>
       Make Forecast
     </Button>
   );

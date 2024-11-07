@@ -4,16 +4,25 @@ import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
 import RadioButtons from "./RadioButtons";
 import PredictButton from "./PredictButton";
 import Graph from "./Graph";
-import { getPastDataAPICall, getPastDataUnbiasedAPICall } from "../ApiCalls";
+import {
+  getPastDataAPICall,
+  getPastDataUnbiasedAPICall,
+  predictDataAPICall,
+  predictDataUnbiasedAPICall,
+} from "../ApiCalls";
 import { DataSeries } from "../types";
 
 function MainPage() {
+  // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
   const [filterFactor, setFilterFactor] = useState<string>("noFilter");
 
   // Data State Variables
   const [pastData, setPastData] = useState<DataSeries>();
   const [pastDataUnbiased, setPastDataUnbiased] = useState<DataSeries>();
+  const [predictedData, setPredictedData] = useState<DataSeries>();
+  const [predictedDataUnbiased, setPredictedDataUnbiased] =
+    useState<DataSeries>();
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(filterFactor);
@@ -37,6 +46,37 @@ function MainPage() {
       });
     }
   }
+  async function predictData() {
+    const formattedData = await predictDataAPICall(filterFactor, sliderValue);
+
+    if (formattedData) {
+      setPredictedData({
+        name: "Predicted Data",
+        color: "green",
+        data: formattedData,
+      });
+    }
+  }
+  async function predictDataUnbiased() {
+    const formattedData = await predictDataUnbiasedAPICall(
+      filterFactor,
+      sliderValue
+    );
+
+    if (formattedData) {
+      setPredictedDataUnbiased({
+        name: "Predicted Data (Unbiased)",
+        color: "purple",
+        data: formattedData,
+      });
+    }
+  }
+
+  function updatePrediction() {
+    getPastDataUnbiased();
+    predictData();
+    predictDataUnbiased();
+  }
 
   useEffect(() => {
     getPastData();
@@ -50,7 +90,7 @@ function MainPage() {
         filterFactor={filterFactor}
         setFilterFactor={setFilterFactor}
       />
-      {/* <PredictButton predict={predict} /> */}
+      <PredictButton onPress={updatePrediction} />
     </div>
   );
 }

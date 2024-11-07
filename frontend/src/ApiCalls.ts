@@ -68,3 +68,71 @@ export async function getPastDataUnbiasedAPICall(filterFactor: string) {
         console.error("Error:", error);
     }
 }
+
+
+export async function predictDataAPICall(filterFactor: string, numPoints: number) {
+    const endpoint = `${SERVER_URL}/predictData`;
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ filtering_factor: filterFactor, num_points: numPoints }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error in response: " + response.statusText);
+        }
+
+        const data: RawDataEntry[] = await response.json();
+
+        // Turns the ISO dates into JavaScript date objects   
+        const formattedData: FormattedDataEntry[] = data.map(
+            (entry) => ({
+                date: new Date(entry.date),
+                value: entry.value,
+            })
+        );
+
+        return formattedData      
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+
+export async function predictDataUnbiasedAPICall(filterFactor: string, numPoints: number) {
+    const endpoint = `${SERVER_URL}/predictDataUnbiased`;
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ filtering_factor: filterFactor, num_points: numPoints }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error in response: " + response.statusText);
+        }
+
+        const data: RawDataEntry[] = await response.json();
+
+        // Turns the ISO dates into JavaScript date objects   
+        const formattedData: FormattedDataEntry[] = data.map(
+            (entry) => ({
+                date: new Date(entry.date),
+                value: entry.value,
+            })
+        );
+
+        return formattedData      
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
