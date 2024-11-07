@@ -15,6 +15,7 @@ def read_dataset():
         print(f"Error: The file {file_path} does not exist.")
         return None
 
+
 def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
     """Returns a dataset of only the transaction in the given group in filtering_factor.  
     
@@ -71,7 +72,6 @@ def apply_helper_for_unbias(row):
     return row
 
 
-
 def filter_for_valid_transactions(display_data: pd.DataFrame):
     """Creates a new dataset without any rows marked as blocked (i.e. False Positive (incorrectly blocked), True Positive (correctly blocked))
     """
@@ -79,20 +79,18 @@ def filter_for_valid_transactions(display_data: pd.DataFrame):
     return filtered_df
 
 
-
-
 def create_model(filtering_factor, bias: bool):
     """Creates an arima model for a given dataset.
     Gives the option to create a model for a dataset with (True) or without bias (False).
     """
     raw_data = read_dataset()
-    filtered_data = raw_data  # temporary
-    # TODO: Uncomment these lines when all functions above are implemented.
-    # if not bias:
-    #     filtered_data = unbias(raw_data)
-    # filtered_data = filter_for_valid_transactions(filtered_data)
-    # filtered_data = filter_by_factor(filtered_data, filtering_factor)
+    filtered_data = raw_data
+    if not bias:
+        filtered_data = unbias(raw_data)
+    filtered_data = filter_for_valid_transactions(filtered_data)
+    filtered_data = filter_by_factor(filtered_data, filtering_factor)
     return Model(filtered_data)
+
 
 # Creates the data in the format that VISX needs
 def create_formatted_data(filtering_factor, bias: bool):
@@ -104,6 +102,7 @@ def create_formatted_data(filtering_factor, bias: bool):
         for record in cleaned_data[['Date', TARGET_VAR]].drop_duplicates().to_dict(orient='records')
     ]
     return formatted_data
+
 
 def create_prediction_data(filtering_factor, forecast_steps: int, bias: bool):
     """Returns the data that the arima model predicts

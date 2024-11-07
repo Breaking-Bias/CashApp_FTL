@@ -1,5 +1,10 @@
-export interface DataEntry {
-    date: string; // THIS CAN BE CHANGED GUYS
+export interface RawDataEntry {
+    date: string;
+    value: number;
+  }
+
+export interface FormattedDataEntry {
+    date: Date;
     value: number;
   }
   
