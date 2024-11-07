@@ -66,7 +66,6 @@ function App() {
          </Routes>
 
         <Button color="success" size="medium" onClick={handleLoginClick}>
-          Login
          </Button> 
 
      </Router>
