@@ -1,4 +1,12 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ReferenceLine,
+} from "recharts";
 import { DataSeries } from "../types";
 
 const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
@@ -89,6 +97,18 @@ function Graph({
               data={predictedDataUnbiased.data}
               name={predictedDataUnbiased.name}
               stroke={predictedDataUnbiased.color}
+            />
+          )}
+
+          {predictedData && (
+            <ReferenceLine
+              x={predictedData.data[0].date.getTime()}
+              label={{
+                value: "Present",
+                position: "insideTopRight",
+                offset: 10,
+              }}
+              stroke="gray"
             />
           )}
         </LineChart>
