@@ -6,7 +6,7 @@ test("renders DropdownFilter", () => {
     render (<DropdownFilter onSelectChange={() => {}} />);
   
   // Check if the the Filter is in the document
-  const dropdownElement = screen.getByTitle("Gender Type");
+  const dropdownElement = screen.getByTitle("Gender");
   expect(dropdownElement).toBeInTheDocument();
 })
 
