@@ -15,7 +15,7 @@ import { DataSeries } from "../types";
 function MainPage() {
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
-  const [filterFactor, setFilterFactor] = useState<string>("noFilter");
+  const [filterFactor, setFilterFactor] = useState<string>("NoFilter");
 
   // Data State Variables
   const [pastData, setPastData] = useState<DataSeries>();
@@ -73,6 +73,7 @@ function MainPage() {
   }
 
   function updatePrediction() {
+    getPastData();
     getPastDataUnbiased();
     predictData();
     predictDataUnbiased();
