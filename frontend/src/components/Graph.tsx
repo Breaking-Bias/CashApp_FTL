@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Legend,
   ReferenceLine,
+  Label,
 } from "recharts";
 import { DataSeries } from "../types";
 
@@ -55,7 +56,20 @@ function Graph({
             tickFormatter={dateFormatter}
             domain={getGraphDomain()}
           />
-          <YAxis dataKey="value" />
+
+          <YAxis dataKey="value">
+            <Label
+              value={"Number of Transactions"}
+              angle={270}
+              style={{
+                fill: "black",
+                textAnchor: "middle",
+              }}
+              position="outside"
+              offset={-20}
+            />
+          </YAxis>
+
           <Legend layout="horizontal" verticalAlign="top" />
 
           <Line
