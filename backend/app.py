@@ -3,6 +3,7 @@ from flask_cors import CORS
 import read_data
 import os 
 from werkzeug.utils import secure_filename 
+from file_uploader import FileUploader
 # import logging
 
 # logging.basicConfig(level=logging.DEBUG)
@@ -46,25 +47,28 @@ def predictValuesUnbiased():
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, False)
     return jsonify(new_values)
 
-#This is where it starts
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'csv', 'xlsx'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+#This is where it startsONS
 
 @app.route('/upload-dataset', methods=['POST'])
 def upload_dataset():
+    """Endpoint to handle file upload."""
+    # Initialize FileUploader within the route
+    file_uploader = FileUploader(upload_folder='uploads', allowed_extensions={'csv', 'xlsx'})
+
     if 'file' not in request.files:
         return jsonify({"message": "No file part"}), 400
 
     file = request.files['file']
     if file.filename == '':
         return jsonify({"message": "No selected file"}), 400
+
+    # Use FileUploader to save the file
+    file_path = file_uploader.save_file(file)
+    if file_path:
+        return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
+    else:
+        return jsonify({"message": "Invalid file format. Only CSV and XLSX are allowed."}), 400
+
 
     # try:
 
