@@ -94,8 +94,3 @@ def test_predict_values_unbiased(client):
         assert False, "Response is not valid JSON"
 
     assert is_valid_format(data), "Predicted data is not in the expected format"
-
-def test_cicd_test(client):
-    response = client.get('/cicd_test')
-    assert response.status_code == 200
-    assert response.json == "Hello World"

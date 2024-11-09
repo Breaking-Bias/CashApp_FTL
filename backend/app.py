@@ -38,9 +38,15 @@ def predict_values():
 
 @app.route('/getPastDataUnbiased', methods=['POST'])
 def get_past_data_unbiased():
-    filtering_factor = request.get_json()['filtering_factor']
-    data = read_data.create_formatted_data(filtering_factor, False)
-    return jsonify(data)
+    filter_gender = request.get_json()['filtering_factor']
+
+    past_data = (DataFormatter(women_bias_data)
+                 .filter_by(filter_gender)
+                 .unbias()
+                 .filter_invalid_transactions()
+                 .get_for_display())
+
+    return jsonify(past_data)
 
 
 @app.route('/predictDataUnbiased', methods=['POST'])
@@ -49,12 +55,6 @@ def predict_values_unbiased():
     forecast_steps = request.get_json()['num_points']
     new_values = read_data.create_prediction_data(filtering_factor, forecast_steps, False)
     return jsonify(new_values)
-
-
-# This is to test that CI/CD pipeline is working. Delete later.
-@app.route('/cicd_test')
-def cicd_test():
-    return jsonify("Hello World")
 
 
 if __name__ == '__main__':
