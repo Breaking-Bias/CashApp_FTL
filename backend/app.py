@@ -1,9 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import read_data
+from data_formatter import DataFormatter
+from data_reader import DataReader
 
 app = Flask('app')
 CORS(app)
+women_bias_data = DataReader('women_bias_data.csv').read_dataset()
+
 
 # Example of an endpoint that returns test data
 @app.route('/getinfo')
@@ -14,9 +18,14 @@ def getinfo():
 
 @app.route('/getPastData', methods=['POST'])
 def get_past_data():
-    filtering_factor = request.get_json()['filtering_factor']
-    data = read_data.create_formatted_data(filtering_factor, True)
-    return jsonify(data)
+    filter_gender = request.get_json()['filtering_factor']
+
+    past_data = (DataFormatter(women_bias_data)
+                 .filter_by(filter_gender)
+                 .filter_invalid_transactions()
+                 .get_formatted_df())
+
+    return jsonify(past_data)
 
 
 @app.route('/predictData', methods=['POST'])
