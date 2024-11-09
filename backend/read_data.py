@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from Model import TARGET_VAR, Model
-from filters import AgeFilter, GenderFilter, RaceFilter, StateFilter
+from filters import FilterManager
 
 # Read the raw dataset from the csv
 # TODO: May need to change csv file depending on our final data file.
@@ -26,23 +26,9 @@ def filter_by_factor(data: pd.DataFrame, filtering_factor: str):
     Returns:
     - displayed_data: pd.DataFrame
     """
-    try:
-        # Try to determine if the filtering factor is numeric (for age)
-        int(filtering_factor)
-        filter_obj = AgeFilter(data)  # Create AgeFilter instance
-    except:
-        # If not numeric, check for gender, race, or state
-        if filtering_factor in ['Male', 'Female', 'Non-Binary', 'Other']:
-            filter_obj = GenderFilter(data)  # Create GenderFilter instance
-        elif filtering_factor in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:
-            filter_obj = RaceFilter(data)  # Create RaceFilter instance
-        elif len(filtering_factor) == 2 and filtering_factor.isupper():
-            filter_obj = StateFilter(data)  # Create StateFilter instance
-        else:
-            return data
-    
-    return filter_obj.filter(filtering_factor)
-
+    if filtering_factor is None:
+        return data
+    return FilterManager.apply_filter(data, filtering_factor)
 
 def unbias(display_data: pd.DataFrame):
     """Filters out all the bias within a dataset.

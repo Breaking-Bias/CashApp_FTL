@@ -61,3 +61,23 @@ class StateFilter(Filter):
             return self.data[self.data['State'] == filtering_factor]
         else:
             raise ValueError(f"Invalid state: '{filtering_factor}' is not a recognized state code.")
+        
+class FilterManager:
+    @staticmethod
+    def apply_filter(data: pd.DataFrame, filtering_factor: str) -> pd.DataFrame:
+        """
+        Determines the appropriate filter to use based on the filtering_factor
+        and applies it to the data.
+        """
+        filter_obj = None
+        
+        if filtering_factor.isdigit():
+            filter_obj = AgeFilter(data)
+        elif filtering_factor in ['Male', 'Female', 'Non-Binary', 'Other']:
+            filter_obj = GenderFilter(data)
+        elif filtering_factor in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:
+            filter_obj = RaceFilter(data)
+        elif len(filtering_factor) == 2 and filtering_factor.isupper():
+            filter_obj = StateFilter(data)
+            
+        return filter_obj.filter(filtering_factor) if filter_obj else data
