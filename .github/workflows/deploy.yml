@@ -33,7 +33,7 @@ jobs:
           script: |
             cd repo
             cd CashApp_FTL
-            git pull origin main
+            git pull origin matthew-digitalocean
             source venv/bin/activate
             pip install -r requirements.txt
             cd backend
