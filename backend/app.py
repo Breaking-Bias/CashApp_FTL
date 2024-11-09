@@ -53,7 +53,7 @@ def predictValuesUnbiased():
 def upload_dataset():
     """Endpoint to handle file upload."""
     # Initialize FileUploader within the route
-    file_uploader = FileUploader(upload_folder='uploads', allowed_extensions={'csv', 'xlsx'})
+    file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
 
     if 'file' not in request.files:
         return jsonify({"message": "No file part"}), 400

@@ -2,9 +2,9 @@ import os
 from werkzeug.utils import secure_filename
 
 class FileUploader:
-    def __init__(self, upload_folder='uploads', allowed_extensions=None):
+    def __init__(self, upload_folder='data', allowed_extensions=None):
         self.upload_folder = upload_folder
-        self.allowed_extensions = allowed_extensions or {'csv', 'xlsx'}
+        self.allowed_extensions = allowed_extensions
         
         # Ensure the upload folder exists
         if not os.path.exists(self.upload_folder):
