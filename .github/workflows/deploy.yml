@@ -39,7 +39,7 @@ jobs:
         run: |
           ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
 
-      #
+      #.
       - name: Clean up SSH Key
         run: |
           rm -f /tmp/deploy_key
