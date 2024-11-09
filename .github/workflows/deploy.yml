@@ -19,13 +19,6 @@ jobs:
         with:
           python-version: "3.x"
 
-      # - name: Install dependencies for backend
-      #   run: |
-      #     cd backend
-      #     python -m venv venv
-      #     source venv/bin/activate
-      #     pip install -r requirements.txt
-
       - name: Create SSH Key File
         run: |
           echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > /tmp/deploy_key
