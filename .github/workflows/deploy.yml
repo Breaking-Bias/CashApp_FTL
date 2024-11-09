@@ -1,0 +1,45 @@
+name: Deploy Backend to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Create SSH Key File
+        run: |
+          echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
+
+      - name: Deploy Backend Files
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
+          username: root
+          key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          script: |
+            cd repo
+            cd CashApp_FTL
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            cd backend
+            pkill gunicorn
+            gunicorn --bind 0.0.0.0:8000 app:app &
+            exit 0
+
+      - name: Clean up SSH Key
+        run: |
+          rm -f /tmp/deploy_key
