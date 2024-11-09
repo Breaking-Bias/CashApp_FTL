@@ -23,7 +23,7 @@ def get_past_data():
     past_data = (DataFormatter(women_bias_data)
                  .filter_by(filter_gender)
                  .filter_invalid_transactions()
-                 .get_formatted_df())
+                 .get_for_display())
 
     return jsonify(past_data)
 

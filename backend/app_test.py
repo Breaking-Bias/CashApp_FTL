@@ -8,32 +8,40 @@ def client():
     with app.test_client() as client:
         yield client
 
-def is_valid_format(data) -> bool:
+def is_valid_format(response_data) -> bool:
     # Check that data is a list
-    if not isinstance(data, list):
+    if not isinstance(response_data[0], list):
+        return False  # "Expected data to be a list of dictionaries"
+    if not isinstance(response_data[1], list):
         return False  # "Expected data to be a list of dictionaries"
 
     # Regex pattern for YYYY-MM-DD date format
     date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 
     # Check each item in the list
-    for item in data:
-        if not (isinstance(item, dict)  # "Each item in the list should be a dictionary"
-        and 'date' in item # "Each dictionary should have a 'date' key"
-        and 'value' in item # "Each dictionary should have a 'value' key"
+    for dictionary in response_data:
+        for item in dictionary:
+            if not (isinstance(item, dict)  # "Each item in the list should be a dictionary"
+            and 'date' in item # "Each dictionary should have a 'date' key"
+            and ('num_transactions' in item or 'revenue' in item) # "Each dictionary should have a 'value' key"
 
-        # Check date format
-        and isinstance(item['date'], str) # "The 'date' key should have a string value"
-        and date_pattern.match(item['date'])): # "The 'date' value should match the format YYYY-MM-DD"
-            return False
-        # Check if the date string is valid
-        try:
-            datetime.strptime(item['date'], "%Y-%m-%d")
-        except ValueError:
-            return False # f"The 'date' value '{item['date']}' is not a valid date"
+            # Check date format
+            and isinstance(item['date'], str) # "The 'date' key should have a string value"
+            and date_pattern.match(item['date'])): # "The 'date' value should match the format YYYY-MM-DD"
+                return False
+            # Check if the date string is valid
+            try:
+                datetime.strptime(item['date'], "%Y-%m-%d")
+            except ValueError:
+                return False # f"The 'date' value '{item['date']}' is not a valid date"
 
+    for item in response_data[0]:
         # Check value type
-        if not isinstance(item['value'], int): # "The 'value' key should have an integer value"
+        if not isinstance(item['num_transactions'], int): # "The 'num_transactions' or 'revenue' key should have an float value"
+            return False
+    for item in response_data[1]:
+        # Check value type
+        if not isinstance(item['revenue'], float): # "The 'value' key should have an integer value"
             return False
 
     return True
