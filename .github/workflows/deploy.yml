@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - alex-test-deploy
 
 jobs:
   deploy:
