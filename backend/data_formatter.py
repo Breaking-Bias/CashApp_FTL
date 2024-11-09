@@ -58,12 +58,12 @@ class DataFormatter:
         self._clean_data()
 
         amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
-            num_transactions=('Transaction_Amount_USD', 'sum')
+            num_transactions=('Transaction_Amount_USD', 'count')
         ).reset_index()
         amount_df = amount_df.rename(columns={'Timestamp': 'date'})
 
         count_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
-            revenue=('Transaction_Amount_USD', 'count')
+            revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
         count_df = count_df.rename(columns={'Timestamp': 'date'})
 

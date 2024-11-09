@@ -85,10 +85,21 @@ def test_unbias_does_not_mutate_original(sample_data):
 
 
 def test_for_display(real_data):
-    num_data = [{'date': '2024-05-01', 'num_transactions': 1306375.68}, {'date': '2024-05-02', 'num_transactions': 1361639.44}]
-    revenue_data = [{'date': '2024-05-01', 'revenue': 52}, {'date': '2024-05-02', 'revenue': 48}]
+    num_data = [{'date': '2024-05-01', 'num_transactions': 52}, {'date': '2024-05-02', 'num_transactions': 48}]
+    revenue_data = [{'date': '2024-05-01', 'revenue': 1306375.68}, {'date': '2024-05-02', 'revenue': 1361639.44}]
 
     display_data = DataFormatter(real_data).get_for_display()
 
     assert display_data[0] == num_data
     assert display_data[1] == revenue_data
+
+
+def test_sample(real_data):
+    filter_gender = None
+
+    past_data = (DataFormatter(real_data)
+                 .filter_by(filter_gender)
+                 .filter_invalid_transactions()
+                 .get_for_display())
+
+    print(past_data)
