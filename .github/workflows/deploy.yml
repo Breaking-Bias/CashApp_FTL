@@ -19,12 +19,12 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install dependencies for backend
-        run: |
-          cd backend
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+      # - name: Install dependencies for backend
+      #   run: |
+      #     cd backend
+      #     python -m venv venv
+      #     source venv/bin/activate
+      #     pip install -r requirements.txt
 
       - name: Create SSH Key File
         run: |
@@ -32,12 +32,27 @@ jobs:
           chmod 600 /tmp/deploy_key
 
       - name: Deploy Backend Files
-        run: |
-          rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
 
-      - name: Restart Gunicorn
+        # env:
+        #   SSH_PRIVATE_KEY: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+        #   SERVER_HOST: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
         run: |
-          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
+          ssh -i /tmp/deploy_key root@${{ secrets.DIGITALOCEAN_SERVER_IP }}
+
+          cd repo
+          cd CashApp_FTL
+          git pull origin main
+          source venv/bin/activate
+          pip install -r requirements.txt
+          cd backend
+          pkill gunicorn
+          gunicorn --bind 0.0.0.0:8000 app:app
+        # run: |
+        #   rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
+
+      # - name: Restart Gunicorn
+      #   run: |
+      #     ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
 
       #.
       - name: Clean up SSH Key
