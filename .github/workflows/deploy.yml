@@ -1,0 +1,40 @@
+name: Deploy Backend to Server
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on push to the main branch
+      - matthew-digitalocean
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # GitHub-hosted runner environment
+
+    steps:
+      # Checkout the code from the repo
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install dependencies for the backend (optional but helpful for checking issues)
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Replace with your Python version
+
+      - name: Install dependencies for backend
+        run: |
+          cd backend
+          python -m venv venv  # Create a virtual environment
+          source venv/bin/activate  # Activate the environment
+          pip install -r requirements.txt  # Install dependencies
+
+      # Deploy only the backend directory to the server
+      - name: Deploy Backend Files
+        run: |
+          # Use rsync to copy the backend folder to the server
+          rsync -avz --exclude=frontend/ ./backend/ root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
+
+      # Restart Gunicorn to apply changes
+      - name: Restart Gunicorn
+        run: |
+          ssh -i ${{ secrets.DIGITALOCEAN_SSH_KEY }} -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
