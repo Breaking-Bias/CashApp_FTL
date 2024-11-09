@@ -35,3 +35,4 @@ jobs:
             pkill gunicorn
             nohup gunicorn --bind 0.0.0.0:8000 app:app > /var/log/gunicorn.log 2>&1 &
             exit
+            echo "Backend deployed successfully"
