@@ -41,7 +41,7 @@ def is_valid_format(data) -> bool:
 def test_getinfo(client):
     response = client.get('/getinfo')
     assert response.status_code == 200
-    assert response.json == {"name": 'breaking bias', "score": "awesome"}
+    assert response.json == {"name": 'breaking bias', "score": "stupendous"}
 
 def test_getPastData(client):
     response = client.post('/getPastData', json={'filtering_factor': 'Female'})
