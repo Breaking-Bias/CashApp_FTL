@@ -32,7 +32,7 @@ jobs:
           chmod 600 /tmp/deploy_key
 
       - name: Deploy Backend Files
-        uses: Breaking-Bias/CashApp_FTL@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
           username: root
