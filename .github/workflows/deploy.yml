@@ -46,7 +46,7 @@ jobs:
             cd backend
             pkill gunicorn
             gunicorn --bind 0.0.0.0:8000 app:app &
-            deactivate
+            exit 0
 
       - name: Clean up SSH Key
         run: |
