@@ -11,23 +11,43 @@ class DataFormatter:
 
     Methods
     -------
-    get_formatted_df():
+    __init__(df_to_format: pd.DataFrame)
+        Initializes the DataFormatter with a DataFrame to format.
+
+    get_formatted_df() -> pd.DataFrame
         Returns the formatted DataFrame.
 
-    unbias():
-        Adjusts the DataFrame to remove bias from the data.
+    unbias() -> 'DataFormatter'
+        Removes bias by flipping FP to TN, only for 'Bias' rows.
 
-    filter_by(filter_gender: str = None, filter_race: str = None, filter_state: str = None):
+    _unbias_row(row)
+        Static method to unbias a single row.
+
+    filter_by(filter_gender: str = None, filter_race: str = None,
+     filter_state: str = None) -> 'DataFormatter'
         Filters the DataFrame based on gender, race, or state.
 
-    filter_invalid_transactions():
-        Removes rows marked as blocked (False Positive or True Positive).
+    filter_invalid_transactions() -> 'DataFormatter'
+        Creates a new dataset without any rows marked as blocked (i.e. False
+        Positive (incorrectly blocked), True Positive (correctly blocked)).
 
-    _clean_data():
-        Cleans the DataFrame by removing rows with missing values and converting the 'Timestamp' column to datetime.
+    _clean_data() -> 'DataFormatter'
+        Removes any columns with missing values and converts the 'Timestamp'
+        column to a datetime object.
 
-    get_for_display() -> pd.DataFrame:
-        Formats the data for display, grouping by date and aggregating transaction counts and revenue.
+    helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]
+        Static method to convert a DataFrame to a list of dictionaries.
+
+    _helper_output_df_format() -> tuple[pd.DataFrame, pd.DataFrame]
+        Helper function to format the DataFrame for output. Cleans the
+        DataFrame, groups the data by date, and aggregates the number of
+        transactions and total revenue.
+
+    get_for_display() -> list[dict]
+        Formats the data for output, and converts to list of dictionaries.
+
+    get_for_predicting() -> tuple[pd.DataFrame, pd.DataFrame]
+        Formats the data for output.
     """
     _df: pd.DataFrame
 
@@ -41,13 +61,13 @@ class DataFormatter:
 
 
     def unbias(self) -> 'DataFormatter':
+        """Removes bias by flipping FP to TN, only for 'Bias' rows"""
         self._df =  self._df.apply(DataFormatter._unbias_row, axis=1)
         return self
 
 
     @staticmethod
     def _unbias_row(row):
-        # TODO only flip bits that have bias == 1
         if row['confusion_value'] == 'FP' and row['Bias'] == 1:
             row['confusion_value'] = 'TN'
             row['Bias'] = 0
@@ -55,6 +75,7 @@ class DataFormatter:
 
 
     def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'DataFormatter':
+        """Filters the DataFrame based on gender, race, or state."""
         # ---- TODO: remove this code once PR with the updated filtering code is merged
         if filter_gender in ['Female', 'Male', 'Non-Binary', 'Other']:  # Check for Gender
             self._df = self._df[self._df['Gender'] == filter_gender]
@@ -69,7 +90,9 @@ class DataFormatter:
 
 
     def filter_invalid_transactions(self) -> 'DataFormatter':
-        """Creates a new dataset without any rows marked as blocked (i.e. False Positive (incorrectly blocked), True Positive (correctly blocked))
+        """Creates a new dataset without any rows marked as blocked
+         (i.e. False Positive (incorrectly blocked),
+          True Positive (correctly blocked))
         """
         self._df = self._df[(self._df['confusion_value'] != 'FP') & (self._df['confusion_value'] != 'TP')]
         return self
@@ -86,10 +109,18 @@ class DataFormatter:
 
     @staticmethod
     def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
+        """Converts a DataFrame to a list of dictionaries.
+        """
         return df_to_convert.to_dict('records')
 
 
     def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Helper function to format the DataFrame for output.
+
+        This function cleans the DataFrame, groups the data by date, and
+        aggregates the number of transactions and total revenue. Making two
+        dataframes with only the columns we care about.
+        """
         self._clean_data()
 
         amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
@@ -106,7 +137,7 @@ class DataFormatter:
 
 
     def get_for_display(self) -> list[dict]:
-        """Adjust on original_data to comform the display format for the graph."""
+        """Formats the data for output, and converts to list of dictionaries."""
         amount_df, count_df = self._helper_output_df_format()
         display_format = (DataFormatter.helper_df_to_dict(amount_df), DataFormatter.helper_df_to_dict(count_df))
 
@@ -114,7 +145,7 @@ class DataFormatter:
 
 
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Adjust on original_data to comform the model prediction format for the graph."""
+        """Formats the data for out."""
         amount_df, count_df = self._helper_output_df_format()
 
         return amount_df, count_df
