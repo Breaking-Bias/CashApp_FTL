@@ -89,8 +89,7 @@ class DataFormatter:
         return df_to_convert.to_dict('records')
 
 
-    def get_for_display(self) -> pd.DataFrame:
-        """Adjust on original_data to comform the display format for the graph."""
+    def _helper_output_df_format(self):
         self._clean_data()
 
         amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
@@ -103,23 +102,20 @@ class DataFormatter:
         ).reset_index()
         count_df = count_df.rename(columns={'Timestamp': 'date'})
 
+        return amount_df, count_df
+
+
+    def get_for_display(self) -> pd.DataFrame:
+        """Adjust on original_data to comform the display format for the graph."""
+        amount_df, count_df = self._helper_output_df_format()
         display_format = (DataFormatter.helper_df_to_dict(amount_df), DataFormatter.helper_df_to_dict(count_df))
+
         return display_format
 
 
     def get_for_predicting(self) -> pd.DataFrame:
         """Adjust on original_data to comform the model prediction format for the graph."""
-        self._clean_data()
+        amount_df, count_df = self._helper_output_df_format()
 
-        amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
-            num_transactions=('Transaction_Amount_USD', 'count')
-        ).reset_index()
-        amount_df = amount_df.rename(columns={'Timestamp': 'date'})
-
-        count_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
-            revenue=('Transaction_Amount_USD', 'sum')
-        ).reset_index()
-        count_df = count_df.rename(columns={'Timestamp': 'date'})
-
-        return (amount_df, count_df)
+        return amount_df, count_df
 
