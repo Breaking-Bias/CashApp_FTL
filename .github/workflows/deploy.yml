@@ -36,10 +36,10 @@ jobs:
         shell: bash
 
       # Deploy only the backend directory to the server
-      - name: Deploy Backend Files
-        run: |
-          rsync -avz --exclude=frontend/ ./backend/ root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
-        shell: bash
+      # - name: Deploy Backend Files
+      #   run: |
+      #     rsync -avz --exclude=frontend/ ./backend/ root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
+      #   shell: bash
 
       # Restart Gunicorn to apply changes
       - name: Restart Gunicorn
