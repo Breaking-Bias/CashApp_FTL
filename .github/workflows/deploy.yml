@@ -34,7 +34,7 @@ jobs:
           # Use rsync to copy the backend folder to the server
           rsync -avz --exclude=frontend/ ./backend/ root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
 
-      # Restart Gunicorn to apply changes
+      # Restart Gunicorn to apply changes.
       - name: Restart Gunicorn
         run: |
           ssh -i ${{ secrets.DIGITALOCEAN_SSH_KEY }} -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
