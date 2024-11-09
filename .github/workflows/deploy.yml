@@ -32,10 +32,7 @@ jobs:
           chmod 600 /tmp/deploy_key
 
       - name: Deploy Backend Files
-
-        # env:
-        #   SSH_PRIVATE_KEY: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-        #   SERVER_HOST: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
+        uses: Breaking-Bias/CashApp_FTL@main
         with:
           host: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
           username: root
@@ -49,7 +46,6 @@ jobs:
             cd backend
             pkill gunicorn
             gunicorn --bind 0.0.0.0:8000 app:app
-        run: |
 
         # run: |
         #   rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
