@@ -8,7 +8,7 @@ CORS(app)
 # Example of an endpoint that returns test data
 @app.route('/getinfo')
 def getinfo():
-    info = {"name":'breaking bias', "score":"awesome"}
+    info = {"name":'breaking bias', "score":"awesome", "temp": "hi"}
     return jsonify(info)
 
 
