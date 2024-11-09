@@ -36,17 +36,19 @@ jobs:
         # env:
         #   SSH_PRIVATE_KEY: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
         #   SERVER_HOST: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
-        run: |
-          ssh -i /tmp/deploy_key root@${{ secrets.DIGITALOCEAN_SERVER_IP }}
-
-          cd repo
-          cd CashApp_FTL
-          git pull origin main
-          source venv/bin/activate
-          pip install -r requirements.txt
-          cd backend
-          pkill gunicorn
-          gunicorn --bind 0.0.0.0:8000 app:app
+        with:
+          host: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
+          username: root
+          key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          script: |
+            cd repo
+            cd CashApp_FTL
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            cd backend
+            pkill gunicorn
+            gunicorn --bind 0.0.0.0:8000 app:app
         # run: |
         #   rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
 
