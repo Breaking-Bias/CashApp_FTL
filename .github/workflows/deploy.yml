@@ -45,16 +45,8 @@ jobs:
             pip install -r requirements.txt
             cd backend
             pkill gunicorn
-            gunicorn --bind 0.0.0.0:8000 app:app
+            gunicorn --bind 0.0.0.0:8000 app:app &
 
-        # run: |
-        #   rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
-
-      # - name: Restart Gunicorn
-      #   run: |
-      #     ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
-
-      #.
       - name: Clean up SSH Key
         run: |
           rm -f /tmp/deploy_key
