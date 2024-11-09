@@ -11,17 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Only for testing
-      - name: Debug Key Access
-        run: |
-          echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}"
-          echo "${{ secrets.DIGITALOCEAN_SERVER_IP }}"
-
-      # Checkout the code from the repo
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install dependencies for the backend (optional but helpful for checking issues)
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -30,25 +22,23 @@ jobs:
       - name: Install dependencies for backend
         run: |
           cd backend
-          python -m venv venv  # Create a virtual environment
-          source venv/bin/activate  # Activate the environment
-          pip install -r requirements.txt  # Install dependencies
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-      # Add the server's SSH key to known hosts
-      - name: Add server to known hosts
+      - name: Create SSH Key File
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.DIGITALOCEAN_SERVER_IP }} >> ~/.ssh/known_hosts
-        shell: bash
+          echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
 
-      # Deploy only the backend directory to the server
-      # - name: Deploy Backend Files
-      #   run: |
-      #     rsync -avz --exclude=frontend/ ./backend/ root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
-      #   shell: bash
+      - name: Deploy Backend Files
+        run: |
+          rsync -avz --exclude=frontend/ ./backend/ -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" root@${{ secrets.DIGITALOCEAN_SERVER_IP }}:/root/backend/
 
-      # Restart Gunicorn to apply changes.
       - name: Restart Gunicorn
         run: |
-          ssh -i ${{ secrets.DIGITALOCEAN_SSH_KEY }} -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
-        shell: bash
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DIGITALOCEAN_SERVER_IP }} "sudo systemctl restart gunicorn"
+
+      - name: Clean up SSH Key
+        run: |
+          rm -f /tmp/deploy_key
