@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Only for testing
+      - name: Debug Key Access
+        run: |
+          echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}"
+          echo "${{ secrets.DIGITALOCEAN_SERVER_IP }}"
+
       # Checkout the code from the repo
       - name: Checkout code
         uses: actions/checkout@v2
