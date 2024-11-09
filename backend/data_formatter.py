@@ -36,11 +36,11 @@ class DataFormatter:
         self._df = df_to_format.copy()
 
 
-    def get_formatted_df(self):
+    def get_formatted_df(self) -> pd.DataFrame:
         return self._df
 
 
-    def unbias(self):
+    def unbias(self) -> 'DataFormatter':
         self._df =  self._df.apply(DataFormatter._unbias_row, axis=1)
         return self
 
@@ -54,7 +54,7 @@ class DataFormatter:
         return row
 
 
-    def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None):
+    def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'DataFormatter':
         # ---- TODO: remove this code once PR with the updated filtering code is merged
         if filter_gender in ['Female', 'Male', 'Non-Binary', 'Other']:  # Check for Gender
             self._df = self._df[self._df['Gender'] == filter_gender]
@@ -68,14 +68,14 @@ class DataFormatter:
         return self
 
 
-    def filter_invalid_transactions(self):
+    def filter_invalid_transactions(self) -> 'DataFormatter':
         """Creates a new dataset without any rows marked as blocked (i.e. False Positive (incorrectly blocked), True Positive (correctly blocked))
         """
         self._df = self._df[(self._df['confusion_value'] != 'FP') & (self._df['confusion_value'] != 'TP')]
         return self
 
 
-    def _clean_data(self):
+    def _clean_data(self) -> 'DataFormatter':
         """Remove any columns with missing values
          Convert the 'Timestamp' column to a datetime object."""
 
@@ -85,11 +85,11 @@ class DataFormatter:
 
 
     @staticmethod
-    def helper_df_to_dict(df_to_convert):
+    def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
         return df_to_convert.to_dict('records')
 
 
-    def _helper_output_df_format(self):
+    def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         self._clean_data()
 
         amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
@@ -105,7 +105,7 @@ class DataFormatter:
         return amount_df, count_df
 
 
-    def get_for_display(self) -> pd.DataFrame:
+    def get_for_display(self) -> list[dict]:
         """Adjust on original_data to comform the display format for the graph."""
         amount_df, count_df = self._helper_output_df_format()
         display_format = (DataFormatter.helper_df_to_dict(amount_df), DataFormatter.helper_df_to_dict(count_df))
@@ -113,7 +113,7 @@ class DataFormatter:
         return display_format
 
 
-    def get_for_predicting(self) -> pd.DataFrame:
+    def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Adjust on original_data to comform the model prediction format for the graph."""
         amount_df, count_df = self._helper_output_df_format()
 

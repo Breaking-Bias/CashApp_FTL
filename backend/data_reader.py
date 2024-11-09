@@ -4,6 +4,8 @@ import os
 # Read the raw dataset from the csv
 # TODO: May need to change csv file depending on our final data file.
 class DataReader:
+    file_name: str
+
     def __init__(self, file_name: str):
         self.file_name = file_name
 
