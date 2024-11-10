@@ -4,3 +4,14 @@
   padding: 2rem;
   text-align: center;
 }
+
+
+.custom-help-icon {
+  color: green;
+  font-size: 30px;
+  transition: color 0.3s ease;
+}
+
+.custom-help-icon.hover {
+  color: black;
+}

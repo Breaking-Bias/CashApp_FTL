@@ -141,7 +141,7 @@ function MainPage() {
     <div>
     <Tooltip title="The slider is used to adjust the prediction size.">
       <IconButton>
-        <HelpIcon />
+        <HelpIcon className="custom-help-icon" />
       </IconButton>
     </Tooltip>
     </div>
