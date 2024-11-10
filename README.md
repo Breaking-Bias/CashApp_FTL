@@ -4,7 +4,7 @@ Machine Learning Model Bias Visualization
 
 Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)
 
-Backend hosted with Heroku [here](http://134.122.38.138:8000/)
+Backend hosted with DigitalOcean [here](http://134.122.38.138:8000/)
 
 # Project Overview
 
