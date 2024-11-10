@@ -12,6 +12,9 @@ import {
 } from "../ApiCalls";
 import { DataSeries } from "../types";
 import ExportGraphButton from "./ExportGraphButton";
+import { Button, Menu, MenuItem } from "@mui/material"
+import { useNavigate } from "react-router-dom";
+
 
 function MainPage() {
   // Component State Variables
@@ -24,6 +27,7 @@ function MainPage() {
   const [predictedData, setPredictedData] = useState<DataSeries>();
   const [predictedDataUnbiased, setPredictedDataUnbiased] =
     useState<DataSeries>();
+  const navigate = useNavigate();
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(filterFactor);
@@ -84,6 +88,23 @@ function MainPage() {
     getPastData();
   }, []);
 
+
+  // Add a "HOW TO USE" navigated by a menu button
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event:React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const goToGuidance = () => {
+    navigate('/guidance');
+    handleClose();
+  };
+
   return (
     <div>
       <Graph
@@ -105,6 +126,21 @@ function MainPage() {
       <br />
       <br />
       <ExportGraphButton />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+      >
+        Menu 
+      </Button>
+
+      <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
+    </Menu>
     </div>
   );
 }
