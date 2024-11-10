@@ -37,6 +37,13 @@ class Model:
         # new column 'date', also rename mean to value
         forecast_values = forecast_values.reset_index().rename(columns={'index': 'date'})
 
+        # Concatenate the last entry of training_data to forecast_values.
+        last_entry = self.training_data.iloc[-1]  # Series
+        last_entry.name = pd.Timestamp(last_entry.name)
+        last_entry = pd.DataFrame({'date': [last_entry.name], 'mean': [last_entry.iloc[0]]})
+        forecast_values = (pd.concat([forecast_values, last_entry], ignore_index=True)
+                           .sort_values(by='date').reset_index(drop=True))
+
         return forecast_values
 
     def _check_stationarity(self, data) -> int:

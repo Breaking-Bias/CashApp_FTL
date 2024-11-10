@@ -160,4 +160,3 @@ class DataFormatter:
         count_df.set_index('date', inplace=True)
 
         return amount_df, count_df
-
