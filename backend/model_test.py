@@ -1,8 +1,8 @@
 import pytest
-import pandas as pd
 from data_formatter import DataFormatter
 from data_reader import DataReader
 from model import Model
+from model_interactor import ModelInteractor
 
 @pytest.fixture
 def women_bias_data():
@@ -18,10 +18,6 @@ def test_model(women_bias_data):
                      .filter_invalid_transactions()
                      .get_for_predicting())
 
-    pred_trans_amount = Model(training_data[0]).predict().get_result(forecast_steps)
-    pred_trans_count = Model(training_data[1]).predict().get_result(forecast_steps)
-
-    pred_trans_amount = DataFormatter.helper_datetime_to_string(pred_trans_amount)
-    pred_trans_count = DataFormatter.helper_datetime_to_string(pred_trans_count)
-
+    return_data = ModelInteractor(training_data).execute(forecast_steps)
+    print(return_data)
     # should figure out some way of asserting something true.
