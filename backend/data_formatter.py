@@ -103,7 +103,8 @@ class DataFormatter:
          Convert the 'Timestamp' column to a datetime object."""
 
         self._df = self._df.dropna(axis=1)
-        self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp'])
+        self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp']).dt.date
+        self._df = self._df.rename(columns={'Timestamp': 'date'})
         return self
 
 
@@ -111,8 +112,14 @@ class DataFormatter:
     def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
         """Converts a DataFrame to a list of dictionaries.
         """
+
         return df_to_convert.to_dict('records')
 
+
+    @staticmethod
+    def helper_datetime_to_string(df_to_convert: pd.DataFrame) -> pd.DataFrame:
+        df_to_convert['date'] = pd.to_datetime(df_to_convert['date']).dt.strftime('%Y-%m-%d')
+        return df_to_convert
 
     def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Helper function to format the DataFrame for output.
@@ -123,22 +130,23 @@ class DataFormatter:
         """
         self._clean_data()
 
-        amount_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
+        amount_df = self._df.groupby(self._df['date']).agg(
             num_transactions=('Transaction_Amount_USD', 'count')
         ).reset_index()
-        amount_df = amount_df.rename(columns={'Timestamp': 'date'})
 
-        count_df = self._df.groupby(self._df['Timestamp'].dt.strftime('%Y-%m-%d')).agg(
+        count_df = self._df.groupby(self._df['date']).agg(
             revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
-        count_df = count_df.rename(columns={'Timestamp': 'date'})
 
         return amount_df, count_df
 
 
-    def get_for_display(self) -> list[dict]:
+    def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries."""
         amount_df, count_df = self._helper_output_df_format()
+        amount_df = DataFormatter.helper_datetime_to_string(amount_df)
+        count_df = DataFormatter.helper_datetime_to_string(count_df)
+
         display_format = (DataFormatter.helper_df_to_dict(amount_df), DataFormatter.helper_df_to_dict(count_df))
 
         return display_format
@@ -147,10 +155,9 @@ class DataFormatter:
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
         amount_df, count_df = self._helper_output_df_format()
-        for df in [amount_df, count_df]:
-            # Convert date from string to Date Object
-            df['date'] = pd.to_datetime(df['date']).dt.date
-            # Set index to date
-            df.set_index('date', inplace=True)
+
+        amount_df.set_index('date', inplace=True)
+        count_df.set_index('date', inplace=True)
+
         return amount_df, count_df
 
