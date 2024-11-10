@@ -10,29 +10,34 @@ MAX_FORECAST_STEPS = 100
 
 class Model:
     """Input data (could be complete or filtered) and output forecast_df."""
-    data: pd.DataFrame
+    training_data: pd.DataFrame
     forecast_df: pd.DataFrame | None
 
-    def __init__(self, data: pd.DataFrame):
+    def __init__(self, training_data: pd.DataFrame):
         """Only initialize self.data. forecast_df is left None.
         Assume that the user only wants prediction data for less than 100 days."""
-        self.data = data
+        self.training_data = training_data
         # self.data.set_index('date', inplace=True)
         self.forecast_df = None
 
     def predict(self):
-        model = ARIMA(self.data, order=self._pdq())
+        model = ARIMA(self.training_data, order=self._pdq())
         fitted_model = model.fit()
-        print(fitted_model.summary())
         forecast = fitted_model.get_forecast(steps=MAX_FORECAST_STEPS)
         self.forecast_df = forecast.summary_frame(alpha=0.05)  # 95% confidence interval
-        print(self.forecast_df[['mean', 'mean_ci_lower', 'mean_ci_upper']])
         return self
 
     def get_result(self, forecast_steps: int) -> pd.DataFrame:
         forecast_values = self.forecast_df['mean']
-        future_dates = pd.date_range(start=self.data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
-        return forecast_values[forecast_values.index.isin(future_dates)]
+        future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps+1, freq='D')
+        forecast_values = forecast_values[forecast_values.index.isin(future_dates)]
+
+        # Format df to same standard as rest of backend
+        # Reset the index (make it a usable column) and name the
+        # new column 'date', also rename mean to value
+        forecast_values = forecast_values.reset_index().rename(columns={'index': 'date'})
+
+        return forecast_values
 
     def _check_stationarity(self, data) -> int:
         d = 0
@@ -44,7 +49,6 @@ class Model:
 
     def _adf_test(series) -> bool:
         """Return True if the series is stationary."""
-        print('.\n.\n.\nADF Test started.')
         result = adfuller(series)
         print(f'ADF Statistic: {result[0]}')
         print(f'p-value: {result[1]}')
@@ -78,19 +82,19 @@ class Model:
     # Currently this method is only for internal use.
     def visualize(self, forecast_steps):
         """Visualize with Plotly."""
-        TARGET_VAR = self.data.columns.tolist()[0]
+        TARGET_VAR = self.training_data.columns.tolist()[0]
         fig = go.Figure()
         fig.add_trace(go.Scatter(
-            x=self.data.index, y=self.data[TARGET_VAR],
+            x=self.training_data.index, y=self.training_data[TARGET_VAR],
             mode='lines+markers', name='Original Data'
         ))
         # Plot the in-sample forecast
         fig.add_trace(go.Scatter(
-            x=self.data.index, y=self.data[TARGET_VAR],
+            x=self.training_data.index, y=self.training_data[TARGET_VAR],
             mode='lines+markers', name='In-sample Forecast'
         ))
         # Plot the out-of-sample forecast
-        future_dates = pd.date_range(start=self.data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
+        future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
         fig.add_trace(go.Scatter(
             x=future_dates, y=self.forecast_df['mean'],
             mode='lines+markers', name='Out-of-sample Forecast'
