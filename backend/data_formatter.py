@@ -147,6 +147,10 @@ class DataFormatter:
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
         amount_df, count_df = self._helper_output_df_format()
-
+        for df in [amount_df, count_df]:
+            # Convert date from string to Date Object
+            df['date'] = pd.to_datetime(df['date']).dt.date
+            # Set index to date
+            df.set_index('date', inplace=True)
         return amount_df, count_df
 
