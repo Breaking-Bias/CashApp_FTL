@@ -151,6 +151,6 @@ class DataFormatter:
             # Convert date from string to Date Object
             df['date'] = pd.to_datetime(df['date']).dt.date
             # Set index to date
-            df.set_index('date', inplace=True)
+            # df.set_index('date', inplace=True)
         return amount_df, count_df
 

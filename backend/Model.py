@@ -78,6 +78,7 @@ class Model:
     # Currently this method is only for internal use.
     def visualize(self, forecast_steps):
         """Visualize with Plotly."""
+        TARGET_VAR = self.data.columns.tolist()[0]
         fig = go.Figure()
         fig.add_trace(go.Scatter(
             x=self.data.index, y=self.data[TARGET_VAR],

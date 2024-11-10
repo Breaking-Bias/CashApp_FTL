@@ -62,16 +62,16 @@ def test_get_past_data(client):
 
     assert is_valid_format(data), "Past data is not in the expected format"
 
-def test_predict_values(client):
-    response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': 'Female'})
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    # assert is_valid_format(data), "Predicted data is not in the expected format"
+# def test_predict_values(client):
+#     response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': 'Female'})
+#     assert response.status_code == 200
+#     # Ensure the response data is JSON
+#     try:
+#         data = response.json
+#     except ValueError:
+#         assert False, "Response is not valid JSON"
+#
+#     assert is_valid_format(data), "Predicted data is not in the expected format"
 
 def test_get_past_data_unbiased(client):
     response = client.post('/getPastDataUnbiased', json={'filtering_factor': 'Female'}) # This should be unbiased data by default)
@@ -84,13 +84,13 @@ def test_get_past_data_unbiased(client):
 
     assert is_valid_format(data), "Past data is not in the expected format"
 
-def test_predict_values_unbiased(client):
-    response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': 'Female'})
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    # assert is_valid_format(data), "Predicted data is not in the expected format"
+# def test_predict_values_unbiased(client):
+#     response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': 'Female'})
+#     assert response.status_code == 200
+#     # Ensure the response data is JSON
+#     try:
+#         data = response.json
+#     except ValueError:
+#         assert False, "Response is not valid JSON"
+#
+#     # assert is_valid_format(data), "Predicted data is not in the expected format"

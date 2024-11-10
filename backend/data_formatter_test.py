@@ -1,3 +1,4 @@
+from datetime import datetime
 import pytest
 import pandas as pd
 from data_formatter import DataFormatter
@@ -95,12 +96,20 @@ def test_get_for_display(real_data):
 
 
 def test_get_for_predicting(real_data):
+    # num_df = pd.DataFrame({
+    #     'date': ['2024-05-01', '2024-05-02'],
+    #     'num_transactions': [52, 48]
+    # })
+    # revenue_df = pd.DataFrame({
+    #     'date': ['2024-05-01', '2024-05-02'],
+    #     'revenue': [1306375.68, 1361639.44]
+    # })
     num_df = pd.DataFrame({
-        'date': ['2024-05-01', '2024-05-02'],
+        'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
         'num_transactions': [52, 48]
     })
     revenue_df = pd.DataFrame({
-        'date': ['2024-05-01', '2024-05-02'],
+        'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
         'revenue': [1306375.68, 1361639.44]
     })
 
