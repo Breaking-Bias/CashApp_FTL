@@ -104,14 +104,16 @@ def test_get_for_predicting(real_data):
     #     'date': ['2024-05-01', '2024-05-02'],
     #     'revenue': [1306375.68, 1361639.44]
     # })
-    num_df = pd.DataFrame({
+    num_df = (pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
         'num_transactions': [52, 48]
-    })
+    }))
+    num_df.set_index('date', inplace=True)
     revenue_df = pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
         'revenue': [1306375.68, 1361639.44]
     })
+    revenue_df.set_index('date', inplace=True)
 
     prediction_data = DataFormatter(real_data).get_for_predicting()
     pd.testing.assert_frame_equal(prediction_data[0], num_df)

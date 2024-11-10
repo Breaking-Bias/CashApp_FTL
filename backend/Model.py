@@ -17,7 +17,7 @@ class Model:
         """Only initialize self.data. forecast_df is left None.
         Assume that the user only wants prediction data for less than 100 days."""
         self.data = data
-        self.data.set_index('date', inplace=True)
+        # self.data.set_index('date', inplace=True)
         self.forecast_df = None
 
     def predict(self):
