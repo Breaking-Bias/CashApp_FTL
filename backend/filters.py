@@ -6,78 +6,43 @@ class Filter(ABC):
         self.data = data.copy()
 
     @abstractmethod
-    def filter(self, filtering_factor: str) -> pd.DataFrame:
+    def apply_filter(self, filtering_factor: str) -> pd.DataFrame:
         """Abstract method to filter the data based on a filtering factor."""
         pass
 
 
-class AgeFilter(Filter):
-    # Age ranges can be modified if needed, or even passed in dynamically
-    AGE_RANGES = [
-        (0, 18),    # Age group: 0-18
-        (18, 35),   # Age group: 18-35
-        (35, 65),   # Age group: 35-65
-        (65, float('inf'))  # Age group: 65+
-    ]
-
-    def filter(self, filtering_factor: str) -> pd.DataFrame:
-        """Filter data based on age."""
-        try:
-            age = int(filtering_factor)
-        except ValueError:
-            raise ValueError(f"Invalid age: '{filtering_factor}'. Must be an integer.")
-
-        for min_age, max_age in self.AGE_RANGES:
-            if min_age <= age < max_age:
-                return self.data[(self.data['Age'] >= min_age) & (self.data['Age'] < max_age)]
-
-        raise ValueError(f"Age {age} is out of valid ranges: {self.AGE_RANGES}.")
+# class AgeFilter(Filter):
+#     raise NotImplemented
 
 
 class GenderFilter(Filter):
-    def filter(self, filtering_factor: str) -> pd.DataFrame:
+    def apply_filter(self, filtering_factor: str) -> pd.DataFrame:
         """Filter data based on gender."""
-        valid_genders = ['Female', 'Male', 'Non-Binary', 'Other']
-        if filtering_factor in valid_genders:
-            return self.data[self.data['Gender'] == filtering_factor]
-        else:
-            raise ValueError(f"Invalid gender: '{filtering_factor}' is not a recognized gender.")
-
+        return self.data[self.data['Gender'] == filtering_factor]
 
 class RaceFilter(Filter):
-    def filter(self, filtering_factor: str) -> pd.DataFrame:
+    def apply_filter(self, filtering_factor: str) -> pd.DataFrame:
         """Filter data based on race."""
-        valid_races = ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']
-        if filtering_factor in valid_races:
-            return self.data[self.data['Race'] == filtering_factor]
-        else:
-            raise ValueError(f"Invalid race: '{filtering_factor}' is not a recognized race.")
+        return self.data[self.data['Race'] == filtering_factor]
 
 
-class StateFilter(Filter):
-    def filter(self, filtering_factor: str) -> pd.DataFrame:
-        """Filter data based on state."""
-        if len(filtering_factor) == 2 and filtering_factor.isupper():
-            return self.data[self.data['State'] == filtering_factor]
-        else:
-            raise ValueError(f"Invalid state: '{filtering_factor}' is not a recognized state code.")
+# class StateFilter(Filter):
+#     def apply_filter(self, filtering_factor: str) -> pd.DataFrame:
+#         """Filter data based on state."""
+#         return self.data[self.data['State'] == filtering_factor]
         
 class FilterManager:
-    @staticmethod
-    def apply_filter(data: pd.DataFrame, filtering_factor: str) -> pd.DataFrame:
+    def __init__(self, df_to_filter: pd.DataFrame):
+        self._df = df_to_filter.copy()
+    
+    def apply_filters(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> pd.DataFrame:
         """
         Determines the appropriate filter to use based on the filtering_factor
         and applies it to the data.
-        """
-        filter_obj = None
-        
-        if filtering_factor.isdigit():
-            filter_obj = AgeFilter(data)
-        elif filtering_factor in ['Male', 'Female', 'Non-Binary', 'Other']:
-            filter_obj = GenderFilter(data)
-        elif filtering_factor in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:
-            filter_obj = RaceFilter(data)
-        elif len(filtering_factor) == 2 and filtering_factor.isupper():
-            filter_obj = StateFilter(data)
+        """      
+        if filter_gender in ['Male', 'Female', 'Non-Binary', 'Other']:
+            self._df = GenderFilter(self._df).apply_filter(filter_gender)
+        if filter_race in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:
+            self._df = RaceFilter(self._df).apply_filter(filter_race)
             
-        return filter_obj.filter(filtering_factor) if filter_obj else data
+        return self._df

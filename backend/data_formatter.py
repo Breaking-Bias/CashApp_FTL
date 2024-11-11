@@ -1,4 +1,5 @@
 import pandas as pd
+from filters import FilterManager
 
 class DataFormatter:
     """
@@ -76,16 +77,9 @@ class DataFormatter:
 
     def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        # ---- TODO: remove this code once PR with the updated filtering code is merged
-        if filter_gender in ['Female', 'Male', 'Non-Binary', 'Other']:  # Check for Gender
-            self._df = self._df[self._df['Gender'] == filter_gender]
-        # ----
-        # if filter_gender:
-        #     # call formatter_gender on self.formatted_df
-        # if filter_race:
-        #     # call formatter_race on self.formatted_df
-        # if filter_state:
-        #     # call formatter_state on self.formatted_df
+        filter_manager = FilterManager(self._df)
+        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
+
         return self
 
 
