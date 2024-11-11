@@ -1,52 +1,62 @@
-# CashApp_FTL
+**💰💥Skibidi_Fortnite_FTL💥💰**
 
-Machine Learning Model Bias Visualization
+👾🕺 Machine Learning Model Bias Visualization 🕺👾
 
-Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)
+Frontend deployed with Netlify 👉 [Click Here](https://superlative-entremet-ffedcc.netlify.app)  
+Backend server vibing on DigitalOcean 👉 [Click Here](http://134.122.38.138:8000/)
 
-Backend hosted with DigitalOcean [here](http://134.122.38.138:8000/)
+---
 
-# Project Overview
+## 🛠️ Project Overview 💣
 
-This project aims to help management team to understand how the bias impacts the company's profitability in the long run. The visualization tools and analysis focus on detecting and representing bias across different subgroups in the dataset based on attributes such as gender, geographical location, and so on.
+Yo, fam! This project is here to show the management squad how bias be impacting the company’s loot 💵 in the long run. We got some lit visualization tools to detect bias lurking in different squads of data 💻 like gender, location, etc. 👀🔍
 
-# Usage
+---
 
-Click the button on the interactive dashboard to get the visualization with different attributes that could potentially affect number of active users.
+## 🔫 Usage (How 2 Skibidi Dance 🕺)
 
-Attributes:
+Hit that button on the interactive dashboard 🎮 to drop in and get a visual breakdown of how different attributes affect the player base (active users, yo! 🕹️).
 
-- Gender
-- Age
-- Race
-- State
-- ...
+**Attributes you gotta check:**
+- Gender 🧑👩
+- Age 📅
+- Race 🎭
+- State 🗺️
+- And more... 🚀
 
-# Installation
+---
 
-Requirements:
+## 🔧 Installation Instructions 🛠️
 
-- git
-- node.js
-- Python
-- mySQL
+⚡ Requirements ⚡
+- 🖥️ `git`
+- 💻 `node.js`
+- 🐍 `Python`
+- 🗄️ `mySQL`
 
-To run the front end:
-'cd frontend'
-'npm install'
-'npm run dev'
+### To deploy the front-end:
+```
+cd frontend
+npm install
+npm run dev
+```
 
-To run server:
-TO RUN SERVER:
+### To launch that backend server:
+```
+cd backend
+pip install -r requirements.txt
+python server.py
+```
+Or just smash that play button! 🎮
 
-'cd backend'
-'pip install -r requirements.txt'
-'python server.py' (or click the play button)
+---
 
-# License
+## 📜 License
 
-The project is licensed under the ??MIT License?
+This project be rollin' under the **MIT License** 📝.
 
-# Acknowledgments
+---
 
-Special thanks :)
+## 🔥 Acknowledgments 🔥
+
+Special thanks to all the real ones out there 😎
