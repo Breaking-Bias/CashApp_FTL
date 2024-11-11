@@ -92,7 +92,11 @@ function MainPage() {
         predictedData={predictedData}
         predictedDataUnbiased={predictedDataUnbiased}
       />
+      <br />
+      <h3>Prediction size:</h3>
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+      <br />
+      <h3>Filter:</h3>
       <RadioButtons
         filterFactor={filterFactor}
         setFilterFactor={setFilterFactor}

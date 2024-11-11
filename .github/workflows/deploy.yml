@@ -1,0 +1,37 @@
+name: Deploy Backend to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Deploy Backend Files
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
+          username: root
+          key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          script: |
+            cd repo
+            cd CashApp_FTL
+            git pull origin main
+            source venv/bin/activate
+            cd backend
+            pip install -r requirements.txt
+            pkill gunicorn
+            nohup gunicorn --bind 0.0.0.0:8000 app:app > ~/logs/gunicorn.log 2>&1 &
+            exit
+            echo "Backend deployed successfully"
