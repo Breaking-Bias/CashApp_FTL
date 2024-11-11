@@ -63,21 +63,26 @@ class StateFilter(Filter):
             raise ValueError(f"Invalid state: '{filtering_factor}' is not a recognized state code.")
         
 class FilterManager:
-    @staticmethod
-    def apply_filter(data: pd.DataFrame, filtering_factor: str) -> pd.DataFrame:
-        """
-        Determines the appropriate filter to use based on the filtering_factor
-        and applies it to the data.
-        """
-        filter_obj = None
+    def __init__(self, data: pd.DataFrame):
+        self._df = data.copy() 
+    
+    def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'FilterManager':
+        """Filters the DataFrame based on gender, race, or state."""
         
-        if filtering_factor.isdigit():
-            filter_obj = AgeFilter(data)
-        elif filtering_factor in ['Male', 'Female', 'Non-Binary', 'Other']:
-            filter_obj = GenderFilter(data)
-        elif filtering_factor in ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']:
-            filter_obj = RaceFilter(data)
-        elif len(filtering_factor) == 2 and filtering_factor.isupper():
-            filter_obj = StateFilter(data)
-            
-        return filter_obj.filter(filtering_factor) if filter_obj else data
+        if filter_gender:
+            gender_filter = GenderFilter(self._df)
+            self._df = gender_filter.filter(filter_gender)
+        
+        if filter_race:
+            race_filter = RaceFilter(self._df)
+            self._df = race_filter.filter(filter_race)
+        
+        if filter_state:
+            state_filter = StateFilter(self._df)
+            self._df = state_filter.filter(filter_state)
+        
+        return self
+    def get_filtered_data(self) -> pd.DataFrame:
+        return self._df
+
+    
