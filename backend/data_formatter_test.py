@@ -55,11 +55,7 @@ def test_filter_by_factor(sample_data):
 
 def test_filter_by_factor_no_matching_values(sample_data):
     """Edge case: Test filter_by_factor with no matching values."""
-    filtered_df = DataFormatter(sample_data).filter_by(
-        'Nonexistent_gender',
-        'Nonexistent_race',
-        'Nonexistent_state'
-    ).get_formatted_df()
+    filtered_df = DataFormatter(sample_data).filter_by("Nonexistant_factor").get_formatted_df()
     assert filtered_df.equals(sample_data)  # Should return the original dataset
 
 

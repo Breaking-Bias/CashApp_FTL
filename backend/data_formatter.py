@@ -75,11 +75,12 @@ class DataFormatter:
         return row
 
 
-    def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'DataFormatter':
+    def filter_by(self, filter_factor:str) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
         filter_manager = FilterManager(self._df)
-        filter_manager.filter_by(filter_gender=filter_gender, filter_race=filter_race, filter_state=filter_state)
-        return filter_manager.get_filtered_data()
+        self._df=filter_manager.filter_by(filter_factor)
+        return self
+
 
 
     def filter_invalid_transactions(self) -> 'DataFormatter':
