@@ -10,3 +10,4 @@ plotly
 scikit-learn
 faker
 datetime
+flake8
