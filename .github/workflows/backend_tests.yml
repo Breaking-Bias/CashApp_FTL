@@ -10,7 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  name: Run pytests
+  test:
     runs-on: ubuntu-latest
 
     steps:

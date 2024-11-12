@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  deploy:
+  name: Deploy to DigitalOcean
+  backend-deploy:
     runs-on: ubuntu-latest
 
     steps:
