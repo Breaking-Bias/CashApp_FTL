@@ -1,4 +1,6 @@
 import pandas as pd
+from filters import FilterManager
+
 
 class DataFormatter:
     """
@@ -51,20 +53,16 @@ class DataFormatter:
     """
     _df: pd.DataFrame
 
-
     def __init__(self, df_to_format: pd.DataFrame):
         self._df = df_to_format.copy()
-
 
     def get_formatted_df(self) -> pd.DataFrame:
         return self._df
 
-
     def unbias(self) -> 'DataFormatter':
         """Removes bias by flipping FP to TN, only for 'Bias' rows"""
-        self._df =  self._df.apply(DataFormatter._unbias_row, axis=1)
+        self._df = self._df.apply(DataFormatter._unbias_row, axis=1)
         return self
-
 
     @staticmethod
     def _unbias_row(row):
@@ -73,30 +71,22 @@ class DataFormatter:
             row['Bias'] = 0
         return row
 
-
-    def filter_by(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> 'DataFormatter':
+    def filter_by(self, filter_gender: str = None, filter_race:
+                  str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        # ---- TODO: remove this code once PR with the updated filtering code is merged
-        if filter_gender in ['Female', 'Male', 'Non-Binary', 'Other']:  # Check for Gender
-            self._df = self._df[self._df['Gender'] == filter_gender]
-        # ----
-        # if filter_gender:
-        #     # call formatter_gender on self.formatted_df
-        # if filter_race:
-        #     # call formatter_race on self.formatted_df
-        # if filter_state:
-        #     # call formatter_state on self.formatted_df
-        return self
+        filter_manager = FilterManager(self._df)
+        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
 
+        return self
 
     def filter_invalid_transactions(self) -> 'DataFormatter':
         """Creates a new dataset without any rows marked as blocked
          (i.e. False Positive (incorrectly blocked),
           True Positive (correctly blocked))
         """
-        self._df = self._df[(self._df['confusion_value'] != 'FP') & (self._df['confusion_value'] != 'TP')]
+        self._df = self._df[(self._df['confusion_value'] != 'FP')
+                            & (self._df['confusion_value'] != 'TP')]
         return self
-
 
     def _clean_data(self) -> 'DataFormatter':
         """Remove any columns with missing values
@@ -107,14 +97,12 @@ class DataFormatter:
         self._df = self._df.rename(columns={'Timestamp': 'date'})
         return self
 
-
     @staticmethod
     def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
         """Converts a DataFrame to a list of dictionaries.
         """
 
         return df_to_convert.to_dict('records')
-
 
     @staticmethod
     def helper_datetime_to_string(df_to_convert: pd.DataFrame) -> pd.DataFrame:
@@ -140,17 +128,16 @@ class DataFormatter:
 
         return amount_df, count_df
 
-
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
-        """Formats the data for output, and converts to list of dictionaries."""
+        """Formats the data for output, and converts to list of dictionaries"""
         amount_df, count_df = self._helper_output_df_format()
         amount_df = DataFormatter.helper_datetime_to_string(amount_df)
         count_df = DataFormatter.helper_datetime_to_string(count_df)
 
-        display_format = (DataFormatter.helper_df_to_dict(amount_df), DataFormatter.helper_df_to_dict(count_df))
+        display_format = (DataFormatter.helper_df_to_dict(amount_df),
+                          DataFormatter.helper_df_to_dict(count_df))
 
         return display_format
-
 
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
