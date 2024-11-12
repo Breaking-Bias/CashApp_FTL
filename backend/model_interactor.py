@@ -4,9 +4,9 @@ import pandas as pd
 
 
 class ModelInteractor:
-    training_data: pd.DataFrame
+    training_data:  tuple[pd.DataFrame, pd.DataFrame]
 
-    def __init__(self, training_data: pd.DataFrame):
+    def __init__(self, training_data:  tuple[pd.DataFrame, pd.DataFrame]):
         self.training_data = training_data
 
     def execute(self, forecast_steps: int) -> tuple[list[dict], list[dict]]:
