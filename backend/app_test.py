@@ -3,10 +3,12 @@ import re
 from datetime import datetime
 from app import app
 
+
 @pytest.fixture
 def client():
     with app.test_client() as client:
         yield client
+
 
 def is_valid_format(response_data) -> bool:
     # Check that data is a list

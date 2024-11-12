@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-# Read the raw dataset from the csv
+
 # TODO: May need to change csv file depending on our final data file.
 class DataReader:
     file_name: str
