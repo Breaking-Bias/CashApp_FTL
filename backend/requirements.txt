@@ -5,9 +5,9 @@ gunicorn
 numpy
 matplotlib
 statsmodels
-pytest
+pytest # TODO: remove for production
 plotly
 scikit-learn
 faker
 datetime
-flake8
+flake8 # TODO: remove for production
