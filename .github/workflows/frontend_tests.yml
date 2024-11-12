@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  name: Run-jtests
   frontend-build-and-test:
+    name: Run-jtests
     runs-on: ubuntu-latest
 
     defaults:

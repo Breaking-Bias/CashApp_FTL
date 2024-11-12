@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  name: Run-pytests
   test:
+    name: Run-pytests
     runs-on: ubuntu-latest
 
     steps:
