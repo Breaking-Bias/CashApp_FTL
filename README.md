@@ -45,7 +45,7 @@ TO RUN SERVER:
 
 # License
 
-The project is licensed under the ??MIT License?
+The project is licensed under the MIT License
 
 # Acknowledgments
 
