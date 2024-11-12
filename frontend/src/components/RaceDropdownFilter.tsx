@@ -5,7 +5,7 @@ interface DropdownFilterProps {
   onSelectChange: (value: string) => void;
 }
 
-function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
+function RaceDropdownFilter({ onSelectChange }: DropdownFilterProps) {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleChange = (event: SelectChangeEvent<string>) => {
@@ -16,19 +16,21 @@ function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
 
   return (
     <FormControl fullWidth>
-      <InputLabel>Gender</InputLabel>
+      <InputLabel>Race</InputLabel>
       <Select
         value={selectedOption}
         onChange={handleChange}
       >
         <MenuItem value="NoFilter">No Filter</MenuItem>
-        <MenuItem value="Male">Male</MenuItem>
-        <MenuItem value="Female">Female</MenuItem>
-        <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+        <MenuItem value="Black">Black</MenuItem>
+        <MenuItem value="White">White</MenuItem>
+        <MenuItem value="Asian">Asian</MenuItem>
+        <MenuItem value="Hispanic">Hispanic</MenuItem>
+        <MenuItem value="Mixed">Mixed</MenuItem>
         <MenuItem value="Other">Other</MenuItem>
       </Select>
     </FormControl>
   );
 }
 
-export default DropdownFilter;
+export default RaceDropdownFilter;

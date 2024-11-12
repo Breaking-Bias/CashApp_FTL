@@ -2,7 +2,8 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
 // import RadioButtons from "./RadioButtons";
-import DropdownFilter from "./DropdownFilter";
+import GenderDropdownFilter from "./GenderDropdownFilter";
+import RaceDropdownFilter from "./RaceDropdownFilter";
 import PredictButton from "./PredictButton";
 import Graph from "./Graph";
 import {
@@ -98,9 +99,12 @@ function MainPage() {
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
       <br />
       <h3>Filter:</h3>
-      <DropdownFilter
+      <GenderDropdownFilter
         // filterFactor={filterFactor}
         // setFilterFactor={setFilterFactor}
+        onSelectChange={(value: string) => setFilterFactor(value)}
+      />
+      <RaceDropdownFilter
         onSelectChange={(value: string) => setFilterFactor(value)}
       />
       <PredictButton onClick={updatePrediction} />

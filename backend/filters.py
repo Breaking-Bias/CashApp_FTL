@@ -79,5 +79,5 @@ class FilterManager:
         race_filter = RaceFilter(self._df, filter_race)
         if race_filter.valid_filter():
             self._df = race_filter.apply_filter()
-            
+
         return self._df
