@@ -15,7 +15,7 @@ import ExportGraphButton from "./ExportGraphButton";
 import { Button, Menu, MenuItem } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { Tooltip, IconButton } from "@mui/material";
-import HelpIcon from "@mui/icons-material/Help";
+import HelpIcon from '@mui/icons-material/Help';
 
 function MainPage() {
   // Component State Variables
