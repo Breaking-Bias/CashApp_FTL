@@ -26,7 +26,6 @@ function UploadDataset() {
 
     const formData = new FormData();
     formData.append('file', file);
-
     try {
       const response = await fetch('https://breakingbiasbigboss.zapto.org/upload-dataset', {
         method: 'POST',
@@ -35,22 +34,17 @@ function UploadDataset() {
       
       // Check if the response is successful
       if (!response.ok) {
-        setMessage("Failed to upload the file. Server returned error.");
+        setMessage("Failed to upload the file. Server returned an error.");
         return;
       }
-
+    
       const result = await response.json();
-
-      // Update UI with response message and preview data
+    
+      // Set success message if upload goes through
       setMessage(result.message || "File uploaded successfully!");
-      if (result.data_head) {
-        setPreviewData(result.data_head); // Store preview data for display
-      } else {
-        setMessage("Data preview not available.");
-      }
     } catch (error) {
       setMessage("Error uploading file. Please try again.");
-      console.error(error);
+      console.error("Upload error:", error);
     }
   };
 
