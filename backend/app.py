@@ -12,7 +12,7 @@ women_bias_data = DataReader('women_bias_data.csv').read_dataset()
 # Example of an endpoint that returns test data
 @app.route('/getinfo')
 def getinfo():
-    info = {"name":'breaking bias', "score":"stupendous"}
+    info = {"name": 'breaking bias', "score": "stupendous"}
     return jsonify(info)
 
 
