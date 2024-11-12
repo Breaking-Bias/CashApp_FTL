@@ -50,3 +50,5 @@ The project is licensed under the ??MIT License?
 # Acknowledgments
 
 Special thanks :)
+
+I love linting
