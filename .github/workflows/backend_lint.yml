@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   backend-lint:
-    name: Lint Code
+    name: Lint-Code
     runs-on: ubuntu-latest
 
     steps:
