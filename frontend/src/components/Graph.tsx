@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { DataSeries } from "../types";
 
-const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
+// const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
 interface Props {
   pastData: DataSeries | undefined;
@@ -38,7 +38,34 @@ function Graph({
 
       return [start, end];
     }
+    return [0, 0];
   }
+
+  // Generate ticks for the first day of each month
+  const generateMonthTicks = (startDate: Date, endDate: Date) => {
+    const ticks = [];
+    const current = new Date(startDate);
+    
+    // Adjust the current to the first day of the month for the start
+    current.setDate(1);
+
+    // Generate ticks for the first day of each month within the range
+    while (current <= endDate) {
+      ticks.push(current.getTime());
+      current.setMonth(current.getMonth() + 1); // Move to the next month
+    }
+
+    return ticks;
+  };
+
+  const dateFormatter = (tick: number) => {
+    const date = new Date(tick);
+    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  };
+
+  // Get the domain from pastData and predictedData
+  const [startDate, endDate] = getGraphDomain();
+  const monthTicks = generateMonthTicks(new Date(startDate), new Date(endDate));
 
   return (
     <div id="graph-canvas">
@@ -54,7 +81,8 @@ function Graph({
             scale="time"
             type="number"
             tickFormatter={dateFormatter}
-            domain={getGraphDomain()}
+            domain={[startDate, endDate]}
+            ticks={monthTicks}
           />
 
           <YAxis dataKey="value">
