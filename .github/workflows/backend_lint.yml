@@ -1,8 +1,6 @@
-name: Python Backend Tests
+name: Flake8 Tests
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     branches: ["main"]
 
@@ -10,8 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    name: Run-pytests
+  backend-lint:
+    name: Lint-Code
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +20,10 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: |
-          pip install pytest
+          pip install flake8
           cd backend
           pip install -r requirements.txt
-      - name: Test with pytest
+      - name: (see HERE for errors) Lint with flake8
         run: |
-          pytest
+          cd backend
+          flake8 --show-source --statistics

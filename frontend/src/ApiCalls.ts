@@ -18,13 +18,14 @@ async function genericPostCall(endpoint: string, params: object) {
             throw new Error("Error in response: " + response.statusText);
         }
 
-        const data: RawDataEntry[] = await response.json();
+        const data: [RawDataEntry[], never] = await response.json();
+        const rawData = data[0];
 
         // Turns the ISO dates into JavaScript date objects   
-        const formattedData: FormattedDataEntry[] = data.map(
+        const formattedData: FormattedDataEntry[] = rawData.map(
             (entry) => ({
                 date: new Date(entry.date),
-                value: entry.value,
+                value: entry.num_transactions,
             })
         );
 

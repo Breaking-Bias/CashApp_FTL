@@ -1,8 +1,6 @@
-name: Python Backend Tests
+name: Coverage Test
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     branches: ["main"]
 
@@ -10,8 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    name: Run-pytests
+  backend-coverage:
+    name: Coverage
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +21,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest
+          pip install coverage
           cd backend
           pip install -r requirements.txt
-      - name: Test with pytest
+      - name: (see HERE for errors) Check coverage of pytests
         run: |
-          pytest
+          cd backend
+          python coverage_check.py
