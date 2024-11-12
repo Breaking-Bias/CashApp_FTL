@@ -47,7 +47,3 @@ venv/
 */.pytest_cache/*
 __pycache__/
 *.pyc
-
-#package-lock.json
-backend/package-lock.json
-package-lock.json
