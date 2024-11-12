@@ -1,7 +1,8 @@
 import "../App.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
-import RadioButtons from "./RadioButtons";
+// import RadioButtons from "./RadioButtons";
+import DropdownFilter from "./DropdownFilter";
 import PredictButton from "./PredictButton";
 import Graph from "./Graph";
 import {
@@ -97,9 +98,10 @@ function MainPage() {
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
       <br />
       <h3>Filter:</h3>
-      <RadioButtons
-        filterFactor={filterFactor}
-        setFilterFactor={setFilterFactor}
+      <DropdownFilter
+        // filterFactor={filterFactor}
+        // setFilterFactor={setFilterFactor}
+        onSelectChange={(value: string) => setFilterFactor(value)}
       />
       <PredictButton onClick={updatePrediction} />
       <br />

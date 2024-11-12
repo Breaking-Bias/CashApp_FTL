@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
 
 interface DropdownFilterProps {
   onSelectChange: (value: string) => void;
@@ -8,7 +8,7 @@ interface DropdownFilterProps {
 function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handleChange = (event: { target: { value: any; }; }) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     const value = event.target.value;
     setSelectedOption(value);
     onSelectChange(value);
@@ -21,8 +21,11 @@ function DropdownFilter({ onSelectChange }: DropdownFilterProps) {
         value={selectedOption}
         onChange={handleChange}
       >
-        <MenuItem value="male">Male</MenuItem>
-        <MenuItem value="female">Female</MenuItem>
+        <MenuItem value="NoFilter">No Filter</MenuItem>
+        <MenuItem value="Male">Male</MenuItem>
+        <MenuItem value="Female">Female</MenuItem>
+        <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+        <MenuItem value="Other">Other</MenuItem>
       </Select>
     </FormControl>
   );
