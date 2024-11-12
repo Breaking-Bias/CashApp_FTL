@@ -85,19 +85,19 @@ def test_unbias_does_not_mutate_original(sample_data):
 
 
 def test_get_for_display(real_data):
-    num_data = [{'date': '2024-05-01', 'num_transactions': 52}, {'date': '2024-05-02', 'num_transactions': 48}]
+    frequency_data = [{'date': '2024-05-01', 'frequency': 52}, {'date': '2024-05-02', 'frequency': 48}]
     revenue_data = [{'date': '2024-05-01', 'revenue': 1306375.68}, {'date': '2024-05-02', 'revenue': 1361639.44}]
 
     display_data = DataFormatter(real_data).get_for_display()
 
-    assert display_data[0] == num_data
+    assert display_data[0] == frequency_data
     assert display_data[1] == revenue_data
 
 
 def test_get_for_predicting(real_data):
     num_df = (pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
-        'num_transactions': [52, 48]
+        'frequency': [52, 48]
     }))
     num_df.set_index('date', inplace=True)
     revenue_df = pd.DataFrame({
