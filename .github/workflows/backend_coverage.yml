@@ -22,7 +22,7 @@ jobs:
         run: |
           cd backend
           pip install -r requirements.txt
-      - name: Check coverage of pytests (see HERE for errors)
+      - name: (see HERE for errors) Check coverage of pytests
         run: |
           cd backend
           python coverage_check.py
