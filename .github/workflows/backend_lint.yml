@@ -8,7 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  backend-lint:
+    name: Lint Code
     runs-on: ubuntu-latest
 
     steps:
