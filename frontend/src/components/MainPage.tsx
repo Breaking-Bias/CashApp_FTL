@@ -15,7 +15,7 @@ import ExportGraphButton from "./ExportGraphButton";
 import { Button, Menu, MenuItem } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { Tooltip, IconButton } from "@mui/material";
-import HelpIcon from '@mui/icons-material/Help';
+// import HelpIcon from '@mui/icons-material/Help';
 
 function MainPage() {
   // Component State Variables
@@ -139,11 +139,11 @@ function MainPage() {
       <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
     </Menu>
     <div>
-    <Tooltip title="The slider is used to adjust the prediction size.">
+    {/* <Tooltip title="The slider is used to adjust the prediction size.">
       <IconButton>
         <HelpIcon className="custom-help-icon" />
       </IconButton>
-    </Tooltip>
+    </Tooltip> */}
     </div>
   </div>
   );
