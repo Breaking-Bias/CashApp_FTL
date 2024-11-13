@@ -45,9 +45,8 @@ function Graph({
   const generateMonthTicks = (startDate: Date, endDate: Date) => {
     const ticks = [];
     const current = new Date(startDate);
-    
-    // Adjust the current to the first day of the month for the start
     current.setDate(1);
+    current.setMonth(current.getMonth() + 1); // Move to the next month
 
     // Generate ticks for the first day of each month within the range
     while (current <= endDate) {
