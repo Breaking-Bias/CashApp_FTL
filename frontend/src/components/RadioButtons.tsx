@@ -3,29 +3,24 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 interface Props {
-  filterFactor: string;
-  setFilterFactor: (newValue: string) => void;
+  mode: string;
+  setMode: (newValue: string) => void;
 }
+// 0 means number of transaction, 1 means value of transaction
 
-function RadioButtons({ filterFactor, setFilterFactor }: Props) {
-  const handleChange = (event: any) => {
-    setFilterFactor(event.target.value);
+function RadioButtons({ mode, setMode }: Props) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMode(event.target.value);
   };
 
   return (
     <RadioGroup
-      defaultValue="noFilter"
-      value={filterFactor}
+      defaultValue="0"
+      value={mode}
       onChange={handleChange}
     >
-      <FormControlLabel value="Female" control={<Radio />} label="Female" />
-      <FormControlLabel value="Male" control={<Radio />} label="Male" />
-      <FormControlLabel value="Other" control={<Radio />} label="Other" />
-      <FormControlLabel
-        value="NoFilter"
-        control={<Radio />}
-        label="No Filter"
-      />
+      <FormControlLabel value="0" control={<Radio />} label="number of transactions" />
+      <FormControlLabel value="1" control={<Radio />} label="value of transactions" />
     </RadioGroup>
   );
 }
