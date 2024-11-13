@@ -12,11 +12,8 @@ import {
 } from "../ApiCalls";
 import { DataSeries } from "../types";
 import ExportGraphButton from "./ExportGraphButton";
-import { Button, Menu, MenuItem } from "@mui/material"
+import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import { Tooltip, IconButton } from "@mui/material";
-// import HelpIcon from '@mui/icons-material/Help';
-
 
 function MainPage() {
   // Component State Variables
@@ -93,7 +90,7 @@ function MainPage() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -103,6 +100,21 @@ function MainPage() {
 
   return (
     <div>
+      {/* Menu button at the top */}
+      <Box display="flex" justifyContent="flex-start" padding={2}>
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          Menu
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
+        </Menu>
+      </Box>
+
+      {/* Main content */}
       <Graph
         pastData={pastData}
         pastDataUnbiased={pastDataUnbiased}
@@ -122,24 +134,7 @@ function MainPage() {
       <br />
       <br />
       <ExportGraphButton />
-    
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        Menu 
-      </Button>
-
-    <Menu
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-    >
-      <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
-    </Menu>
-
-  </div>
+    </div>
   );
 }
 
