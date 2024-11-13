@@ -12,7 +12,7 @@ import {
 } from "../ApiCalls";
 import { DataSeries } from "../types";
 import ExportGraphButton from "./ExportGraphButton";
-import { Menu, MenuItem } from "@mui/material"
+import { Button, Menu, MenuItem } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 // import { Tooltip, IconButton } from "@mui/material";
 // import HelpIcon from '@mui/icons-material/Help';
@@ -93,9 +93,9 @@ function MainPage() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // const handleClick = (event:React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const handleClick = (event:React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -122,6 +122,14 @@ function MainPage() {
       <br />
       <br />
       <ExportGraphButton />
+    
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+      >
+        Menu 
+      </Button>
 
     <Menu
       anchorEl={anchorEl}
