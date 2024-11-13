@@ -15,6 +15,7 @@ function RadioButtons({ mode, setMode }: Props) {
 
   return (
     <RadioGroup
+      row // makes the radio buttons inline
       defaultValue="0"
       value={mode}
       onChange={handleChange}

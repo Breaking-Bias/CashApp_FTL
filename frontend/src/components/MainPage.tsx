@@ -16,6 +16,7 @@ import ExportGraphButton from "./ExportGraphButton";
 function MainPage() {
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
+  const [mode, setMode] = useState<string>("0");
   const [filterFactor, setFilterFactor] = useState<string>("NoFilter");
 
   // Data State Variables
@@ -86,6 +87,13 @@ function MainPage() {
 
   return (
     <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <h3>I want data on </h3>
+        <RadioButtons
+          mode={mode}
+          setMode={setMode}
+        />
+      </div>
       <Graph
         pastData={pastData}
         pastDataUnbiased={pastDataUnbiased}
@@ -96,11 +104,11 @@ function MainPage() {
       <h3>Prediction size:</h3>
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
       <br />
-      <h3>Filter:</h3>
+      {/* <h3>Filter:</h3>
       <RadioButtons
         filterFactor={filterFactor}
         setFilterFactor={setFilterFactor}
-      />
+      /> */}
       <PredictButton onClick={updatePrediction} />
       <br />
       <br />
