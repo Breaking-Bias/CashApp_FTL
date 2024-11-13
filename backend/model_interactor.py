@@ -11,14 +11,15 @@ class ModelInteractor:
 
     def execute(self, forecast_steps: int) -> tuple[list[dict], list[dict]]:
         model_amount = Model(self.training_data[0])
-        pred_trans_amount = (model_amount.predict().get_result(forecast_steps)
-                             .rename(columns={'mean': 'num_transactions'}))
+        pred_trans_amount = (model_amount.predict().get_result(forecast_steps))
+                             # .rename(columns={'mean': 'num_transactions'}))
         pred_trans_amount = ModelInteractor._process_data(pred_trans_amount)
 
         model_count = Model(self.training_data[1])
-        pred_trans_count = (model_count.predict().get_result(forecast_steps)
-                            .rename(columns={'mean': 'revenue'}))
+        pred_trans_count = (model_count.predict().get_result(forecast_steps))
+                            # .rename(columns={'mean': 'revenue'}))
         pred_trans_count = ModelInteractor._process_data(pred_trans_count)
+        # Don't rename the columns here, otherwise frontend won't work.
 
         return pred_trans_amount, pred_trans_count
 

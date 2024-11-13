@@ -119,12 +119,13 @@ class DataFormatter:
         self._clean_data()
 
         amount_df = self._df.groupby(self._df['date']).agg(
-            num_transactions=('Transaction_Amount_USD', 'count')
+            value=('Transaction_Amount_USD', 'count')
         ).reset_index()
 
         count_df = self._df.groupby(self._df['date']).agg(
-            revenue=('Transaction_Amount_USD', 'sum')
+            value=('Transaction_Amount_USD', 'sum')
         ).reset_index()
+        # Don't change the column names here, otherwise frontend won't work.
 
         return amount_df, count_df
 

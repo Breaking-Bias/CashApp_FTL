@@ -4,7 +4,7 @@ const SERVER_URL = process.env.VITE_SERVER_URL;
 
 async function genericPostCall(endpoint: string, params: object, mode: string) {
     const fullEndpoint = `${SERVER_URL}${endpoint}`;
-
+    
     try {
         const response = await fetch(fullEndpoint, {
             method: "POST",
@@ -13,19 +13,19 @@ async function genericPostCall(endpoint: string, params: object, mode: string) {
             },
             body: JSON.stringify(params),
         });
-
+        
         if (!response.ok) {
             throw new Error("Error in response: " + response.statusText);
         }
 
         const data: [RawDataEntry[], never] = await response.json();
         const rawData = mode === "0" ? data[0] : data[1];
-
+        
         // Turns the ISO dates into JavaScript date objects   
         const formattedData: FormattedDataEntry[] = rawData.map(
             (entry) => ({
                 date: new Date(entry.date),
-                value: entry.num_transactions,
+                value: entry.value,
             })
         );
 
