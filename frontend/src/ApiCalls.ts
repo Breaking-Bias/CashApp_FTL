@@ -2,7 +2,7 @@ import { FormattedDataEntry, RawDataEntry } from "./types";
 
 const SERVER_URL = process.env.VITE_SERVER_URL;
 
-async function genericPostCall(endpoint: string, params: object) {
+async function genericPostCall(endpoint: string, params: object, mode: string) {
     const fullEndpoint = `${SERVER_URL}${endpoint}`;
 
     try {
@@ -19,7 +19,7 @@ async function genericPostCall(endpoint: string, params: object) {
         }
 
         const data: [RawDataEntry[], never] = await response.json();
-        const rawData = data[0];
+        const rawData = mode === "0" ? data[0] : data[1];
 
         // Turns the ISO dates into JavaScript date objects   
         const formattedData: FormattedDataEntry[] = rawData.map(
@@ -36,18 +36,18 @@ async function genericPostCall(endpoint: string, params: object) {
     }
 }
 
-export async function getPastDataAPICall(filterFactor: string) {
-    return await genericPostCall("/getPastData", { filtering_factor: filterFactor })
+export async function getPastDataAPICall(filterFactor: string, mode: string) {
+    return await genericPostCall("/getPastData", { filtering_factor: filterFactor }, mode)
 }
 
-export async function getPastDataUnbiasedAPICall(filterFactor: string) {
-    return await genericPostCall("/getPastDataUnbiased", { filtering_factor: filterFactor })
+export async function getPastDataUnbiasedAPICall(filterFactor: string, mode: string) {
+    return await genericPostCall("/getPastDataUnbiased", { filtering_factor: filterFactor }, mode)
 }
 
-export async function predictDataAPICall(filterFactor: string, numPoints: number) {
-    return await genericPostCall("/predictData", { filtering_factor: filterFactor, num_points: numPoints })
+export async function predictDataAPICall(filterFactor: string, numPoints: number, mode: string) {
+    return await genericPostCall("/predictData", { filtering_factor: filterFactor, num_points: numPoints }, mode)
 }
 
-export async function predictDataUnbiasedAPICall(filterFactor: string, numPoints: number) {
-    return await genericPostCall("/predictDataUnbiased", { filtering_factor: filterFactor, num_points: numPoints })
+export async function predictDataUnbiasedAPICall(filterFactor: string, numPoints: number, mode: string) {
+    return await genericPostCall("/predictDataUnbiased", { filtering_factor: filterFactor, num_points: numPoints }, mode)
 }

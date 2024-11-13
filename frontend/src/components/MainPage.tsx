@@ -27,7 +27,7 @@ function MainPage() {
     useState<DataSeries>();
 
   async function getPastData() {
-    const formattedData = await getPastDataAPICall(filterFactor);
+    const formattedData = await getPastDataAPICall(filterFactor, mode);
 
     if (formattedData) {
       setPastData({
@@ -38,7 +38,7 @@ function MainPage() {
     }
   }
   async function getPastDataUnbiased() {
-    const formattedData = await getPastDataUnbiasedAPICall(filterFactor);
+    const formattedData = await getPastDataUnbiasedAPICall(filterFactor, mode);
 
     if (formattedData) {
       setPastDataUnbiased({
@@ -49,7 +49,7 @@ function MainPage() {
     }
   }
   async function predictData() {
-    const formattedData = await predictDataAPICall(filterFactor, sliderValue);
+    const formattedData = await predictDataAPICall(filterFactor, sliderValue, mode);
 
     if (formattedData) {
       setPredictedData({
@@ -62,7 +62,8 @@ function MainPage() {
   async function predictDataUnbiased() {
     const formattedData = await predictDataUnbiasedAPICall(
       filterFactor,
-      sliderValue
+      sliderValue,
+      mode
     );
 
     if (formattedData) {
@@ -83,7 +84,7 @@ function MainPage() {
 
   useEffect(() => {
     getPastData();
-  }, []);
+  }, [mode]);
 
   return (
     <div>
