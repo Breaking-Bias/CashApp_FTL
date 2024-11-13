@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 
-interface DataRow {
-  [key: string]: string | number;
-}
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
-  const [previewData, setPreviewData] = useState<DataRow[]>([]);
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,16 +34,11 @@ function UploadDataset() {
         setMessage("Failed to upload the file. Server returned error.");
         return;
       }
-
+    
       const result = await response.json();
-
-      // Update UI with response message and preview data
+    
+      // Update UI with a success or error message only
       setMessage(result.message || "File uploaded successfully!");
-      if (result.data_head) {
-        setPreviewData(result.data_head); // Store preview data for display
-      } else {
-        setMessage("Data preview not available.");
-      }
     } catch (error) {
       setMessage("Error uploading file. Please try again.");
       console.error(error);
@@ -60,31 +51,6 @@ function UploadDataset() {
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload Dataset</button>
       <p>{message}</p>
-
-      {/* Display preview of the data if available */}
-      {previewData.length > 0 && (
-        <div>
-          <h3>Data Preview:</h3>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(previewData[0]).map((key) => (
-                  <th key={key}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {previewData.map((row, index) => (
-                <tr key={index}>
-                  {Object.values(row).map((value, i) => (
-                    <td key={i}>{String(value)}</td> // Convert values to strings
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 }
