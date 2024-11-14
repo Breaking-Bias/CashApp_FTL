@@ -19,7 +19,8 @@ function MainPage() {
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
   const [mode, setMode] = useState<string>("0");
-  const [filterFactor, setFilterFactor] = useState<string>("NoFilter");
+  // const [filterFactor, setFilterFactor] = useState<string>("NoFilter");
+  const filterFactor = "NoFilter"; // temporary, should resolve when conflicts happen
 
   // Data State Variables
   const [pastData, setPastData] = useState<DataSeries>();
