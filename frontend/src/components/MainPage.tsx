@@ -105,7 +105,7 @@ function MainPage() {
    return (
     <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}>
       {/* Page Title */}
-      <h1 style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}>Breaking Bias - Data Visualization</h1>
+      <h1 style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}>Dashboard</h1>
 
       {/* Menu Button */}
       <Box
