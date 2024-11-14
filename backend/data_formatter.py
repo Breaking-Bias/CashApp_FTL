@@ -144,6 +144,11 @@ class DataFormatter:
     def _add_back_missing(df: pd.DataFrame) -> pd.DataFrame:
         df.set_index('date', inplace=True)
         all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
+        df = DataFormatter._reindex_with_dates(all_dates, df)
+        return df
+
+    @staticmethod
+    def _reindex_with_dates(all_dates, df):
         df = df.reindex(all_dates, fill_value=0)
         df.index = df.index.date
         df.index.name = 'date'
