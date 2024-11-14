@@ -28,6 +28,7 @@ export const Desktop = (): JSX.Element => {
         size="large"
         className="login-button"
         onClick={handleUploadDataset}
+        sx={{ marginBottom: 2 }}
       >
         Upload Dataset
       </Button>
@@ -39,6 +40,7 @@ export const Desktop = (): JSX.Element => {
         size="large"
         className="login-button"
         onClick={handleLogin}
+        sx={{ marginButtom: 2}}
       >
         Start
       </Button>

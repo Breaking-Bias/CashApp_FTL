@@ -10,6 +10,7 @@ function ExportGraphButton() {
       variant="contained"
       data-testid="forecast-button"
       onClick={handleExport}
+      color="success"
     >
       Export Graph to PDF
     </Button>
