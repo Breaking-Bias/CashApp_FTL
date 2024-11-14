@@ -31,12 +31,12 @@ class Model:
         forecast_values = self.forecast_df['mean']
         future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps+1, freq='D')
         forecast_values = forecast_values[forecast_values.index.isin(future_dates)]
-        forecast_values = forecast_values.reset_index().rename(columns={'index': 'date', 'mean': 'value'})
+        forecast_values = forecast_values.reset_index().rename(columns={'index': 'date'})
 
         # Concatenate the last entry of training_data to forecast_values.
         last_entry = self.training_data.iloc[-1]  # Series
         last_entry.name = pd.Timestamp(last_entry.name)
-        last_entry = pd.DataFrame({'date': [last_entry.name], 'value': [last_entry.iloc[0]]})
+        last_entry = pd.DataFrame({'date': [last_entry.name], 'mean': [last_entry.iloc[0]]})
         forecast_values = (pd.concat([forecast_values, last_entry], ignore_index=True)
                            .sort_values(by='date').reset_index(drop=True))
 
