@@ -44,7 +44,7 @@ def is_valid_format(response_data) -> bool:
             return False
     for item in response_data[1]:
         # Check value type
-        if not isinstance(item['value'], float): # "The 'value' key should have an integer value"
+        if not isinstance(item['revenue'], float): # "The 'value' key should have an integer value"
             print("The 'value' key should have an integer value")
             return False
 
@@ -61,7 +61,6 @@ def test_get_past_data(client):
     # Ensure the response data is JSON
     try:
         data = response.json
-
     except ValueError:
         assert False, "Response is not valid JSON"
 
