@@ -103,15 +103,6 @@ function MainPage() {
 
   return (
     <div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <h3>I want data on </h3>
-        <RadioButtons
-          mode={mode}
-          setMode={setMode}
-        />
-      </div>
-
       {/* Menu button at the top */}
       <Box display="flex" justifyContent="flex-start" padding={2}>
         <Button variant="contained" color="primary" onClick={handleClick}>

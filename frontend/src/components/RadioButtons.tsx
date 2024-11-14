@@ -20,8 +20,8 @@ function RadioButtons({ mode, setMode }: Props) {
       value={mode}
       onChange={handleChange}
     >
-      <FormControlLabel value="0" control={<Radio />} label="number of transactions" />
-      <FormControlLabel value="1" control={<Radio />} label="value of transactions" />
+      <FormControlLabel value="0" control={<Radio />} label="transaction frequency" />
+      <FormControlLabel value="1" control={<Radio />} label="revenue" />
     </RadioGroup>
   );
 }
