@@ -103,9 +103,15 @@ function MainPage() {
   };
 
    return (
-    <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}>
+    <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}  aria-live="polite">
       {/* Page Title */}
-      <h1 style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}>Dashboard</h1>
+      <h1 
+      style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}
+      aria-labelledby="dashboard"
+      id="dashboard"
+    >
+      Dashboard
+    </h1>
 
       {/* Menu Button */}
       <Box
@@ -116,10 +122,14 @@ function MainPage() {
           padding: 2,
         }}
       >
-        <Button variant="contained" color="success" onClick={handleClick}>
+        <Button variant="contained" color="success" onClick={handleClick}
+          aria-haspopup="true"
+          aria-expanded={Boolean(anchorEl)}
+          aria-controls="menu"
+          aria-label="Open menu">
           Menu
         </Button>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} aria-label="Main menu">
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
@@ -138,22 +148,22 @@ function MainPage() {
         <Box display="flex" alignItems="center" justifyContent="center">
           <h3 style={{ marginRight: "8px" }}>Prediction size:</h3>
           <Tooltip title="The slider is used to adjust the prediction size. Longer timeframe when slider is on the right.">
-            <IconButton style={{ padding: "4px", marginLeft: "4px" }}>
+            <IconButton aria-label="Help with prediction size slider" style={{ padding: "4px", marginLeft: "4px" }}>
               <HelpIcon />
             </IconButton>
           </Tooltip>
         </Box>
 
-        <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+        <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} aria-labelledby="prediction-size-label"/>
         <br />
 
         {/* Filter Section */}
         <h3>Filter:</h3>
-        <RadioButtons filterFactor={filterFactor} setFilterFactor={setFilterFactor} />
-        <PredictButton onClick={updatePrediction} />
+        <RadioButtons filterFactor={filterFactor} setFilterFactor={setFilterFactor} aria-label="Filter options"/>
+        <PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
         <br />
         <br />
-        <ExportGraphButton />
+        <ExportGraphButton aria-label="Export graph"/>
       </div>
     </div>
   );
