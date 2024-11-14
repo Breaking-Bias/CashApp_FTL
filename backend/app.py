@@ -35,7 +35,7 @@ def predict_values():
     filter_race = request.get_json()['filtering_factor'][1]
     forecast_steps = request.get_json()['num_points']
     training_data = (DataFormatter(women_bias_data)
-                     .filter_by(filter_gender, filter_race)
+                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                      .filter_invalid_transactions()
                      .get_for_predicting())
 
@@ -49,7 +49,7 @@ def get_past_data_unbiased():
     filter_race = request.get_json()['filtering_factor'][1]
 
     past_data = (DataFormatter(women_bias_data)
-                 .filter_by(filter_gender, filter_race)
+                 .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                  .unbias()
                  .filter_invalid_transactions()
                  .get_for_display())
@@ -63,7 +63,7 @@ def predict_values_unbiased():
     filter_race = request.get_json()['filtering_factor'][1]
     forecast_steps = request.get_json()['num_points']
     training_data = (DataFormatter(women_bias_data)
-                     .filter_by(filter_gender, filter_race)
+                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                      .unbias()
                      .filter_invalid_transactions()
                      .get_for_predicting())
