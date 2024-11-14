@@ -12,6 +12,8 @@ import {
 } from "../ApiCalls";
 import { DataSeries } from "../types";
 import ExportGraphButton from "./ExportGraphButton";
+import { Button, Menu, MenuItem, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function MainPage() {
   // Component State Variables
@@ -86,8 +88,21 @@ function MainPage() {
     getPastData();
   }, [mode]);
 
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <h3>I want data on </h3>
         <RadioButtons
@@ -95,6 +110,30 @@ function MainPage() {
           setMode={setMode}
         />
       </div>
+
+      {/* Menu button at the top */}
+      <Box display="flex" justifyContent="flex-start" padding={2}>
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          Menu
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
+        </Menu>
+      </Box>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <h3>I want data on </h3>
+        <RadioButtons
+          mode={mode}
+          setMode={setMode}
+        />
+      </div>
+
+      {/* Main content */}
+
       <Graph
         pastData={pastData}
         pastDataUnbiased={pastDataUnbiased}
