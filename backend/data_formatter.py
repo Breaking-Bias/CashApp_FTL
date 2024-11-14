@@ -75,7 +75,8 @@ class DataFormatter:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
         filter_manager = FilterManager(self._df)
-        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
+
+        self._df = filter_manager.apply_filters(filter_gender=filter_gender, filter_race=filter_race, filter_state=filter_state)
 
         return self
 
@@ -139,11 +140,19 @@ class DataFormatter:
 
         return display_format
 
+    @staticmethod
+    def _add_back_missing(df: pd.DataFrame) -> pd.DataFrame:
+        df.set_index('date', inplace=True)
+        all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
+        df = df.reindex(all_dates, fill_value=0)
+        # df.set_index('date', inplace=True)
+        return df
+
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
         amount_df, count_df = self._helper_output_df_format()
 
-        amount_df.set_index('date', inplace=True)
-        count_df.set_index('date', inplace=True)
+        amount_df = DataFormatter._add_back_missing(amount_df)
+        count_df = DataFormatter._add_back_missing(count_df)
 
         return amount_df, count_df
