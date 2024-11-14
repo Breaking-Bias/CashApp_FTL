@@ -3,6 +3,7 @@ import pandas as pd
 from data_formatter import DataFormatter
 from data_reader import DataReader
 
+
 @pytest.fixture
 def sample_data():
     sample_data = pd.DataFrame({
@@ -13,6 +14,7 @@ def sample_data():
         'Bias': [1, 0, 1, 0, 0]
     })
     return sample_data
+
 
 @pytest.fixture
 def real_data():
@@ -43,12 +45,14 @@ def test_unbias_all_fp_values(sample_data):
     all_fp_data = sample_data.copy()
     all_fp_data['confusion_value'] = 'FP'
     unbiased_df = DataFormatter(all_fp_data).unbias().get_formatted_df()
-    assert (unbiased_df['confusion_value'] == 'TN').sum() == (all_fp_data['Bias'] == 1).sum()
+    assert (unbiased_df['confusion_value'] == 'TN').sum() == (
+                all_fp_data['Bias'] == 1).sum()
 
 
 def test_filter_by_factor(sample_data):
     """Test the filter_by_factor function."""
-    filtered_df = DataFormatter(sample_data).filter_by('Female').get_formatted_df()
+    filtered_df = DataFormatter(sample_data).filter_by(
+        'Female').get_formatted_df()
     assert len(filtered_df) == 3
     assert (filtered_df['Gender'] == 'Female').all()
 
@@ -66,11 +70,13 @@ def test_filter_by_factor_no_matching_values(sample_data):
 def test_filter_by_factor_all_rows_match(sample_data):
     """Edge case: Test filter_by_factor where all rows match the value."""
     all_female_data = sample_data[sample_data['Gender'] == 'Female']
-    filtered_df = DataFormatter(sample_data).filter_by('Female').get_formatted_df()
+    filtered_df = DataFormatter(sample_data).filter_by(
+        'Female').get_formatted_df()
     pd.testing.assert_frame_equal(filtered_df, all_female_data)
 
+
 def test_unbias_does_not_mutate_original(sample_data):
-    """Test to ensure the original DataFrame is not mutated by the unbias function."""
+    """Test to ensure the original df is not mutated by the unbias function."""
     # Create a copy of the original DataFrame for comparison
     original_data_copy = sample_data.copy()
 
@@ -81,39 +87,45 @@ def test_unbias_does_not_mutate_original(sample_data):
     unbiased_df['Transaction_Amount_USD'] = 0
 
     # Assert that the original DataFrame is unchanged
-    pd.testing.assert_frame_equal(sample_data, original_data_copy, check_dtype=True)
+    pd.testing.assert_frame_equal(sample_data, original_data_copy,
+                                  check_dtype=True)
 
 
 def test_get_for_display(real_data):
-    num_data = [{'date': '2024-05-01', 'value': 52}, {'date': '2024-05-02', 'value': 48}]
-    revenue_data = [{'date': '2024-05-01', 'value': 1306375.68}, {'date': '2024-05-02', 'value': 1361639.44}]
+    frequency_data = [{'date': '2024-05-01', 'frequency': 52},
+                      {'date': '2024-05-02', 'frequency': 48}]
+    revenue_data = [{'date': '2024-05-01', 'revenue': 1306375.68},
+                    {'date': '2024-05-02', 'revenue': 1361639.44}]
 
     display_data = DataFormatter(real_data).get_for_display()
 
-    assert display_data[0] == num_data
+    assert display_data[0] == frequency_data
     assert display_data[1] == revenue_data
 
 
 def test_get_for_predicting(real_data):
-    num_df = (pd.DataFrame({
-        'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
-        'value': [52, 48]
+    frequency_df = (pd.DataFrame({
+        'date': [pd.to_datetime('2024-05-01').date(),
+                 pd.to_datetime('2024-05-02').date()],
+        'frequency': [52, 48]
     }))
-    num_df.set_index('date', inplace=True)
+    frequency_df.set_index('date', inplace=True)
     revenue_df = pd.DataFrame({
-        'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
-        'value': [1306375.68, 1361639.44]
+        'date': [pd.to_datetime('2024-05-01').date(),
+                 pd.to_datetime('2024-05-02').date()],
+        'revenue': [1306375.68, 1361639.44]
     })
     revenue_df.set_index('date', inplace=True)
 
     prediction_data = DataFormatter(real_data).get_for_predicting()
-    pd.testing.assert_frame_equal(prediction_data[0], num_df)
+    pd.testing.assert_frame_equal(prediction_data[0], frequency_df)
     pd.testing.assert_frame_equal(prediction_data[1], revenue_df)
 
 
 def test_helper_df_to_dict(sample_data):
     sample_data = sample_data.iloc[:2, :2]
-    expected_result = [{'Customer_ID': 'C001', 'confusion_value': 'FP'}, {'Customer_ID': 'C002', 'confusion_value': 'TN'}]
+    expected_result = [{'Customer_ID': 'C001', 'confusion_value': 'FP'},
+                       {'Customer_ID': 'C002', 'confusion_value': 'TN'}]
 
     calculated_result = DataFormatter.helper_df_to_dict(sample_data)
     assert calculated_result == expected_result
