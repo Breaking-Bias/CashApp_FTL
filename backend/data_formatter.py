@@ -75,7 +75,8 @@ class DataFormatter:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
         filter_manager = FilterManager(self._df)
-        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
+
+        self._df = filter_manager.apply_filters(filter_gender=filter_gender, filter_race=filter_race, filter_state=filter_state)
 
         return self
 
