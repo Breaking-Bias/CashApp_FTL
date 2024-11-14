@@ -85,8 +85,8 @@ def test_unbias_does_not_mutate_original(sample_data):
 
 
 def test_get_for_display(real_data):
-    num_data = [{'date': '2024-05-01', 'num_transactions': 52}, {'date': '2024-05-02', 'num_transactions': 48}]
-    revenue_data = [{'date': '2024-05-01', 'revenue': 1306375.68}, {'date': '2024-05-02', 'revenue': 1361639.44}]
+    num_data = [{'date': '2024-05-01', 'value': 52}, {'date': '2024-05-02', 'value': 48}]
+    revenue_data = [{'date': '2024-05-01', 'value': 1306375.68}, {'date': '2024-05-02', 'value': 1361639.44}]
 
     display_data = DataFormatter(real_data).get_for_display()
 
@@ -97,12 +97,12 @@ def test_get_for_display(real_data):
 def test_get_for_predicting(real_data):
     num_df = (pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
-        'num_transactions': [52, 48]
+        'value': [52, 48]
     }))
     num_df.set_index('date', inplace=True)
     revenue_df = pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(), pd.to_datetime('2024-05-02').date()],
-        'revenue': [1306375.68, 1361639.44]
+        'value': [1306375.68, 1361639.44]
     })
     revenue_df.set_index('date', inplace=True)
 
