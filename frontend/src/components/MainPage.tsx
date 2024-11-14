@@ -102,61 +102,60 @@ function MainPage() {
     setAnchorEl(null);
   };
 
-  return (
-    <div className="main-container">
-      {/* Menu button at the top */}
-      <Box 
+   return (
+    <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}>
+      {/* Page Title */}
+      <h1 style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}>Breaking Bias - Data Visualization</h1>
+
+      {/* Menu Button */}
+      <Box
         sx={{
           position: "absolute",
-          top:0,
+          top: 0,
           right: 0,
-          padding: 2
+          padding: 2,
         }}
       >
         <Button variant="contained" color="success" onClick={handleClick}>
           Menu
         </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
 
-      {/* Main content */}
-      <Graph
-        pastData={pastData}
-        pastDataUnbiased={pastDataUnbiased}
-        predictedData={predictedData}
-        predictedDataUnbiased={predictedDataUnbiased}
-      />
-      <br />
+      <div className="main-container">
+        {/* Graph Component */}
+        <Graph
+          pastData={pastData}
+          pastDataUnbiased={pastDataUnbiased}
+          predictedData={predictedData}
+          predictedDataUnbiased={predictedDataUnbiased}
+        />
+        <br />
 
-      <div className="controls">
-      <h3>Prediction size:</h3>
-      <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
-      <br />
-      <h3>Filter:</h3>
-      <RadioButtons
-        filterFactor={filterFactor}
-        setFilterFactor={setFilterFactor}
-      />
-      <PredictButton onClick={updatePrediction} />
-      <br />
-      <br />
-      <ExportGraphButton />
+        {/* Prediction Size Section */}
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <h3 style={{ marginRight: "8px" }}>Prediction size:</h3>
+          <Tooltip title="The slider is used to adjust the prediction size. Longer timeframe when slider is on the right.">
+            <IconButton style={{ padding: "4px", marginLeft: "4px" }}>
+              <HelpIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+
+        <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+        <br />
+
+        {/* Filter Section */}
+        <h3>Filter:</h3>
+        <RadioButtons filterFactor={filterFactor} setFilterFactor={setFilterFactor} />
+        <PredictButton onClick={updatePrediction} />
+        <br />
+        <br />
+        <ExportGraphButton />
       </div>
-
-      <Tooltip title="The slider is used to adjust the prediction size.">
-        <IconButton className="help-icon">
-          <HelpIcon />
-        </IconButton>
-      </Tooltip>
     </div>
   );
 }
-
-
 export default MainPage;
