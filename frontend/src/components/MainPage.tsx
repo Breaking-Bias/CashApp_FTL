@@ -14,6 +14,9 @@ import { DataSeries } from "../types";
 import ExportGraphButton from "./ExportGraphButton";
 import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { IconButton, Tooltip } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
+
 
 function MainPage() {
   // Component State Variables
@@ -134,6 +137,12 @@ function MainPage() {
       <br />
       <br />
       <ExportGraphButton />
+
+      <Tooltip title="The slider is used to adjust the prediction size.">
+        <IconButton>
+          <HelpIcon className="custom-help-icon" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 }
