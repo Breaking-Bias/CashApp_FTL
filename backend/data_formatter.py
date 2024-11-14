@@ -145,7 +145,8 @@ class DataFormatter:
         df.set_index('date', inplace=True)
         all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
         df = df.reindex(all_dates, fill_value=0)
-        # df.set_index('date', inplace=True)
+        df.index = df.index.date
+        df.index.name = 'date'
         return df
 
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
