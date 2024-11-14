@@ -10,7 +10,7 @@ class App:
         self.app = Flask('app')
         CORS(self.app)
         self.name_of_file = 'woman_bias_data.csv'
-        self.women_bias_data = DataReader(self.name_of_file).read_dataset()
+        self.read_dataset = DataReader(self.name_of_file).read_dataset()
 
         # Register routes
         self._register_routes()
@@ -30,7 +30,7 @@ class App:
 
     def get_past_data(self):
         filter_gender = request.get_json()['filtering_factor']
-        past_data = (DataFormatter(self.women_bias_data)
+        past_data = (DataFormatter(self.read_dataset)
                      .filter_by(filter_gender)
                      .filter_invalid_transactions()
                      .get_for_display())
@@ -39,7 +39,7 @@ class App:
     def predict_values(self):
         filter_gender = request.get_json()['filtering_factor']
         forecast_steps = request.get_json()['num_points']
-        training_data = (DataFormatter(self.women_bias_data)
+        training_data = (DataFormatter(self.read_dataset)
                          .filter_by(filter_gender)
                          .filter_invalid_transactions()
                          .get_for_predicting())
@@ -48,7 +48,7 @@ class App:
 
     def get_past_data_unbiased(self):
         filter_gender = request.get_json()['filtering_factor']
-        past_data = (DataFormatter(self.women_bias_data)
+        past_data = (DataFormatter(self.read_dataset)
                      .filter_by(filter_gender)
                      .unbias()
                      .filter_invalid_transactions()
@@ -58,7 +58,7 @@ class App:
     def predict_values_unbiased(self):
         filter_gender = request.get_json()['filtering_factor']
         forecast_steps = request.get_json()['num_points']
-        training_data = (DataFormatter(self.women_bias_data)
+        training_data = (DataFormatter(self.read_dataset)
                          .filter_by(filter_gender)
                          .unbias()
                          .filter_invalid_transactions()
@@ -80,7 +80,7 @@ class App:
         file_path = file_uploader.save_file(file)
         if file_path:
             self.name_of_file = file_uploader.nameoffile
-            self.women_bias_data = DataReader(self.name_of_file).read_dataset()
+            self.read_dataset = DataReader(self.name_of_file).read_dataset()
             print(self.name_of_file)
             return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
         else:
