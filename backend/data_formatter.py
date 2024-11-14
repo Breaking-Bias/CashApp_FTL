@@ -119,32 +119,32 @@ class DataFormatter:
         """
         self._clean_data()
 
-        amount_df = self._df.groupby(self._df['date']).agg(
-            num_transactions=('Transaction_Amount_USD', 'count')
+        frequency_df = self._df.groupby(self._df['date']).agg(
+            frequency=('Transaction_Amount_USD', 'count')
         ).reset_index()
 
-        count_df = self._df.groupby(self._df['date']).agg(
+        revenue_df = self._df.groupby(self._df['date']).agg(
             revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
 
-        return amount_df, count_df
+        return frequency_df, revenue_df
 
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries"""
-        amount_df, count_df = self._helper_output_df_format()
-        amount_df = DataFormatter.helper_datetime_to_string(amount_df)
-        count_df = DataFormatter.helper_datetime_to_string(count_df)
+        frequency_df, revenue_df = self._helper_output_df_format()
+        frequency_df = DataFormatter.helper_datetime_to_string(frequency_df)
+        revenue_df = DataFormatter.helper_datetime_to_string(revenue_df)
 
-        display_format = (DataFormatter.helper_df_to_dict(amount_df),
-                          DataFormatter.helper_df_to_dict(count_df))
+        display_format = (DataFormatter.helper_df_to_dict(frequency_df),
+                          DataFormatter.helper_df_to_dict(revenue_df))
 
         return display_format
 
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
-        amount_df, count_df = self._helper_output_df_format()
+        frequency_df, revenue_df = self._helper_output_df_format()
 
-        amount_df.set_index('date', inplace=True)
-        count_df.set_index('date', inplace=True)
+        frequency_df.set_index('date', inplace=True)
+        revenue_df.set_index('date', inplace=True)
 
-        return amount_df, count_df
+        return frequency_df, revenue_df
