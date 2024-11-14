@@ -25,7 +25,7 @@ async function genericPostCall(endpoint: string, params: object, mode: string) {
         const formattedData: FormattedDataEntry[] = rawData.map(
             (entry) => ({
                 date: new Date(entry.date),
-                value: entry.frequency,
+                value: mode === "0" ? entry.frequency ?? 0 : entry.revenue ?? 0,
             })
         );
 
