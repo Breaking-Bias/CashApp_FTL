@@ -18,7 +18,7 @@ function GuidancePage() {
             <strong>Prediction Size:</strong> Use the slider to adjust the prediction size, up to ** days.
         </li>
         <li>
-            <strong>Need More Help?</strong> For additional assistance, reach out to our support team via email: <a href="mailto:bigboss@gmail.com">bigboss@gmail.com</a>.
+            <strong>Need More Help?</strong> For additional assistance, reach out to our support team via email: <a href="mailto:mrbigboss@gmail.com">bigboss@gmail.com</a>.
         </li>
     </ul>
     </div>
