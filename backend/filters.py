@@ -60,13 +60,13 @@ class RaceFilter(Filter):
 #     def apply_filter(self) -> pd.DataFrame:
 #         """Filter data based on state."""
 #         return self.data[self.data['State'] == self.filter_factor]
-        
+
 class FilterManager:
     _df: pd.DataFrame
 
     def __init__(self, df_to_filter: pd.DataFrame):
         self._df = df_to_filter.copy()
-    
+
     def apply_filters(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> pd.DataFrame:
         """
         Determines the appropriate filter(s) to use based on the filter_factors
@@ -76,8 +76,8 @@ class FilterManager:
         if gender_filter.valid_filter():
             self._df = gender_filter.apply_filter()
 
-        race_filter = GenderFilter(self._df, filter_race)
+        race_filter = RaceFilter(self._df, filter_race)
         if race_filter.valid_filter():
             self._df = race_filter.apply_filter()
-            
+
         return self._df
