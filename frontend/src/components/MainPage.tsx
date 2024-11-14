@@ -2,7 +2,9 @@ import "../App.css";
 import "./MainPage.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
-import RadioButtons from "./RadioButtons";
+// import RadioButtons from "./RadioButtons";
+import GenderDropdownFilter from "./GenderDropdownFilter";
+import RaceDropdownFilter from "./RaceDropdownFilter";
 import PredictButton from "./PredictButton";
 import Graph from "./Graph";
 import {
@@ -22,7 +24,8 @@ import HelpIcon from '@mui/icons-material/Help';
 function MainPage() {
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
-  const [filterFactor, setFilterFactor] = useState<string>("NoFilter");
+  const [filterGender, setFilterGender] = useState<string>("NoFilter");
+  const [filterRace, setFilterRace] = useState<string>("NoFilter");
 
   // Data State Variables
   const [pastData, setPastData] = useState<DataSeries>();
@@ -32,7 +35,7 @@ function MainPage() {
     useState<DataSeries>();
 
   async function getPastData() {
-    const formattedData = await getPastDataAPICall(filterFactor);
+    const formattedData = await getPastDataAPICall([filterGender, filterRace]);
 
     if (formattedData) {
       setPastData({
@@ -43,7 +46,7 @@ function MainPage() {
     }
   }
   async function getPastDataUnbiased() {
-    const formattedData = await getPastDataUnbiasedAPICall(filterFactor);
+    const formattedData = await getPastDataUnbiasedAPICall([filterGender, filterRace]);
 
     if (formattedData) {
       setPastDataUnbiased({
@@ -54,7 +57,7 @@ function MainPage() {
     }
   }
   async function predictData() {
-    const formattedData = await predictDataAPICall(filterFactor, sliderValue);
+    const formattedData = await predictDataAPICall([filterGender, filterRace], sliderValue);
 
     if (formattedData) {
       setPredictedData({
@@ -66,7 +69,7 @@ function MainPage() {
   }
   async function predictDataUnbiased() {
     const formattedData = await predictDataUnbiasedAPICall(
-      filterFactor,
+      [filterGender, filterRace],
       sliderValue
     );
 
@@ -85,6 +88,7 @@ function MainPage() {
     predictData();
     predictDataUnbiased();
   }
+  
 
   useEffect(() => {
     getPastData();
@@ -133,7 +137,6 @@ function MainPage() {
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
-
       <div className="main-container">
         {/* Graph Component */}
         <Graph
@@ -159,7 +162,17 @@ function MainPage() {
 
         {/* Filter Section */}
         <h3>Filter:</h3>
-        <RadioButtons filterFactor={filterFactor} setFilterFactor={setFilterFactor} aria-label="Filter options"/>
+        <GenderDropdownFilter
+          // filterFactor={filterFactor}
+          // setFilterFactor={setFilterFactor}
+          aria-label="Gender filter options"
+          onSelectChange={(value: string) => setFilterGender(value)
+          }
+        />
+        <RaceDropdownFilter
+          aria-label="Race filter options"
+          onSelectChange={(value: string) => setFilterRace(value)}
+        />
         <PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
         <br />
         <br />
