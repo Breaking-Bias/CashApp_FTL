@@ -2,7 +2,7 @@ import "../App.css";
 import "./MainPage.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
-// import RadioButtons from "./RadioButtons";
+import RadioButtons from "./RadioButtons";
 import GenderDropdownFilter from "./GenderDropdownFilter";
 import RaceDropdownFilter from "./RaceDropdownFilter";
 import PredictButton from "./PredictButton";
