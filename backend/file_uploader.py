@@ -22,3 +22,14 @@ class FileUploader:
             file.save(file_path)
             return file_path
         return None
+    def list_datasets(self):
+        """Return a list of filenames in the upload folder."""
+        try:
+            # List all files in the upload folder
+            datasets = [
+                f for f in os.listdir(self.upload_folder)
+                if os.path.isfile(os.path.join(self.upload_folder, f))
+            ]
+            return datasets
+        except Exception as e:
+            raise Exception(f"Error listing datasets: {str(e)}")

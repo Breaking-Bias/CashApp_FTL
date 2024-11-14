@@ -85,8 +85,19 @@ def upload_dataset():
         return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
     else:
         return jsonify({"message": "Invalid file format. Only CSV and XLSX are allowed."}), 400
-
     
+@app.route('/getDatasets', methods=['GET'])
+def get_datasets():
+
+    file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
+    try:
+        datasets = file_uploader.list_datasets()
+        return jsonify({"datasets": datasets}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 
 

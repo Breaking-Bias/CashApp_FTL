@@ -1,6 +1,6 @@
 export interface RawDataEntry {
     date: string;
-    num_transactions: number;
+    frequency: number;
   }
 
 export interface FormattedDataEntry {
