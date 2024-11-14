@@ -2,16 +2,26 @@ import "./GuidancePage.css";
 
 function GuidancePage() {
     return (
-        <div>
-            <h2> Guidance on using the Breaking Bias Application</h2>
-            <p>Welcome to Breaking Bias! Here are some steps to help you get started:</p>
-            <ol>
-                <li>On the main page, the graph shows the historical and predicted user base and transaction value jump due to the underlying bias removed </li>
-                <li>Options for variables includes: Gender - male, female, other and no filter</li>
-                <li>The prediction size could be adjusted with the slider - up to ** days</li>
-                <li>For any additional help, reach out to our support team vias email: bigboss@gmail.com</li>
-            </ol>
-        </div>
+    <div className="guidance-container">
+        <h2>Guidance on Using the Breaking Bias Application</h2>
+    
+        <p>Welcome to <strong>Breaking Bias</strong>! Below are some simple steps to help you get started:</p>
+    
+    <ul className="step-list">
+        <li>
+            <strong>Graph Overview:</strong> The graph on the main page displays the historical and predicted user base, along with transaction value changes resulting from the removal of bias.
+        </li>
+        <li>
+            <strong>Variable Options:</strong> You can choose the gender variable (male, female, other) or select "no filter" for analysis.
+        </li>
+        <li>
+            <strong>Prediction Size:</strong> Use the slider to adjust the prediction size, up to ** days.
+        </li>
+        <li>
+            <strong>Need More Help?</strong> For additional assistance, reach out to our support team via email: <a href="mailto:bigboss@gmail.com">bigboss@gmail.com</a>.
+        </li>
+    </ul>
+    </div>
     )
 }
 

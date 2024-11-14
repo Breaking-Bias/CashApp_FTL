@@ -1,4 +1,5 @@
 import "../App.css";
+import "./MainPage.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
 import RadioButtons from "./RadioButtons";
@@ -36,7 +37,7 @@ function MainPage() {
     if (formattedData) {
       setPastData({
         name: "Known Data",
-        color: "#2933f2", //blue
+        color: "#2933f2", 
         data: formattedData,
       });
     }
@@ -102,10 +103,17 @@ function MainPage() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       {/* Menu button at the top */}
-      <Box display="flex" justifyContent="flex-start" padding={2}>
-        <Button variant="contained" color="primary" onClick={handleClick}>
+      <Box 
+        sx={{
+          position: "absolute",
+          top:0,
+          right: 0,
+          padding: 2
+        }}
+      >
+        <Button variant="contained" color="success" onClick={handleClick}>
           Menu
         </Button>
         <Menu
@@ -125,6 +133,8 @@ function MainPage() {
         predictedDataUnbiased={predictedDataUnbiased}
       />
       <br />
+
+      <div className="controls">
       <h3>Prediction size:</h3>
       <Slider sliderValue={sliderValue} setSliderValue={setSliderValue} />
       <br />
@@ -137,14 +147,16 @@ function MainPage() {
       <br />
       <br />
       <ExportGraphButton />
+      </div>
 
       <Tooltip title="The slider is used to adjust the prediction size.">
-        <IconButton>
-          <HelpIcon className="custom-help-icon" />
+        <IconButton className="help-icon">
+          <HelpIcon />
         </IconButton>
       </Tooltip>
     </div>
   );
 }
+
 
 export default MainPage;
