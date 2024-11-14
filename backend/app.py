@@ -9,7 +9,7 @@ class App:
     def __init__(self):
         self.app = Flask('app')
         CORS(self.app)
-        self.name_of_file = 'women_bias_data.csv'
+        self.name_of_file = 'woman_bias_data.csv'
         self.women_bias_data = DataReader(self.name_of_file).read_dataset()
 
         # Register routes
@@ -80,6 +80,7 @@ class App:
         file_path = file_uploader.save_file(file)
         if file_path:
             self.name_of_file = file_uploader.nameoffile
+            self.women_bias_data = DataReader(self.name_of_file).read_dataset()
             print(self.name_of_file)
             return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
         else:
