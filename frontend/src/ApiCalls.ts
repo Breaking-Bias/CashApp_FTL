@@ -36,18 +36,18 @@ async function genericPostCall(endpoint: string, params: object) {
     }
 }
 
-export async function getPastDataAPICall(filterFactor: string) {
+export async function getPastDataAPICall(filterFactor: string[]) {
     return await genericPostCall("/getPastData", { filtering_factor: filterFactor })
 }
 
-export async function getPastDataUnbiasedAPICall(filterFactor: string) {
+export async function getPastDataUnbiasedAPICall(filterFactor: string[]) {
     return await genericPostCall("/getPastDataUnbiased", { filtering_factor: filterFactor })
 }
 
-export async function predictDataAPICall(filterFactor: string, numPoints: number) {
+export async function predictDataAPICall(filterFactor: string[], numPoints: number) {
     return await genericPostCall("/predictData", { filtering_factor: filterFactor, num_points: numPoints })
 }
 
-export async function predictDataUnbiasedAPICall(filterFactor: string, numPoints: number) {
+export async function predictDataUnbiasedAPICall(filterFactor: string[], numPoints: number) {
     return await genericPostCall("/predictDataUnbiased", { filtering_factor: filterFactor, num_points: numPoints })
 }

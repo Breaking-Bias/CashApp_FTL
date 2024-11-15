@@ -27,6 +27,7 @@ function Slider({ sliderValue, setSliderValue }: Props) {
       valueLabelDisplay="auto"
       value={sliderValue}
       onChange={handleChange}
+      color="success"
     />
   );
 }

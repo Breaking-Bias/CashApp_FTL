@@ -1,5 +1,5 @@
 import pandas as pd
-from filters import FilterManager
+from filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:
@@ -74,8 +74,12 @@ class DataFormatter:
     def filter_by(self, filter_gender: str = None, filter_race:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        filter_manager = FilterManager(self._df)
-        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
+        filters = []
+        filters.append(GenderFilter(filter_gender))
+        filters.append(RaceFilter(filter_race))
+
+        filter_manager = FilterManager(self._df, filters)
+        self._df = filter_manager.apply_filters()
 
         return self
 
