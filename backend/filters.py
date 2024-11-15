@@ -58,9 +58,10 @@ class RaceFilter(Filter):
 #     def apply_filter(self) -> pd.DataFrame:
 #         """Filter data based on state."""
 #         return self.data[self.data['State'] == self.filter_factor]
-        
+
 class FilterManager:
     _df: pd.DataFrame
+    filters: list[Filter]
 
     def __init__(self, df_to_filter: pd.DataFrame, filters: list[Filter]):
         self._df = df_to_filter.copy()
@@ -71,11 +72,9 @@ class FilterManager:
         Determines the appropriate filter(s) to use based on the filter_factors
         passed through and applies it to the data.
         """
-
         # Uses polymorphism to apply each filter
         for filter in self.filters:
             if filter.valid_filter():
                 self._df = filter.apply_filter(self._df) 
 
         return self._df
-    

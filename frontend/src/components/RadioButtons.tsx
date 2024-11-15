@@ -17,6 +17,7 @@ function RadioButtons({ filterFactor, setFilterFactor }: Props) {
       defaultValue="noFilter"
       value={filterFactor}
       onChange={handleChange}
+      color="success"
     >
       <FormControlLabel value="Female" control={<Radio />} label="Female" />
       <FormControlLabel value="Male" control={<Radio />} label="Male" />
