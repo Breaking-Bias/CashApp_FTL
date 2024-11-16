@@ -25,7 +25,7 @@ def get_past_data():
                  .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                  .filter_invalid_transactions()
                  .get_for_display())
-
+    print(past_data)
     return jsonify(past_data)
 
 

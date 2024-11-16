@@ -1,5 +1,5 @@
 import pandas as pd
-from filters import FilterManager
+from filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:
@@ -74,9 +74,12 @@ class DataFormatter:
     def filter_by(self, filter_gender: str = None, filter_race:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        filter_manager = FilterManager(self._df)
+        filters = []
+        filters.append(GenderFilter(filter_gender))
+        filters.append(RaceFilter(filter_race))
 
-        self._df = filter_manager.apply_filters(filter_gender=filter_gender, filter_race=filter_race, filter_state=filter_state)
+        filter_manager = FilterManager(self._df, filters)
+        self._df = filter_manager.apply_filters()
 
         return self
 
@@ -126,6 +129,7 @@ class DataFormatter:
         revenue_df = self._df.groupby(self._df['date']).agg(
             revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
+        # Don't change the column names here, otherwise frontend won't work.
 
         return frequency_df, revenue_df
 
