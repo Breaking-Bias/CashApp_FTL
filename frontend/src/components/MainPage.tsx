@@ -2,7 +2,7 @@ import "../App.css";
 import "./MainPage.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./Slider";
-// import RadioButtons from "./RadioButtons";
+import RadioButtons from "./RadioButtons";
 import GenderDropdownFilter from "./GenderDropdownFilter";
 import RaceDropdownFilter from "./RaceDropdownFilter";
 import PredictButton from "./PredictButton";
@@ -24,6 +24,7 @@ import HelpIcon from '@mui/icons-material/Help';
 function MainPage() {
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
+  const [mode, setMode] = useState<string>("0");
   const [filterGender, setFilterGender] = useState<string>("NoFilter");
   const [filterRace, setFilterRace] = useState<string>("NoFilter");
 
@@ -35,7 +36,7 @@ function MainPage() {
     useState<DataSeries>();
 
   async function getPastData() {
-    const formattedData = await getPastDataAPICall([filterGender, filterRace]);
+    const formattedData = await getPastDataAPICall([filterGender, filterRace], mode);
 
     if (formattedData) {
       setPastData({
@@ -46,7 +47,7 @@ function MainPage() {
     }
   }
   async function getPastDataUnbiased() {
-    const formattedData = await getPastDataUnbiasedAPICall([filterGender, filterRace]);
+    const formattedData = await getPastDataUnbiasedAPICall([filterGender, filterRace], mode);
 
     if (formattedData) {
       setPastDataUnbiased({
@@ -57,7 +58,7 @@ function MainPage() {
     }
   }
   async function predictData() {
-    const formattedData = await predictDataAPICall([filterGender, filterRace], sliderValue);
+    const formattedData = await predictDataAPICall([filterGender, filterRace], sliderValue, mode);
 
     if (formattedData) {
       setPredictedData({
@@ -70,7 +71,8 @@ function MainPage() {
   async function predictDataUnbiased() {
     const formattedData = await predictDataUnbiasedAPICall(
       [filterGender, filterRace],
-      sliderValue
+      sliderValue,
+      mode
     );
 
     if (formattedData) {
@@ -92,7 +94,7 @@ function MainPage() {
 
   useEffect(() => {
     getPastData();
-  }, []);
+  }, [mode]);
 
   const navigate = useNavigate();
 
@@ -137,6 +139,14 @@ function MainPage() {
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <h3>I want data on </h3>
+        <RadioButtons
+          mode={mode}
+          setMode={setMode}
+        />
+      </div>
       <div className="main-container">
         {/* Graph Component */}
         <Graph
@@ -178,6 +188,7 @@ function MainPage() {
         <br />
         <ExportGraphButton aria-label="Export graph"/>
       </div>
+
     </div>
   );
 }

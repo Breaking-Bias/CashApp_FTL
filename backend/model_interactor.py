@@ -19,6 +19,7 @@ class ModelInteractor:
         pred_trans_count = (model_count.predict().get_result(forecast_steps)
                             .rename(columns={'mean': 'revenue'}))
         pred_trans_count = ModelInteractor._process_data(pred_trans_count)
+        # Don't rename the columns here, otherwise frontend won't work.
 
         return pred_trans_amount, pred_trans_count
 

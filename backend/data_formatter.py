@@ -129,6 +129,7 @@ class DataFormatter:
         revenue_df = self._df.groupby(self._df['date']).agg(
             revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
+        # Don't change the column names here, otherwise frontend won't work.
 
         return frequency_df, revenue_df
 
