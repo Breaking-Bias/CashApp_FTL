@@ -7,8 +7,8 @@ import pandas as pd
 # labelled either "frequency" or "revenue".
 class GraphingData:
     def __init__(self, data: pd.DataFrame):
-        assert data.shape[1] == 2
-        assert data.columns[1] in ["frequency", "revenue"]
+        assert data.shape[1] == 2, "DataFrame must have exactly 2 columns."
+        assert data.columns[1] in ["frequency", "revenue"], "The second column header must be 'frequency' or 'revenue'."
         self.data = pd.DataFrame
 
     def getData(self) -> pd.DataFrame:
