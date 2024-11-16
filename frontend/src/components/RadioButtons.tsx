@@ -21,7 +21,12 @@ function RadioButtons({ mode, setMode }: Props) {
       onChange={handleChange}
       color="success"
     >
-      <FormControlLabel value="0" control={<Radio />} label="transaction frequency" />
+      <FormControlLabel 
+        value="0" 
+        control={<Radio />} 
+        label="transaction frequency" 
+        style={{ fontSize: "2rem" }}
+      />
       <FormControlLabel value="1" control={<Radio />} label="revenue" />
     </RadioGroup>
   );

@@ -50,3 +50,27 @@
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.revenue-container {
+  flex: 1;
+  margin-left: 20px;
+  margin-top: 50px;
+  text-align: right;
+  background-color: #f9f9f9; /* Optional, to differentiate the section */
+  padding: 20px;
+}
+
+.fixed-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
