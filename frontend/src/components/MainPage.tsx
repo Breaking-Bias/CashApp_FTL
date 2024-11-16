@@ -109,6 +109,7 @@ function MainPage() {
    return (
     <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}  aria-live="polite">
       {/* Page Title */}
+      <div className="fixed-bar">
       <h1 
       style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}
       aria-labelledby="dashboard"
@@ -116,8 +117,7 @@ function MainPage() {
     >
       Dashboard
     </h1>
-
-      {/* Menu Button */}
+    {/* Menu Button */}
       <Box
         sx={{
           position: "absolute",
@@ -137,6 +137,9 @@ function MainPage() {
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
+      </div>
+
+      
       <div className="main-container">
         {/* Graph Component */}
         <Graph
