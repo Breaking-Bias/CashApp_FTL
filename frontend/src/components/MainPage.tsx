@@ -165,7 +165,7 @@ function MainPage() {
             
       <div className="main-container">
         {/* Graph Component */}
-        <div style={{marginTop: "30px" }}>
+        <div style={{marginTop: "100px" }}>
           <Graph
             pastData={pastData}
             pastDataUnbiased={pastDataUnbiased}
