@@ -109,20 +109,20 @@ function MainPage() {
   };
 
    return (
-    <div style={{ textAlign: "center", marginTop: "50px", padding: "20px"}}  aria-live="polite">
+    <div style={{ textAlign: "center", marginTop: "50px", padding: "10px 20px"}}  aria-live="polite">
       {/* Page Title */}
       <div className="fixed-bar" style={{ backgroundColor: "white", padding: "20px", position: "fixed", width: "100%", top: 0, left: 0, zIndex: 100 }}>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
       <h1 
-      style={{ fontSize: "3rem", color: "#2d2d2d", marginBottom: "20px" }}
+      style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "10px" }}
       aria-labelledby="dashboard"
       id="dashboard"
     >
       Dashboard
     </h1>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: "20px" }}>
-          <h3 style={{ fontSize: "1.5rem"}}>I want data on </h3>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: "0px" }}>
+          <h3 style={{ fontSize: "1rem"}}>I want data on </h3>
           <RadioButtons
             mode={mode}
             setMode={setMode}
