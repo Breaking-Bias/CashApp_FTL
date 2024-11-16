@@ -9,14 +9,17 @@ class App:
     def __init__(self):
         self.app = Flask('app')
         CORS(self.app)
-        self.name_of_file = 'woman_bias_data.csv'
+        self.name_of_file = 'women_bias_data.csv'
         self.read_dataset = DataReader(self.name_of_file).read_dataset()
 
         # Register routes
         self._register_routes()
 
+    def get_app(self):
+        return self.app
+
     def _register_routes(self):
-        self.app.add_url_rule('/getinfo', 'getinfo', self.getinfo)
+        self.app.add_url_rule('/getinfo', 'getinfo', self.getinfo, methods=['GET'])
         self.app.add_url_rule('/getPastData', 'get_past_data', self.get_past_data, methods=['POST'])
         self.app.add_url_rule('/predictData', 'predict_values', self.predict_values, methods=['POST'])
         self.app.add_url_rule('/getPastDataUnbiased', 'get_past_data_unbiased', self.get_past_data_unbiased, methods=['POST'])
