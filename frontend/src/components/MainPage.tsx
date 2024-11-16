@@ -155,23 +155,24 @@ function MainPage() {
     
       <div style={{ display: "flex", height: "100vh" }}>
           <div style={{
-            width: "50%", 
+            width: "80%", 
             padding: "20px", 
             borderRight: "1px solid #ccc",
             display: "flex",
-            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"
             }}>
             
       <div className="main-container">
         {/* Graph Component */}
-        <Graph
-          pastData={pastData}
-          pastDataUnbiased={pastDataUnbiased}
-          predictedData={predictedData}
-          predictedDataUnbiased={predictedDataUnbiased}
-        />
+        <div style={{marginTop: "30px" }}>
+          <Graph
+            pastData={pastData}
+            pastDataUnbiased={pastDataUnbiased}
+            predictedData={predictedData}
+            predictedDataUnbiased={predictedDataUnbiased}
+          />
+        </div>
         <br />
 
         {/* Prediction Size Section */}
