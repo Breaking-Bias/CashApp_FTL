@@ -34,6 +34,15 @@ function MainPage() {
   const [predictedDataUnbiased, setPredictedDataUnbiased] =
     useState<DataSeries>();
 
+  // const sampleRevenueData = [
+  //   {predicted_biased: 2000, predicted_unbiased: 3000}
+  // ];
+  // const [revenueData, setRevenueData]  = useState(sampleRevenueData));
+
+  // async function fetchRevenueData() {
+  //   return [sampleRevenueData];
+  // }
+
   async function getPastData() {
     const formattedData = await getPastDataAPICall([filterGender, filterRace]);
 
@@ -94,6 +103,16 @@ function MainPage() {
     getPastData();
   }, []);
 
+// async function getRevenueData() {
+//   const formattedData = await getRevenueDataAPICall(); 
+//   if (formattedData) {
+//     setRevenueData(formattedData);
+//   }
+// }
+// useEffect(() =>{
+//   getRevenueData();
+// }, []);
+
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -107,9 +126,9 @@ function MainPage() {
   };
 
    return (
-    <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}  aria-live="polite">
+    <div style={{ textAlign: "center", marginTop: "50px", padding: "20px"}}  aria-live="polite">
       {/* Page Title */}
-      <div className="fixed-bar">
+      <div className="fixed-bar" style={{ backgroundColor: "white", padding: "20px"}}>
       <h1 
       style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}
       aria-labelledby="dashboard"
@@ -140,7 +159,8 @@ function MainPage() {
       </div>
 
       
-      <div className="main-container">
+      <div style={{display: "flex", height: "100vh" }}>
+        <div style={{ flex: 1, padding: "20px", borderRight: "1px solid #ccc" }}>
         {/* Graph Component */}
         <Graph
           pastData={pastData}
@@ -165,6 +185,7 @@ function MainPage() {
 
         {/* Filter Section */}
         <h3>Filter:</h3>
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap={2} flexWrap="wrap" width="100%">
         <GenderDropdownFilter
           // filterFactor={filterFactor}
           // setFilterFactor={setFilterFactor}
@@ -176,12 +197,38 @@ function MainPage() {
           aria-label="Race filter options"
           onSelectChange={(value: string) => setFilterRace(value)}
         />
-        <PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center">
+        < PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
+        <Tooltip title="Choose Prediction Size and Filter first, then click on this button to visualize.">
+            <IconButton aria-label="Make forecast button" style={{ padding: "4px", marginLeft: "4px" }}>
+              <HelpIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <br />
         <br />
         <ExportGraphButton aria-label="Export graph"/>
       </div>
+
+     {/* Right Section for Revenue Data */}
+  <div style={{ flex: 1,  textAlign: "right", marginLeft: "50px", marginTop: "50px"}}>
+    <h2 style={{ fontSize: "1.5rem", color: "#2d2d2d", marginBottom: "20px" }}>Revenue Loss</h2>
+    {/* Graph for Revenue Data */}
+    {/* {revenueData ? (
+      <Graph
+        pastData={{
+          name: "Revenue Data",
+          color: "#42a5f5", // Blue for revenue
+          data: revenueData,
+        }}
+      />
+    ) : ( */}
+      <p>Loading revenue data...</p>
+    {/* )} */}
     </div>
+  </div>
+  </div>
   );
 }
 export default MainPage;
