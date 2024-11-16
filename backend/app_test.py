@@ -1,11 +1,15 @@
 import pytest
 import re
 from datetime import datetime
-from app import app
+from app import App
 
 
 @pytest.fixture
 def client():
+
+    app_instance = App()
+    app = app_instance.get_app()
+
     with app.test_client() as client:
         yield client
 
@@ -56,7 +60,8 @@ def test_getinfo(client):
     assert response.json == {"name": 'breaking bias', "score": "stupendous"}
 
 def test_get_past_data(client):
-    response = client.post('/getPastData', json={'filtering_factor': 'Female'})
+    response = client.post('/getPastData', json={'filtering_factor': ['Female', 'Asian']})
+    
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
@@ -67,7 +72,8 @@ def test_get_past_data(client):
     assert is_valid_format(data), "Past data is not in the expected format"
 
 def test_predict_values(client):
-    response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': 'Female'})
+    response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
+
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
@@ -78,7 +84,8 @@ def test_predict_values(client):
     assert is_valid_format(data), "Predicted data is not in the expected format"
 
 def test_get_past_data_unbiased(client):
-    response = client.post('/getPastDataUnbiased', json={'filtering_factor': 'Female'}) # This should be unbiased data by default)
+    response = client.post('/getPastDataUnbiased', json={'filtering_factor': ['Female', 'Asian']}) # This should be unbiased data by default
+
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
@@ -89,7 +96,8 @@ def test_get_past_data_unbiased(client):
     assert is_valid_format(data), "Past data is not in the expected format"
 
 def test_predict_values_unbiased(client):
-    response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': 'Female'})
+    response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
+
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
