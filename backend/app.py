@@ -29,37 +29,41 @@ class App:
         return jsonify(info)
 
     def get_past_data(self):
-        filter_gender = request.get_json()['filtering_factor']
+        filter_gender = request.get_json()['filtering_factor'][0]
+        filter_race = request.get_json()['filtering_factor'][1]
         past_data = (DataFormatter(self.read_dataset)
-                     .filter_by(filter_gender)
+                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                      .filter_invalid_transactions()
                      .get_for_display())
         return jsonify(past_data)
 
     def predict_values(self):
-        filter_gender = request.get_json()['filtering_factor']
+        filter_gender = request.get_json()['filtering_factor'][0]
+        filter_race = request.get_json()['filtering_factor'][1]
         forecast_steps = request.get_json()['num_points']
         training_data = (DataFormatter(self.read_dataset)
-                         .filter_by(filter_gender)
+                         .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                          .filter_invalid_transactions()
                          .get_for_predicting())
         return_data = ModelInteractor(training_data).execute(forecast_steps)
         return jsonify(return_data)
 
     def get_past_data_unbiased(self):
-        filter_gender = request.get_json()['filtering_factor']
+        filter_gender = request.get_json()['filtering_factor'][0]
+        filter_race = request.get_json()['filtering_factor'][1]
         past_data = (DataFormatter(self.read_dataset)
-                     .filter_by(filter_gender)
+                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                      .unbias()
                      .filter_invalid_transactions()
                      .get_for_display())
         return jsonify(past_data)
 
     def predict_values_unbiased(self):
-        filter_gender = request.get_json()['filtering_factor']
+        filter_gender = request.get_json()['filtering_factor'][0]
+        filter_race = request.get_json()['filtering_factor'][1]
         forecast_steps = request.get_json()['num_points']
         training_data = (DataFormatter(self.read_dataset)
-                         .filter_by(filter_gender)
+                         .filter_by(filter_gender=filter_gender, filter_race=filter_race)
                          .unbias()
                          .filter_invalid_transactions()
                          .get_for_predicting())

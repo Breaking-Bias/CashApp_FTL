@@ -3,11 +3,9 @@ import pandas as pd
 
 
 class Filter(ABC):
-    data: pd.DataFrame
     filter_factor: str | int
 
-    def __init__(self, data: pd.DataFrame, filter_factor: str | int):
-        self.data = data.copy()
+    def __init__(self, filter_factor: str | int):
         self.filter_factor = filter_factor
 
 
@@ -18,7 +16,7 @@ class Filter(ABC):
 
 
     @abstractmethod
-    def apply_filter(self) -> pd.DataFrame:
+    def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
         """Abstract method to filter the data based on a filtering factor."""
         raise NotImplementedError
 
@@ -35,9 +33,9 @@ class GenderFilter(Filter):
         return result
 
 
-    def apply_filter(self) -> pd.DataFrame:
+    def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
         """Filter data based on gender."""
-        return self.data[self.data['Gender'] == self.filter_factor]
+        return data[data['Gender'] == self.filter_factor]
 
 
 class RaceFilter(Filter):
@@ -48,9 +46,9 @@ class RaceFilter(Filter):
         return result
 
 
-    def apply_filter(self) -> pd.DataFrame:
+    def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
         """Filter data based on race."""
-        return self.data[self.data['Race'] == self.filter_factor]
+        return data[data['Race'] == self.filter_factor]
 
 
 # class StateFilter(Filter):
@@ -60,24 +58,23 @@ class RaceFilter(Filter):
 #     def apply_filter(self) -> pd.DataFrame:
 #         """Filter data based on state."""
 #         return self.data[self.data['State'] == self.filter_factor]
-        
+
 class FilterManager:
     _df: pd.DataFrame
+    filters: list[Filter]
 
-    def __init__(self, df_to_filter: pd.DataFrame):
+    def __init__(self, df_to_filter: pd.DataFrame, filters: list[Filter]):
         self._df = df_to_filter.copy()
+        self.filters = filters
     
-    def apply_filters(self, filter_gender: str = None, filter_race: str = None, filter_state: str = None) -> pd.DataFrame:
+    def apply_filters(self) -> pd.DataFrame:
         """
         Determines the appropriate filter(s) to use based on the filter_factors
         passed through and applies it to the data.
         """
-        gender_filter = GenderFilter(self._df, filter_gender)
-        if gender_filter.valid_filter():
-            self._df = gender_filter.apply_filter()
+        # Uses polymorphism to apply each filter
+        for filter in self.filters:
+            if filter.valid_filter():
+                self._df = filter.apply_filter(self._df) 
 
-        race_filter = GenderFilter(self._df, filter_race)
-        if race_filter.valid_filter():
-            self._df = race_filter.apply_filter()
-            
         return self._df

@@ -6,7 +6,7 @@ interface Props {
 
 function PredictButton({ onClick }: Props) {
   return (
-    <Button variant="contained" data-testid="forecast-button" onClick={onClick}>
+    <Button color="success" variant="contained" data-testid="forecast-button" onClick={onClick}>
       Make Forecast
     </Button>
   );

@@ -13,7 +13,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.6",
+    "@mui/icons-material": "^6.1.7",
+    "@mui/material": "^6.1.7",
     "@testing-library/react": "^16.0.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",

@@ -1,5 +1,5 @@
 import pandas as pd
-from filters import FilterManager
+from filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:
@@ -74,8 +74,12 @@ class DataFormatter:
     def filter_by(self, filter_gender: str = None, filter_race:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        filter_manager = FilterManager(self._df)
-        self._df = filter_manager.apply_filters(filter_gender, filter_race, filter_state)
+        filters = []
+        filters.append(GenderFilter(filter_gender))
+        filters.append(RaceFilter(filter_race))
+
+        filter_manager = FilterManager(self._df, filters)
+        self._df = filter_manager.apply_filters()
 
         return self
 
@@ -118,32 +122,47 @@ class DataFormatter:
         """
         self._clean_data()
 
-        amount_df = self._df.groupby(self._df['date']).agg(
-            num_transactions=('Transaction_Amount_USD', 'count')
+        frequency_df = self._df.groupby(self._df['date']).agg(
+            frequency=('Transaction_Amount_USD', 'count')
         ).reset_index()
 
-        count_df = self._df.groupby(self._df['date']).agg(
+        revenue_df = self._df.groupby(self._df['date']).agg(
             revenue=('Transaction_Amount_USD', 'sum')
         ).reset_index()
+        # Don't change the column names here, otherwise frontend won't work.
 
-        return amount_df, count_df
+        return frequency_df, revenue_df
 
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries"""
-        amount_df, count_df = self._helper_output_df_format()
-        amount_df = DataFormatter.helper_datetime_to_string(amount_df)
-        count_df = DataFormatter.helper_datetime_to_string(count_df)
+        frequency_df, revenue_df = self._helper_output_df_format()
+        frequency_df = DataFormatter.helper_datetime_to_string(frequency_df)
+        revenue_df = DataFormatter.helper_datetime_to_string(revenue_df)
 
-        display_format = (DataFormatter.helper_df_to_dict(amount_df),
-                          DataFormatter.helper_df_to_dict(count_df))
+        display_format = (DataFormatter.helper_df_to_dict(frequency_df),
+                          DataFormatter.helper_df_to_dict(revenue_df))
 
         return display_format
 
+    @staticmethod
+    def _add_back_missing(df: pd.DataFrame) -> pd.DataFrame:
+        df.set_index('date', inplace=True)
+        all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
+        df = DataFormatter._reindex_with_dates(all_dates, df)
+        return df
+
+    @staticmethod
+    def _reindex_with_dates(all_dates, df):
+        df = df.reindex(all_dates, fill_value=0)
+        df.index = df.index.date
+        df.index.name = 'date'
+        return df
+
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
-        amount_df, count_df = self._helper_output_df_format()
+        frequency_df, revenue_df = self._helper_output_df_format()
 
-        amount_df.set_index('date', inplace=True)
-        count_df.set_index('date', inplace=True)
+        frequency_df = DataFormatter._add_back_missing(frequency_df)
+        revenue_df = DataFormatter._add_back_missing(revenue_df)
 
-        return amount_df, count_df
+        return frequency_df, revenue_df
