@@ -4,6 +4,7 @@ from statsmodels.tsa.arima.model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import adfuller, acf, pacf
 import plotly.express as px
 import plotly.graph_objects as go
+import data_formatter
 
 MAX_FORECAST_STEPS = 100
 
@@ -23,8 +24,10 @@ class Model:
     def predict(self):
         model = ARIMA(self.training_data, order=self._pdq())
         fitted_model = model.fit()
+        print(fitted_model.summary())
         forecast = fitted_model.get_forecast(steps=MAX_FORECAST_STEPS)
         self.forecast_df = forecast.summary_frame(alpha=0.05)  # 95% confidence interval
+        print(self.forecast_df[['mean', 'mean_ci_lower', 'mean_ci_upper']])
         return self
 
     def get_result(self, forecast_steps: int) -> pd.DataFrame:
@@ -123,8 +126,10 @@ class Model:
 
 if __name__ == '__main__':
     forecast_steps = 30
-    original_data = pd.read_csv('data/women_bias_data.csv')
-    Model(original_data.copy()).visualize(forecast_steps)
-    data_unbiased = original_data.copy()[original_data['Bias'] == 1]
-    Model(data_unbiased).visualize(forecast_steps)
+    original_data = data_formatter.DataFormatter(pd.read_csv('data/women_bias_data.csv')).get_for_predicting()[0]
+    model = Model(original_data.copy())
+    model.predict().get_result(forecast_steps)
+    model.visualize(forecast_steps)
+    # data_unbiased = original_data.copy()[original_data['Bias'] == 1]
+    # Model(data_unbiased).visualize(forecast_steps)
 
