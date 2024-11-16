@@ -109,8 +109,10 @@ function MainPage() {
   };
 
    return (
-    <div style={{ textAlign: "center", marginTop: "20px", padding: "20px"}}  aria-live="polite">
+    <div style={{ textAlign: "center", marginTop: "50px", padding: "20px"}}  aria-live="polite">
       {/* Page Title */}
+      <div className="fixed-bar" style={{ backgroundColor: "white", padding: "20px", position: "fixed", width: "100%", top: 0, left: 0, zIndex: 100 }}>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
       <h1 
       style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}
       aria-labelledby="dashboard"
@@ -119,12 +121,21 @@ function MainPage() {
       Dashboard
     </h1>
 
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: "20px" }}>
+          <h3>I want data on </h3>
+          <RadioButtons
+            mode={mode}
+            setMode={setMode}
+          />
+      </div>
+    </div>
+
       {/* Menu Button */}
       <Box
         sx={{
           position: "absolute",
           top: 0,
-          right: 0,
+          right: 100,
           padding: 2,
         }}
       >
@@ -139,14 +150,20 @@ function MainPage() {
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <h3>I want data on </h3>
-        <RadioButtons
-          mode={mode}
-          setMode={setMode}
-        />
+      
       </div>
+    
+      <div style={{ display: "flex", height: "100vh" }}>
+          <div style={{
+            width: "50%", 
+            padding: "20px", 
+            borderRight: "1px solid #ccc",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+            }}>
+            
       <div className="main-container">
         {/* Graph Component */}
         <Graph
@@ -172,6 +189,7 @@ function MainPage() {
 
         {/* Filter Section */}
         <h3>Filter:</h3>
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap={2} flexWrap="wrap" width="100%">
         <GenderDropdownFilter
           // filterFactor={filterFactor}
           // setFilterFactor={setFilterFactor}
@@ -183,13 +201,30 @@ function MainPage() {
           aria-label="Race filter options"
           onSelectChange={(value: string) => setFilterRace(value)}
         />
-        <PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
+        
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center">
+        < PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
+        <Tooltip title="Choose Prediction Size and Filter first, then click on this button to visualize.">
+            <IconButton aria-label="Make forecast button" style={{ padding: "4px", marginLeft: "4px" }}>
+              <HelpIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <br />
         <br />
         <ExportGraphButton aria-label="Export graph"/>
       </div>
-
     </div>
+
+     {/* Right Section for Revenue Data */}
+    <div style={{ flex: 1,  textAlign: "right", marginLeft: "200px", marginTop: "100px"}}>
+      <h2 style={{ fontSize: "1.5rem", color: "#2d2d2d", marginBottom: "20px" }}>Revenue Loss</h2>
+    {/* Graph for Revenue Data */}
+      <p>Loading revenue data...</p>
+    </div>
+  </div>
+  </div>
   );
 }
 export default MainPage;
