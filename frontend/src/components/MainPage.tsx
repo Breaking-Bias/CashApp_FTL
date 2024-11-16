@@ -114,7 +114,7 @@ function MainPage() {
       <div className="fixed-bar" style={{ backgroundColor: "white", padding: "20px", position: "fixed", width: "100%", top: 0, left: 0, zIndex: 100 }}>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
       <h1 
-      style={{ fontSize: "2rem", color: "#2d2d2d", marginBottom: "20px" }}
+      style={{ fontSize: "3rem", color: "#2d2d2d", marginBottom: "20px" }}
       aria-labelledby="dashboard"
       id="dashboard"
     >
@@ -122,7 +122,7 @@ function MainPage() {
     </h1>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: "20px" }}>
-          <h3>I want data on </h3>
+          <h3 style={{ fontSize: "1.5rem"}}>I want data on </h3>
           <RadioButtons
             mode={mode}
             setMode={setMode}
@@ -165,7 +165,7 @@ function MainPage() {
             
       <div className="main-container">
         {/* Graph Component */}
-        <div style={{marginTop: "100px" }}>
+        <div style={{marginTop: "200px" }}>
           <Graph
             pastData={pastData}
             pastDataUnbiased={pastDataUnbiased}
@@ -219,7 +219,7 @@ function MainPage() {
     </div>
 
      {/* Right Section for Revenue Data */}
-    <div style={{ flex: 1,  textAlign: "right", marginLeft: "200px", marginTop: "100px"}}>
+    <div style={{ flex: 1,  textAlign: "right", marginLeft: "200px", marginTop: "200px"}}>
       <h2 style={{ fontSize: "1.5rem", color: "#2d2d2d", marginBottom: "20px" }}>Revenue Loss</h2>
     {/* Graph for Revenue Data */}
       <p>Loading revenue data...</p>
