@@ -31,10 +31,6 @@ class Model:
         forecast_values = self.forecast_df['mean']
         future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps+1, freq='D')
         forecast_values = forecast_values[forecast_values.index.isin(future_dates)]
-
-        # Format df to same standard as rest of backend
-        # Reset the index (make it a usable column) and name the
-        # new column 'date', also rename mean to value
         forecast_values = forecast_values.reset_index().rename(columns={'index': 'date'})
 
         # Concatenate the last entry of training_data to forecast_values.

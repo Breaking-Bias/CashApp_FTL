@@ -86,7 +86,7 @@ function Graph({
 
           <YAxis dataKey="value">
             <Label
-              value={"Number of Transactions"}
+              // value={"Number of Transactions"}
               angle={270}
               style={{
                 fill: "black",
