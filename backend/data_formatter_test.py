@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from backend.graphing_data import GraphingData
+from graphing_data import GraphingData
 from data_formatter import DataFormatter
 from data_reader import DataReader
 
