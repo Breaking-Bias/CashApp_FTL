@@ -9,12 +9,19 @@
   text-align: center;
 }
 
-/* Controls container - prediction size, filter, and buttons */
-.controls {
+
+.fixed-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
 }
 
 /* Menu button at the top right */
@@ -51,26 +58,27 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.revenue-container {
-  flex: 1;
-  margin-left: 20px;
-  margin-top: 50px;
-  text-align: right;
-  background-color: #f9f9f9; /* Optional, to differentiate the section */
-  padding: 20px;
-}
 
-.fixed-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  padding: 20px;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.left-container {
+  flex: 6; 
+  padding: 100px;
+  border-right: 1px solid #ccc;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
+.right-container {
+  flex: 4; 
+  margin-left: 150px;
+  margin-top: 70px;
+}
+
+
+
+/* @media (max-width: 768px) {
+  .left-container,
+  .right-container {
+    flex: 1;  
+  }
+} */
