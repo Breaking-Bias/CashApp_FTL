@@ -27,3 +27,8 @@ class GraphingData:
 
     def get_data(self) -> pd.DataFrame:
         return self.data
+    
+    def is_equal(self, other: 'GraphingData') -> bool:
+        if not isinstance(other, GraphingData):
+            return False
+        return self.data.equals(other.data)
