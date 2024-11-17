@@ -17,7 +17,7 @@ import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
-import AverageBigNumber from "./components/AverageBigNumber";
+import BigNumber from "./components/BigNumber";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -118,7 +118,9 @@ function DashboardPage() {
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-          <h1 style={{ marginRight: "40px" }}>Showing data for</h1>
+          <h1 style={{ marginRight: "40px", color: "black" }}>
+            Showing data for
+          </h1>
           <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
 
@@ -165,7 +167,16 @@ function DashboardPage() {
       </Box>
 
       <Box bgcolor="cornsilk" padding="40px">
-        <AverageBigNumber></AverageBigNumber>
+        <BigNumber
+          value="$271K"
+          revenueOrTransactions={mode}
+          averageOrTotal="average"
+        />
+        <BigNumber
+          value="$81.1M"
+          revenueOrTransactions={mode}
+          averageOrTotal="total"
+        />
 
         <span style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Prediction Size:</h2>
