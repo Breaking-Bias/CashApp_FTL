@@ -1,35 +1,49 @@
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+import React from "react";
+import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 interface Props {
   mode: string;
   setMode: (newValue: string) => void;
 }
-// 0 means number of transaction, 1 means value of transaction
 
-function RadioButtons({ mode, setMode }: Props) {
+function SwitchButtons({ mode, setMode }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.value);
+    setMode(event.target.checked ? "1" : "0");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      setMode(mode === "0" ? "1" : "0");
+    }
   };
 
   return (
-    <RadioGroup
-      row // makes the radio buttons inline
-      defaultValue="0"
-      value={mode}
-      onChange={handleChange}
-      color="success"
-    >
-      <FormControlLabel 
-        value="0" 
-        control={<Radio />} 
-        label="transaction frequency" 
-        style={{ fontSize: "2rem" }}
+    <div>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={mode === "0"}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            aria-label="Transaction Frequency"
+          />
+        }
+        label="Transaction Frequency"
       />
-      <FormControlLabel value="1" control={<Radio />} label="revenue" />
-    </RadioGroup>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={mode === "1"}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            aria-label="Revenue"
+          />
+        }
+        label="Revenue"
+      />
+    </div>
   );
 }
 
-export default RadioButtons;
+export default SwitchButtons;
