@@ -7,8 +7,20 @@ class GraphAdapter:
         self.revenue_past_unbiased_data = revenue_past_unbiased_data
         self.revenue_predicted_biased_data = revenue_predicted_biased_data
         self.revenue_predicted_unbiased_data = revenue_predicted_unbiased_data
+
+    def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
+        return df_to_convert.to_dict('records')
     
+    def getPastUnbiasedLine():
+        pass
+    def getPredictedUnbiasedLine():
+        pass
+    def getPastBiasedLine():
+        pass
+    def getPredictedBiasedLine():
+        pass
     
+
     
 
         
