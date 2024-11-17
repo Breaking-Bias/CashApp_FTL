@@ -26,6 +26,7 @@ class ModelInteractor:
 
     @staticmethod
     def _add_back_missing_dates(data: GraphingData) -> pd.DataFrame:
+        """Returning DataFrame is one-col date-indexed."""
         df = ModelInteractor._graphingdata_to_onecol(data)
         all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
         df = df.reindex(all_dates, fill_value=0)
