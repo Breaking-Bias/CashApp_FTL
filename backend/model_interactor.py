@@ -26,8 +26,8 @@ class ModelInteractor:
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Formats the data for out."""
         frequency_df, revenue_df = self.training_data
-        frequency_df = ModelInteractor._add_back_missing(frequency_df)
-        revenue_df = ModelInteractor._add_back_missing(revenue_df)
+        frequency_df = ModelInteractor._add_back_missing(frequency_df.getData())
+        revenue_df = ModelInteractor._add_back_missing(revenue_df.getData())
         return frequency_df, revenue_df
 
     def execute(self, forecast_steps: int) -> tuple[GraphingData, GraphingData]:
@@ -39,36 +39,11 @@ class ModelInteractor:
         pred_revenue = (model_revenue.predict().get_result(forecast_steps)
                         .rename(columns={'mean': 'revenue'}))
         pred_revenue = ModelInteractor._to_graphingdata(pred_revenue)
+        return pred_frequency, pred_revenue
 
     @staticmethod
     def _to_graphingdata(df: pd.DataFrame) -> GraphingData:
-        df['date'] = pd.to_datetime(df['date']).dt.strftime('%Y-%m-%d')
-        return df
-
-
-# class ModelInteractor:
-#     training_data:  tuple[pd.DataFrame, pd.DataFrame]
-#
-#     def __init__(self, training_data:  tuple[pd.DataFrame, pd.DataFrame]):
-#         self.training_data = training_data
-#
-#     def execute(self, forecast_steps: int) -> tuple[list[dict], list[dict]]:
-#         model_amount = Model(self.training_data[0])
-#         pred_trans_amount = (model_amount.predict().get_result(forecast_steps)
-#                              .rename(columns={'mean': 'frequency'}))
-#         pred_trans_amount = ModelInteractor._process_data(pred_trans_amount)
-#
-#         model_count = Model(self.training_data[1])
-#         pred_trans_count = (model_count.predict().get_result(forecast_steps)
-#                             .rename(columns={'mean': 'revenue'}))
-#         pred_trans_count = ModelInteractor._process_data(pred_trans_count)
-#         # Don't rename the columns here, otherwise frontend won't work.
-#
-#         return pred_trans_amount, pred_trans_count
-#
-#     @staticmethod
-#     def _process_data(data: pd.DataFrame) -> list[dict]:
-#         processed_data = DataFormatter.helper_datetime_to_string(data)
-#         processed_data = DataFormatter.helper_df_to_dict(processed_data)
-#
-#         return processed_data
+        column_name = df.columns[0]
+        df = df.reset_index()
+        df.columns = ['date', column_name]
+        return GraphingData(df)
