@@ -26,4 +26,4 @@ class GraphingData:
         return isinstance(val, datetime.date)
 
     def get_data(self) -> pd.DataFrame:
-        return self.data
+        return self.data.copy()

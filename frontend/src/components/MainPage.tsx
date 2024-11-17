@@ -150,37 +150,38 @@ function MainPage() {
           <MenuItem onClick={() => navigate("/guidance")}>How To Use</MenuItem>
         </Menu>
       </Box>
-      
       </div>
     
-      <div style={{ display: "flex", height: "100vh" }}>
-          <div style={{
-            width: "80%", 
-            padding: "20px", 
-            borderRight: "1px solid #ccc",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-            }}>
-            
-      <div className="main-container">
-        {/* Graph Component */}
-        <div style={{marginTop: "200px" }}>
-          <Graph
-            pastData={pastData}
-            pastDataUnbiased={pastDataUnbiased}
-            predictedData={predictedData}
-            predictedDataUnbiased={predictedDataUnbiased}
-          />
-        </div>
-        <br />
+      <div style={{ display: "flex", height: "100vh", gap: "20px" }}>
+        <div className="left-container">
 
+        <div className="main-container">
+          {/* Graph Component */}
+          <div style={{marginTop: "200px" }}>
+            <Graph
+              pastData={pastData}
+              pastDataUnbiased={pastDataUnbiased}
+              predictedData={predictedData}
+              predictedDataUnbiased={predictedDataUnbiased}
+            />
+          </div>
+        </div>
+
+        {/* Revenue/Transaction Difference */}
+        {/* <div style={{ marginTop: "20px", textAlign: "center"}}>
+        <h2> Revenue </h2>
+        </div> */}
+        </div>
+
+
+     {/* Right Section for Variables */}
+    <div className="right-container">
         {/* Prediction Size Section */}
         <Box display="flex" alignItems="center" justifyContent="center">
           <h3 style={{ marginRight: "8px" }}>Prediction size:</h3>
-          <Tooltip title="The slider is used to adjust the prediction size. Longer timeframe when slider is on the right.">
-            <IconButton aria-label="Help with prediction size slider" style={{ padding: "4px", marginLeft: "4px" }}>
-              <HelpIcon />
+          <Tooltip title="The slider is used to adjust the prediction size. Longer timeframe when slider is on the right." sx= {{ fontSize: "25px"}}>
+            <IconButton aria-label="Help with prediction size slider" style={{ fontSize: "30px", padding: "4px", marginLeft: "4px" }}>
+              <HelpIcon style={{fontSize: "30px"}}/>
             </IconButton>
           </Tooltip>
         </Box>
@@ -202,27 +203,20 @@ function MainPage() {
           aria-label="Race filter options"
           onSelectChange={(value: string) => setFilterRace(value)}
         />
-        
         </Box>
-        <Box display="flex" alignItems="center" justifyContent="center">
+
+        <Box display="flex" alignItems="center" justifyContent="center" style={{ marginTop: "40px"}}>
         < PredictButton onClick={updatePrediction} aria-label="Update prediction"/>
-        <Tooltip title="Choose Prediction Size and Filter first, then click on this button to visualize.">
+        <Tooltip title="Choose Prediction Size and Filter first, then click on this button to visualize." sx={{fontSize: '25px' }}>
             <IconButton aria-label="Make forecast button" style={{ padding: "4px", marginLeft: "4px" }}>
-              <HelpIcon />
+              <HelpIcon style={{fontSize: "30px"}}/>
             </IconButton>
           </Tooltip>
         </Box>
         <br />
         <br />
         <ExportGraphButton aria-label="Export graph"/>
-      </div>
-    </div>
-
-     {/* Right Section for Revenue Data */}
-    <div style={{ flex: 1,  textAlign: "right", marginLeft: "200px", marginTop: "200px"}}>
-      <h2 style={{ fontSize: "1.5rem", color: "#2d2d2d", marginBottom: "20px" }}>Revenue Loss</h2>
-    {/* Graph for Revenue Data */}
-      <p>Loading revenue data...</p>
+        
     </div>
   </div>
   </div>
