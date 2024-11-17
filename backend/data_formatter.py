@@ -1,4 +1,5 @@
 import pandas as pd
+from graphing_data import GraphingData
 from filters import FilterManager, GenderFilter, RaceFilter
 
 
@@ -37,19 +38,11 @@ class DataFormatter:
         Removes any columns with missing values and converts the 'Timestamp'
         column to a datetime object.
 
-    helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]
-        Static method to convert a DataFrame to a list of dictionaries.
+    get_revenue_data() -> GraphingData
+        Returns a GraphingData object with the revenue data.
 
-    _helper_output_df_format() -> tuple[pd.DataFrame, pd.DataFrame]
-        Helper function to format the DataFrame for output. Cleans the
-        DataFrame, groups the data by date, and aggregates the number of
-        transactions and total revenue.
-
-    get_for_display() -> list[dict]
-        Formats the data for output, and converts to list of dictionaries.
-
-    get_for_predicting() -> tuple[pd.DataFrame, pd.DataFrame]
-        Formats the data for output.
+    get_frequency_data() -> GraphingData
+        Returns a GraphingData object with the frequency data.
     """
     _df: pd.DataFrame
 
@@ -74,9 +67,8 @@ class DataFormatter:
     def filter_by(self, filter_gender: str = None, filter_race:
                   str = None, filter_state: str = None) -> 'DataFormatter':
         """Filters the DataFrame based on gender, race, or state."""
-        filters = []
-        filters.append(GenderFilter(filter_gender))
-        filters.append(RaceFilter(filter_race))
+        filters = [GenderFilter(filter_gender),
+                   RaceFilter(filter_race)]
 
         filter_manager = FilterManager(self._df, filters)
         self._df = filter_manager.apply_filters()
@@ -92,6 +84,26 @@ class DataFormatter:
                             & (self._df['confusion_value'] != 'TP')]
         return self
 
+    def get_revenue_data(self) -> GraphingData:
+        """Returns a GraphingData object with the revenue data."""
+        self._clean_data()
+
+        revenue_df = self._df.groupby(self._df['date']).agg(
+            revenue=('Transaction_Amount_USD', 'sum')
+        ).reset_index()
+
+        return GraphingData(revenue_df)
+
+    def get_frequency_data(self) -> GraphingData:
+        """Returns a GraphingData object with the frequency data."""
+        self._clean_data()
+
+        frequency_df = self._df.groupby(self._df['date']).agg(
+            frequency=('Transaction_Amount_USD', 'count')
+        ).reset_index()
+
+        return GraphingData(frequency_df)
+
     def _clean_data(self) -> 'DataFormatter':
         """Remove any columns with missing values
          Convert the 'Timestamp' column to a datetime object."""
@@ -101,37 +113,20 @@ class DataFormatter:
         self._df = self._df.rename(columns={'Timestamp': 'date'})
         return self
 
+    # TODO: delete
+    ##########################################################
+    # Outdated code to use in future refactored objects.
+    ##########################################################
     @staticmethod
     def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
         """Converts a DataFrame to a list of dictionaries.
         """
-
         return df_to_convert.to_dict('records')
 
     @staticmethod
     def helper_datetime_to_string(df_to_convert: pd.DataFrame) -> pd.DataFrame:
         df_to_convert['date'] = pd.to_datetime(df_to_convert['date']).dt.strftime('%Y-%m-%d')
         return df_to_convert
-
-    def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Helper function to format the DataFrame for output.
-
-        This function cleans the DataFrame, groups the data by date, and
-        aggregates the number of transactions and total revenue. Making two
-        dataframes with only the columns we care about.
-        """
-        self._clean_data()
-
-        frequency_df = self._df.groupby(self._df['date']).agg(
-            frequency=('Transaction_Amount_USD', 'count')
-        ).reset_index()
-
-        revenue_df = self._df.groupby(self._df['date']).agg(
-            revenue=('Transaction_Amount_USD', 'sum')
-        ).reset_index()
-        # Don't change the column names here, otherwise frontend won't work.
-
-        return frequency_df, revenue_df
 
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries"""
