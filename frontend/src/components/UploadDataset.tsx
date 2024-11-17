@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
+  const navigate = useNavigate();
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +52,8 @@ function UploadDataset() {
       <h2>Upload Dataset</h2>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload Dataset</button>
+      <button onClick={() => navigate("/")}>Go to Home Page</button>
+      <button onClick={() => navigate("/graph")}>Go to Main Page</button>
       <p>{message}</p>
     </div>
   );
