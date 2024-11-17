@@ -1,52 +1,23 @@
-/* Main container for the page */
-.main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  text-align: center;
+
+#grid-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 8fr;
+  width: 100vw;
+  height: 100vh;
 }
 
-
-.fixed-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  padding: 20px;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+header {
+  grid-column: span 2; 
+  background-color: antiquewhite;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 40px;
 }
 
-/* Menu button at the top right */
-.MuiButton-root {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #4caf50;
-  color: white;
-}
 
-/* Graph component styling */
-.graph-container {
-  width: 80%;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-/* Slider and RadioButton container */
-.controls h3 {
-  margin-bottom: 10px;
-}
 
 /* Help icon styling */
 .help-icon {
@@ -57,28 +28,3 @@
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-
-.left-container {
-  flex: 6; 
-  padding: 100px;
-  border-right: 1px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.right-container {
-  flex: 4; 
-  margin-left: 150px;
-  margin-top: 70px;
-}
-
-
-
-/* @media (max-width: 768px) {
-  .left-container,
-  .right-container {
-    flex: 1;  
-  }
-} */
