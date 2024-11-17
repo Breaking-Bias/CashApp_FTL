@@ -8,7 +8,7 @@ import {
   ReferenceLine,
   Label,
 } from "recharts";
-import { DataSeries } from "../types";
+import { DataSeries } from "../../../types";
 
 // const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
@@ -59,7 +59,10 @@ function Graph({
 
   const dateFormatter = (tick: number) => {
     const date = new Date(tick);
-    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
   };
 
   // Get the domain from pastData and predictedData

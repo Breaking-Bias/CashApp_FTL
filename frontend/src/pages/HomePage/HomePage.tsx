@@ -1,10 +1,9 @@
 import { Button } from "@mui/material";
-import logo from "./logo.png";
-// import greenBlob from "./greenBlob.svg";
+import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
+import "./HomePage.css";
 
-export const Desktop = (): JSX.Element => {
+const HomePage = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleUploadDataset = () => {
@@ -40,7 +39,7 @@ export const Desktop = (): JSX.Element => {
         size="large"
         className="login-button"
         onClick={handleLogin}
-        sx={{ marginButtom: 2}}
+        sx={{ marginButtom: 2 }}
       >
         Start
       </Button>
@@ -48,4 +47,4 @@ export const Desktop = (): JSX.Element => {
   );
 };
 
-export default Desktop;
+export default HomePage;
