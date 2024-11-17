@@ -39,15 +39,21 @@ function DashboardPage() {
   function formatNumberForDisplay(num: number): string {
     if (num >= 1_000_000_000) {
       const billions = num / 1_000_000_000;
-      return billions >= 100 ? `${Math.round(billions)}B` : `${billions.toFixed(1).replace(/\.0$/, '')}B`;
+      return billions >= 100
+        ? `$${Math.round(billions)}B`
+        : `$${billions.toFixed(1).replace(/\.0$/, "")}B`;
     } else if (num >= 1_000_000) {
       const millions = num / 1_000_000;
-      return millions >= 100 ? `${Math.round(millions)}M` : `${millions.toFixed(1).replace(/\.0$/, '')}M`;
+      return millions >= 100
+        ? `$${Math.round(millions)}M`
+        : `$${millions.toFixed(1).replace(/\.0$/, "")}M`;
     } else if (num >= 1_000) {
       const thousands = num / 1_000;
-      return thousands >= 100 ? `${Math.round(thousands)}K` : `${thousands.toFixed(1).replace(/\.0$/, '')}K`;
+      return thousands >= 100
+        ? `$${Math.round(thousands)}K`
+        : `$${thousands.toFixed(1).replace(/\.0$/, "")}K`;
     } else {
-      return num.toString();
+      return "$" + num.toString();
     }
   }
 
@@ -183,15 +189,16 @@ function DashboardPage() {
 
       <Box bgcolor="cornsilk" padding="40px">
         <BigNumber
-          value="$271K"
+          value={formatNumberForDisplay(27_100)}
           revenueOrTransactions={mode}
           averageOrTotal="average"
         />
         <BigNumber
-          value="$81.1M"
+          value={formatNumberForDisplay(156_000_000)}
           revenueOrTransactions={mode}
           averageOrTotal="total"
         />
+        <br />
 
         <span style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Prediction Size:</h2>
