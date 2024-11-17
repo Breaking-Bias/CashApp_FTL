@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 
 
 # This is the GraphingData class.
@@ -12,8 +13,9 @@ class GraphingData:
         assert data.shape[1] == 2, "Data must have exactly 2 columns."
 
         assert data.columns[0] == "date", "First column header must be 'date'."
-        assert all(self._is_valid_date(val) for val in data.iloc[:, 0]),\
-            "All values in the date col must be pd.to_datetime().date objects."
+
+        assert all(data.iloc[:, 0].apply(self._is_valid_date)),\
+            "All values in the first column must be pd.Timestamp.date objects."
 
         assert data.columns[1] in ["frequency", "revenue"], \
             "Second column header must be 'frequency' or 'revenue'."
@@ -21,8 +23,7 @@ class GraphingData:
 
     @staticmethod
     def _is_valid_date(val) -> bool:
-        return (isinstance(val, pd.Timestamp) and
-                val.time() == pd.Timestamp.min.time())
+        return isinstance(val, datetime.date)
 
     def get_data(self) -> pd.DataFrame:
         return self.data
