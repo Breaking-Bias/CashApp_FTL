@@ -63,6 +63,16 @@ def sample_graphingdata_with_missing_dates():
     return GraphingData(df)
 
 
+def test_graphingdata_to_onecol(sample_graphingdata, sample_onecol):
+    assert (ModelInteractor._graphingdata_to_onecol(sample_graphingdata)
+            .equals(sample_onecol))
+
+
+def test_onecol_to_graphingdata(sample_onecol, sample_graphingdata):
+    assert (ModelInteractor._onecol_to_graphingdata(sample_onecol)
+            .equals(sample_graphingdata))
+
+
 def test_add_back_missing(sample_graphingdata_with_missing_dates):
     expected_df = pd.DataFrame({
         'date': [datetime.date(2021, 1, 1),
@@ -73,12 +83,12 @@ def test_add_back_missing(sample_graphingdata_with_missing_dates):
         'frequency': [100, 0, 300, 0, 500]
     })
     assert (ModelInteractor._add_back_missing_dates(
-        sample_graphingdata_with_missing_dates) == expected_df)
+        sample_graphingdata_with_missing_dates).equals(expected_df))
 
 
 def test_add_back_missing_unchanged(sample_training_data):
     """With data with no missing dates, the dataframe should not change."""
-    expected_df =
+    expected_df = ...
 
 def test_get_for_predicting(sample_training_data):
     ...

@@ -10,7 +10,7 @@ class GraphingData:
 
     def __init__(self, data: pd.DataFrame):
         assert data.shape[1] == 2, "Data must have exactly 2 columns."
-        assert data.columns[0] == "data", "First column header must be 'data'."
+        assert data.columns[0] == "date", "First column header must be 'data'."
         assert data.columns[1] in ["frequency", "revenue"], "Second column header must be 'frequency' or 'revenue'."
         self.data = data
 
