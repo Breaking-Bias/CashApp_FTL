@@ -10,9 +10,23 @@ class ModelInteractor:
         self.training_data = training_data
 
     @staticmethod
-    def _add_back_missing(df: pd.DataFrame) -> pd.DataFrame:
-        """df: two-column; returned: one-column date-indexed"""
+    def _graphingdata_to_onecol(graphing_data: GraphingData) -> pd.DataFrame:
+        """Convert GraphingData to one-column date-indexed DataFrame."""
+        df = graphing_data.getData()
         df.set_index('date', inplace=True)
+        return df
+
+    @staticmethod
+    def _onecol_to_graphingdata(df: pd.DataFrame) -> GraphingData:
+        """Convert one-column date-indexed DataFrame to GraphingData."""
+        column_name = df.columns[0]
+        df = df.reset_index()
+        df.columns = ['date', column_name]
+        return GraphingData(df)
+
+    @staticmethod
+    def _add_back_missing_dates(data: GraphingData) -> pd.DataFrame:
+        df = ModelInteractor._graphingdata_to_onecol(data)
         all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
         df = df.reindex(all_dates, fill_value=0)
         ModelInteractor._set_date_index(df)
@@ -24,10 +38,10 @@ class ModelInteractor:
         df.index.name = 'date'
 
     def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Formats the data for out."""
+        """Formats the data for Model input."""
         frequency_df, revenue_df = self.training_data
-        frequency_df = ModelInteractor._add_back_missing(frequency_df.getData())
-        revenue_df = ModelInteractor._add_back_missing(revenue_df.getData())
+        frequency_df = ModelInteractor._add_back_missing_dates(frequency_df)
+        revenue_df = ModelInteractor._add_back_missing_dates(revenue_df)
         return frequency_df, revenue_df
 
     def execute(self, forecast_steps: int) -> tuple[GraphingData, GraphingData]:
@@ -42,18 +56,4 @@ class ModelInteractor:
         return pred_frequency, pred_revenue
 
 
-    @staticmethod
-    def _graphingdata_to_onecol(graphing_data: GraphingData) -> pd.DataFrame:
-        """Convert GraphingData to one-column date-indexed DataFrame."""
-        df = graphing_data.getData()
-        df.set_index('date', inplace=True)
-        return df
 
-
-    @staticmethod
-    def _onecol_to_graphingdata(df: pd.DataFrame) -> GraphingData:
-        """Convert one-column date-indexed DataFrame to GraphingData."""
-        column_name = df.columns[0]
-        df = df.reset_index()
-        df.columns = ['date', column_name]
-        return GraphingData(df)

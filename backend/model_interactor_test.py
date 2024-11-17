@@ -33,7 +33,7 @@ def test_add_back_missing(sample_df_with_missing_dates):
                  '2021-01-05'],
         'frequency': [100, 0, 300, 0, 500]
     })
-    assert (ModelInteractor._add_back_missing(sample_df_with_missing_dates) ==
+    assert (ModelInteractor._add_back_missing_dates(sample_df_with_missing_dates) ==
             expected_df)
 
 def test_get_for_predicting(sample_training_data):

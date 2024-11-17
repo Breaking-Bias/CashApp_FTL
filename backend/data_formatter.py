@@ -144,13 +144,13 @@ class DataFormatter:
 
         return display_format
 
-
-
-    def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Formats the data for out."""
-        frequency_df, revenue_df = self._helper_output_df_format()
-
-        frequency_df = DataFormatter._add_back_missing(frequency_df)
-        revenue_df = DataFormatter._add_back_missing(revenue_df)
-
-        return frequency_df, revenue_df
+    #
+    #
+    # def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+    #     """Formats the data for out."""
+    #     frequency_df, revenue_df = self._helper_output_df_format()
+    #
+    #     frequency_df = DataFormatter._add_back_missing(frequency_df)
+    #     revenue_df = DataFormatter._add_back_missing(revenue_df)
+    #
+    #     return frequency_df, revenue_df
