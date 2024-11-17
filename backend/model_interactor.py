@@ -46,11 +46,10 @@ class ModelInteractor:
 
     def execute(self, forecast_steps: int) -> tuple[GraphingData, GraphingData]:
         frequency_df, revenue_df = self.get_for_predicting()
-        model_frequency, model_revenue = Model(frequency_df), Model(revenue_df)
-        pred_frequency = (model_frequency.predict().get_result(forecast_steps)
+        pred_frequency = (Model(frequency_df).predict().get_result(forecast_steps)
                           .rename(columns={'mean': 'frequency'}))
         pred_frequency = ModelInteractor._onecol_to_graphingdata(pred_frequency)
-        pred_revenue = (model_revenue.predict().get_result(forecast_steps)
+        pred_revenue = (Model(revenue_df).predict().get_result(forecast_steps)
                         .rename(columns={'mean': 'revenue'}))
         pred_revenue = ModelInteractor._onecol_to_graphingdata(pred_revenue)
         return pred_frequency, pred_revenue
