@@ -1,3 +1,4 @@
+import json
 import pytest
 import re
 from datetime import datetime
@@ -106,3 +107,9 @@ def test_predict_values_unbiased(client):
         assert False, "Response is not valid JSON"
 
     assert is_valid_format(data), "Predicted data is not in the expected format"
+
+def test_get_graph_data(client):
+    response = client.post('/getGraphData', json={'num_points': 30, 'filtering_factor': [None, None]})
+    assert response.status_code == 200
+    with open('./response2.json', 'w') as f:
+        json.dump(response.json, f, indent=4)

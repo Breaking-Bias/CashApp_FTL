@@ -107,10 +107,10 @@ class DataFormatter:
     def _clean_data(self) -> 'DataFormatter':
         """Remove any columns with missing values
          Convert the 'Timestamp' column to a datetime object."""
-
-        self._df = self._df.dropna(axis=1)
-        self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp']).dt.date
-        self._df = self._df.rename(columns={'Timestamp': 'date'})
+        if 'Timestamp' in self._df.columns:
+            self._df = self._df.dropna(axis=1)
+            self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp']).dt.date
+            self._df = self._df.rename(columns={'Timestamp': 'date'})
         return self
 
     # TODO: delete
