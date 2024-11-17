@@ -19,7 +19,7 @@ class GraphingData:
 
         assert data.columns[1] in ["frequency", "revenue"], \
             "Second column header must be 'frequency' or 'revenue'."
-        self.data = data
+        self.data = data.copy()
 
     @staticmethod
     def _is_valid_date(val) -> bool:
