@@ -1,10 +1,12 @@
 import os
 from werkzeug.utils import secure_filename
+from data_reader import DataReader
 
 class FileUploader:
     def __init__(self, upload_folder='data', allowed_extensions=None):
         self.upload_folder = upload_folder
         self.allowed_extensions = allowed_extensions
+        self.nameoffile=None
         
         # Ensure the upload folder exists
         if not os.path.exists(self.upload_folder):
@@ -16,10 +18,11 @@ class FileUploader:
 
     def save_file(self, file):
         """Save the file if it meets the allowed extension criteria."""
-        if file and self.allowed_file(file.filename):
+        if file and self.allowed_file(file.filename): #"test_upload.csv"
             filename = secure_filename(file.filename)
             file_path = os.path.join(self.upload_folder, filename)
             file.save(file_path)
+            self.nameoffile=filename
             return file_path
         return None
     def list_datasets(self):
