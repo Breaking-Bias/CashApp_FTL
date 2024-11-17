@@ -10,15 +10,14 @@ class GraphAdapter:
 
     def helper_df_to_dict(df_to_convert: pd.DataFrame) -> list[dict]:
         return df_to_convert.to_dict('records')
-    
-    def getPastUnbiasedLine():
-        pass
-    def getPredictedUnbiasedLine():
-        pass
-    def getPastBiasedLine():
-        pass
-    def getPredictedBiasedLine():
-        pass
+    def getPastUnbiasedLine(self):
+        return self.helper_df_to_dict(self.revenue_past_unbiased_data.get_data())
+    def getPredictedUnbiasedLine(self):
+        return self.helper_df_to_dict(self.revenue_predicted_unbiased_data.get_data())
+    def getPastBiasedLine(self):
+        return self.helper_df_to_dict(self.revenue_past_biased_data.get_data())
+    def getPredictedBiasedLine(self):
+        return self.helper_df_to_dict(self.revenue_predicted_unbiased_data.get_data())
     
 
     
