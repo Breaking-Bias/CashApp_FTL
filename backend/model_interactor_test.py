@@ -93,6 +93,7 @@ def test_graphingdata_to_onecol(sample_graphingdata, sample_onecol):
 
 
 def test_onecol_to_graphingdata(sample_onecol, sample_graphingdata):
+    a = ModelInteractor._onecol_to_graphingdata(sample_onecol)
     assert (ModelInteractor._onecol_to_graphingdata(sample_onecol)
             .equals(sample_graphingdata))
 
@@ -113,16 +114,17 @@ def test_add_back_missing(sample_graphingdata_with_missing_dates):
 
 def test_add_back_missing_unchanged(sample_graphingdata):
     """With data with no missing dates, the dataframe should not change."""
+    expected_df = ModelInteractor._graphingdata_to_onecol(sample_graphingdata)
     assert (ModelInteractor._add_back_missing_dates(sample_graphingdata)
-            .equals(ModelInteractor._graphingdata_to_onecol(
-             sample_graphingdata)))
+            .equals(expected_df))
 
 
 def test_get_for_predicting(sample_training_data, sample_training_tuple_df):
     model_interactor = ModelInteractor(sample_training_data)
-    print(model_interactor.get_for_predicting())
-    print(sample_training_tuple_df)
-    assert (model_interactor.get_for_predicting() == sample_training_tuple_df)
+    assert (model_interactor.get_for_predicting()[0]
+            .equals(sample_training_tuple_df[0]))
+    assert (model_interactor.get_for_predicting()[1]
+            .equals(sample_training_tuple_df[1]))
 
 
 def test_execute(sample_training_data):

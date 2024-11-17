@@ -12,7 +12,7 @@ class ModelInteractor:
     @staticmethod
     def _graphingdata_to_onecol(graphing_data: GraphingData) -> pd.DataFrame:
         """Convert GraphingData to one-column date-indexed DataFrame."""
-        df = graphing_data.getData()
+        df = graphing_data.getData().copy()
         df.set_index('date', inplace=True)
         return df
 
@@ -49,10 +49,10 @@ class ModelInteractor:
         frequency_df, revenue_df = self.get_for_predicting()
         pred_frequency = (Model(frequency_df).predict().get_result(forecast_steps)
                           .rename(columns={'mean': 'frequency'}))
-        pred_frequency = ModelInteractor._onecol_to_graphingdata(pred_frequency)
+        pred_frequency = GraphingData(pred_frequency)
         pred_revenue = (Model(revenue_df).predict().get_result(forecast_steps)
                         .rename(columns={'mean': 'revenue'}))
-        pred_revenue = ModelInteractor._onecol_to_graphingdata(pred_revenue)
+        pred_revenue = GraphingData(pred_revenue)
         return pred_frequency, pred_revenue
 
 
