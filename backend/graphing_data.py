@@ -10,9 +10,19 @@ class GraphingData:
 
     def __init__(self, data: pd.DataFrame):
         assert data.shape[1] == 2, "Data must have exactly 2 columns."
-        assert data.columns[0] == "data", "First column header must be 'data'."
-        assert data.columns[1] in ["frequency", "revenue"], "Second column header must be 'frequency' or 'revenue'."
+
+        assert data.columns[0] == "date", "First column header must be 'date'."
+        assert all(self._is_valid_date(val) for val in data.iloc[:, 0]),\
+            "All values in the date col must be pd.to_datetime().date objects."
+
+        assert data.columns[1] in ["frequency", "revenue"], \
+            "Second column header must be 'frequency' or 'revenue'."
         self.data = data
 
-    def getData(self) -> pd.DataFrame:
+    @staticmethod
+    def _is_valid_date(val) -> bool:
+        return (isinstance(val, pd.Timestamp) and
+                val.time() == pd.Timestamp.min.time())
+
+    def get_data(self) -> pd.DataFrame:
         return self.data
