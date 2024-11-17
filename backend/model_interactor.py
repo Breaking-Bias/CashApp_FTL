@@ -13,6 +13,7 @@ class ModelInteractor:
     def _graphingdata_to_onecol(graphing_data: GraphingData) -> pd.DataFrame:
         """Convert GraphingData to one-column date-indexed DataFrame."""
         df = graphing_data.getData().copy()
+        # TODO: Remove this .copy when .copy is added in GraphingData.
         df.set_index('date', inplace=True)
         return df
 
