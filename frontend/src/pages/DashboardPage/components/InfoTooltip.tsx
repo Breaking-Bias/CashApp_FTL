@@ -8,7 +8,7 @@ interface Props {
 
 export default function InfoTooltip({ title, ariaLabel }: Props) {
   return (
-    <Tooltip title={title} sx={{ fontSize: "25px" }}>
+    <Tooltip title={<span style={{ fontSize: "16px" }}>{title}</span>}>
       <IconButton
         aria-label={ariaLabel}
         style={{ fontSize: "30px", padding: "4px", marginLeft: "4px" }}

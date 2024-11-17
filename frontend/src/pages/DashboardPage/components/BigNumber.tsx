@@ -29,7 +29,14 @@ export default function BigNumber({
         <br />
         {revenueOrTransactions == "0" ? "transactions" : "revenue"}
       </p>
-      <InfoTooltip title="" ariaLabel={`The ${averageOrTotal} difference`} />
+      <InfoTooltip
+        title={`The ${averageOrTotal} difference between biased and unbiased ${
+          revenueOrTransactions == "0" ? "transactions" : "revenue"
+        }.`}
+        ariaLabel={`Help with ${averageOrTotal} ${
+          revenueOrTransactions == "0" ? "transactions" : "revenue"
+        }`}
+      />
     </Box>
   );
 }
