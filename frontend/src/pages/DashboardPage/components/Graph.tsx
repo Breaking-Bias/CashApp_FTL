@@ -14,9 +14,9 @@ import { DataSeries } from "../../../types";
 
 interface Props {
   pastData: DataSeries | undefined;
-  pastDataUnbiased: DataSeries | undefined;
-  predictedData: DataSeries | undefined;
-  predictedDataUnbiased: DataSeries | undefined;
+  pastDataUnbiased?: DataSeries | undefined;
+  predictedData?: DataSeries | undefined;
+  predictedDataUnbiased?: DataSeries | undefined;
 }
 
 function Graph({

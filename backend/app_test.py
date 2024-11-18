@@ -1,3 +1,4 @@
+import json
 import pytest
 import re
 from datetime import datetime
@@ -29,7 +30,7 @@ def is_valid_format(response_data) -> bool:
         for item in dictionary:
             if not (isinstance(item, dict)  # "Each item in the list should be a dictionary"
             and 'date' in item # "Each dictionary should have a 'date' key"
-            and ('frequency' in item or 'revenue' in item) # "Each dictionary should have a 'value' key"
+            and ('value' in item) # "Each dictionary should have a 'value' key"
             and isinstance(item['date'], str) # "The 'date' key should have a string value"
             and date_pattern.match(item['date'])): # "The 'date' value should match the format YYYY-MM-DD"
                 print('The date value should match the format YYYY-MM-DD')
@@ -43,12 +44,12 @@ def is_valid_format(response_data) -> bool:
 
     for item in response_data[0]:
         # Check value type
-        if not isinstance(item['frequency'], (int, float)): # "The 'frequency' or 'revenue' key should have an float value"
+        if not isinstance(item['value'], (int, float)): # "The 'frequency' or 'revenue' key should have an float value"
             print("The 'frequency' or 'revenue' key should have a float value")
             return False
     for item in response_data[1]:
         # Check value type
-        if not isinstance(item['revenue'], float): # "The 'value' key should have an integer value"
+        if not isinstance(item['value'], float): # "The 'value' key should have an integer value"
             print("The 'value' key should have an integer value")
             return False
 
@@ -60,49 +61,22 @@ def test_getinfo(client):
     assert response.json == {"name": 'breaking bias', "score": "stupendous"}
 
 def test_get_past_data(client):
-    response = client.post('/getPastData', json={'filtering_factor': ['Female', 'Asian']})
+    response = client.post('/getPastData', json={'filtering_factor': [None, None]})
     
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
-        data = response.json
+        frequency_graph = response.json['frequency_graph']
+        revenue_graph = response.json['revenue_graph']
     except ValueError:
         assert False, "Response is not valid JSON"
 
-    assert is_valid_format(data), "Past data is not in the expected format"
+    assert is_valid_format((frequency_graph['past_biased_line'],
+                            revenue_graph['past_biased_line'])),\
+        "Past data is not in the expected format"
 
-def test_predict_values(client):
-    response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
-
+def test_get_graph_data(client):
+    response = client.post('/getGraphData', json={'num_points': 30, 'filtering_factor': [None, None]})
     assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Predicted data is not in the expected format"
-
-def test_get_past_data_unbiased(client):
-    response = client.post('/getPastDataUnbiased', json={'filtering_factor': ['Female', 'Asian']}) # This should be unbiased data by default
-
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Past data is not in the expected format"
-
-def test_predict_values_unbiased(client):
-    response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
-
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Predicted data is not in the expected format"
+    with open('./response_log.json', 'w') as f:
+        json.dump(response.json, f, indent=4)

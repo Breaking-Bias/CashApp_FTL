@@ -22,6 +22,7 @@ export default function BigNumber({
           margin: 0,
         }}
       >
+        {revenueOrTransactions == "1" && "$"}
         {value}
       </p>
       <p>
