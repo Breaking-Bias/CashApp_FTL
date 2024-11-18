@@ -3,8 +3,8 @@ from graphing_data import GraphingData
 
 
 class DifferenceCalculator:
-    df_unbiased: GraphingData
-    df_biased: GraphingData
+    df_unbiased: pd.DataFrame
+    df_biased: pd.DataFrame
     
     def __init__(self, df_unbiased: GraphingData, df_biased: GraphingData):
         self.df_unbiased = df_unbiased.get_data()

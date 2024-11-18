@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from backend.difference_calculator import DifferenceCalculator
-from backend.graph_adapter import GraphAdapter
+from difference_calculator import DifferenceCalculator
+from graph_adapter import GraphAdapter
 from data_formatter import DataFormatter
 from data_reader import DataReader
 from model_interactor import ModelInteractor
@@ -27,9 +27,6 @@ class App:
         self.app.add_url_rule('/getGraphData', 'get_graph_data', self.get_graph_data, methods=['POST'])
 
         self.app.add_url_rule('/getPastData', 'get_past_data', self.get_past_data, methods=['POST'])
-        self.app.add_url_rule('/predictData', 'predict_values', self.predict_values, methods=['POST'])
-        self.app.add_url_rule('/getPastDataUnbiased', 'get_past_data_unbiased', self.get_past_data_unbiased, methods=['POST'])
-        self.app.add_url_rule('/predictDataUnbiased', 'predict_values_unbiased', self.predict_values_unbiased, methods=['POST'])
         self.app.add_url_rule('/upload-dataset', 'upload_dataset', self.upload_dataset, methods=['POST'])
         self.app.add_url_rule('/getDatasets', 'get_datasets', self.get_datasets, methods=['GET'])
 
@@ -56,9 +53,13 @@ class App:
             .execute(forecast_steps))
 
         # initialize unbiased  data
-        formatted_past_data = formatted_past_data.unbias()
-        frequency_past_data_unbiased = formatted_past_data.get_frequency_data()
-        revenue_past_data_unbiased = formatted_past_data.get_revenue_data()
+        formatted_past_data_unbiased = (DataFormatter(self.read_dataset)
+                                        .filter_by(filter_gender, filter_race)
+                                        .unbias()
+                                        .filter_invalid_transactions())
+
+        frequency_past_data_unbiased = formatted_past_data_unbiased.get_frequency_data()
+        revenue_past_data_unbiased = formatted_past_data_unbiased.get_revenue_data()
 
         frequency_predicted_data_unbiased, revenue_predicted_data_unbiased = (
             ModelInteractor((frequency_past_data_unbiased,
@@ -66,11 +67,15 @@ class App:
             .execute(forecast_steps))
 
         # Calculate difference between biased and unbiased data
-        revenue_difference_calculator = DifferenceCalculator(
-            revenue_past_data_biased, revenue_past_data_unbiased)
+        revenue_difference_calculator_past = DifferenceCalculator(
+            revenue_past_data_unbiased, revenue_past_data_biased)
+        revenue_difference_calculator_predicted = DifferenceCalculator(
+            revenue_predicted_data_unbiased, revenue_predicted_data_biased)
 
-        frequency_difference_calculator = DifferenceCalculator(
-            frequency_past_data_biased, frequency_past_data_unbiased)
+        frequency_difference_calculator_past = DifferenceCalculator(
+            frequency_past_data_unbiased, frequency_past_data_biased)
+        frequency_difference_calculator_predicted = DifferenceCalculator(
+            frequency_predicted_data_unbiased, frequency_predicted_data_biased)
 
         # Collect all the data
         revenue_graph = GraphAdapter(revenue_past_data_biased,
@@ -89,8 +94,12 @@ class App:
             "past_unbiased_line": revenue_graph.getPastUnbiasedLine(),
             "predicted_unbiased_line": revenue_graph.getPredictedUnbiasedLine(),
 
-            "total_difference": revenue_difference_calculator.volume_difference(),
-            "average_difference": revenue_difference_calculator.average_difference(),
+            "total_difference":
+                revenue_difference_calculator_past.volume_difference() +
+                revenue_difference_calculator_predicted.volume_difference(),
+            "average_difference":
+                revenue_difference_calculator_past.average_difference() +
+                revenue_difference_calculator_predicted.average_difference(),
         }
 
         frequency_graph = {
@@ -99,8 +108,12 @@ class App:
             "past_unbiased_line": frequency_graph.getPastUnbiasedLine(),
             "predicted_unbiased_line": frequency_graph.getPredictedUnbiasedLine(),
 
-            "total_difference": frequency_difference_calculator.volume_difference(),
-            "average_difference": frequency_difference_calculator.average_difference(),
+            "total_difference":
+                frequency_difference_calculator_past.volume_difference() +
+                frequency_difference_calculator_predicted.volume_difference(),
+            "average_difference":
+                frequency_difference_calculator_past.average_difference() +
+                frequency_difference_calculator_predicted.average_difference(),
         }
 
         result = {
@@ -109,50 +122,33 @@ class App:
         }
         return jsonify(result)
 
-############################################################################################################
-    # TODO: outdated code, remove it
-############################################################################################################
     def get_past_data(self):
-        filter_gender = request.get_json()['filtering_factor'][0]
-        filter_race = request.get_json()['filtering_factor'][1]
-        past_data = (DataFormatter(self.read_dataset)
-                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
-                     .filter_invalid_transactions()
-                     .get_for_display())
-        return jsonify(past_data)
+        formatted_past_data = (DataFormatter(self.read_dataset)
+                               .filter_invalid_transactions())
 
-    def predict_values(self):
-        filter_gender = request.get_json()['filtering_factor'][0]
-        filter_race = request.get_json()['filtering_factor'][1]
-        forecast_steps = request.get_json()['num_points']
-        training_data = (DataFormatter(self.read_dataset)
-                         .filter_by(filter_gender=filter_gender, filter_race=filter_race)
-                         .filter_invalid_transactions()
-                         .get_for_predicting())
-        return_data = ModelInteractor(training_data).execute(forecast_steps)
-        return jsonify(return_data)
+        frequency_past_data_biased = formatted_past_data.get_frequency_data()
+        revenue_past_data_biased = formatted_past_data.get_revenue_data()
 
-    def get_past_data_unbiased(self):
-        filter_gender = request.get_json()['filtering_factor'][0]
-        filter_race = request.get_json()['filtering_factor'][1]
-        past_data = (DataFormatter(self.read_dataset)
-                     .filter_by(filter_gender=filter_gender, filter_race=filter_race)
-                     .unbias()
-                     .filter_invalid_transactions()
-                     .get_for_display())
-        return jsonify(past_data)
+        # Collect all the data
+        revenue_graph = GraphAdapter(revenue_past_data_biased)
 
-    def predict_values_unbiased(self):
-        filter_gender = request.get_json()['filtering_factor'][0]
-        filter_race = request.get_json()['filtering_factor'][1]
-        forecast_steps = request.get_json()['num_points']
-        training_data = (DataFormatter(self.read_dataset)
-                         .filter_by(filter_gender=filter_gender, filter_race=filter_race)
-                         .unbias()
-                         .filter_invalid_transactions()
-                         .get_for_predicting())
-        return_data = ModelInteractor(training_data).execute(forecast_steps)
-        return jsonify(return_data)
+        frequency_graph = GraphAdapter(frequency_past_data_biased)
+
+        revenue_graph = {
+            "past_biased_line": revenue_graph.getPastBiasedLine()
+        }
+
+        frequency_graph = {
+            "past_biased_line": frequency_graph.getPastBiasedLine()
+        }
+
+        result = {
+            "revenue_graph": revenue_graph,
+            "frequency_graph": frequency_graph
+        }
+
+
+        return jsonify(result)
 
     def upload_dataset(self):
         """Endpoint to handle file upload."""

@@ -61,55 +61,22 @@ def test_getinfo(client):
     assert response.json == {"name": 'breaking bias', "score": "stupendous"}
 
 def test_get_past_data(client):
-    response = client.post('/getPastData', json={'filtering_factor': ['Female', 'Asian']})
+    response = client.post('/getPastData', json={'filtering_factor': [None, None]})
     
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
-        data = response.json
+        frequency_graph = response.json['frequency_graph']
+        revenue_graph = response.json['revenue_graph']
     except ValueError:
         assert False, "Response is not valid JSON"
 
-    assert is_valid_format(data), "Past data is not in the expected format"
-
-def test_predict_values(client):
-    response = client.post('/predictData', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
-
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Predicted data is not in the expected format"
-
-def test_get_past_data_unbiased(client):
-    response = client.post('/getPastDataUnbiased', json={'filtering_factor': ['Female', 'Asian']}) # This should be unbiased data by default
-
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Past data is not in the expected format"
-
-def test_predict_values_unbiased(client):
-    response = client.post('/predictDataUnbiased', json={'num_points': 10, 'filtering_factor': ['Female', 'Asian']})
-
-    assert response.status_code == 200
-    # Ensure the response data is JSON
-    try:
-        data = response.json
-    except ValueError:
-        assert False, "Response is not valid JSON"
-
-    assert is_valid_format(data), "Predicted data is not in the expected format"
+    assert is_valid_format((frequency_graph['past_biased_line'],
+                            revenue_graph['past_biased_line'])),\
+        "Past data is not in the expected format"
 
 def test_get_graph_data(client):
     response = client.post('/getGraphData', json={'num_points': 30, 'filtering_factor': [None, None]})
     assert response.status_code == 200
-    with open('./response2.json', 'w') as f:
+    with open('./response_log.json', 'w') as f:
         json.dump(response.json, f, indent=4)
