@@ -6,6 +6,12 @@
   background-color: #a2c9ac83; 
 } */
 
+:root {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
 .desktop-container {
   display: flex;
   flex-direction: column;
@@ -24,4 +30,3 @@ h1 {
   margin-top: 20px;
   padding: 10px 20px;
 }
-
