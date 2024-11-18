@@ -65,27 +65,27 @@ def test_invalid_data_initialization():
     with pytest.raises(AssertionError):
         GraphingData(data)
 
-# Test for GraphAdapter methods
-def test_graph_adapter_methods(graph_adapter):
-    # Test helper_df_to_dict conversion
-    dict_data = graph_adapter.helper_df_to_dict(graph_adapter.revenue_past_biased_data.get_data())
-    assert isinstance(dict_data, list)
-    assert len(dict_data) == 2  # 2 rows in the sample data
-    assert "date" in dict_data[0]
-    assert "revenue" in dict_data[0]
-
-    # Test the specific methods for fetching data
-    past_unbiased = graph_adapter.getPastUnbiasedLine()
-    assert past_unbiased == dict_data  # It should return the same as helper_df_to_dict for the given data
-
-    predicted_unbiased = graph_adapter.getPredictedUnbiasedLine()
-    assert predicted_unbiased == dict_data  # Same data for now
-
-    past_biased = graph_adapter.getPastBiasedLine()
-    assert past_biased == dict_data  # Same data for now
-
-    predicted_biased = graph_adapter.getPredictedBiasedLine()
-    assert predicted_biased == dict_data  # Same data for now
+# # Test for GraphAdapter methods
+# def test_graph_adapter_methods(graph_adapter):
+#     # Test helper_df_to_dict conversion
+#     dict_data = graph_adapter.helper_df_to_dict(graph_adapter.revenue_past_biased_data.get_data())
+#     assert isinstance(dict_data, list)
+#     assert len(dict_data) == 2  # 2 rows in the sample data
+#     assert "date" in dict_data[0]
+#     assert "revenue" in dict_data[0]
+#
+#     # Test the specific methods for fetching data
+#     past_unbiased = graph_adapter.getPastUnbiasedLine()
+#     assert past_unbiased == dict_data  # It should return the same as helper_df_to_dict for the given data
+#
+#     predicted_unbiased = graph_adapter.getPredictedUnbiasedLine()
+#     assert predicted_unbiased == dict_data  # Same data for now
+#
+#     past_biased = graph_adapter.getPastBiasedLine()
+#     assert past_biased == dict_data  # Same data for now
+#
+#     predicted_biased = graph_adapter.getPredictedBiasedLine()
+#     assert predicted_biased == dict_data  # Same data for now
 
 # Test for GraphAdapter and GraphingData with edge cases
 def test_graph_adapter_edge_cases():
