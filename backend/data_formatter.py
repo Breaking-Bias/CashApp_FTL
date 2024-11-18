@@ -107,10 +107,10 @@ class DataFormatter:
     def _clean_data(self) -> 'DataFormatter':
         """Remove any columns with missing values
          Convert the 'Timestamp' column to a datetime object."""
-
-        self._df = self._df.dropna(axis=1)
-        self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp']).dt.date
-        self._df = self._df.rename(columns={'Timestamp': 'date'})
+        if 'Timestamp' in self._df.columns:
+            self._df = self._df.dropna(axis=1)
+            self._df['Timestamp'] = pd.to_datetime(self._df['Timestamp']).dt.date
+            self._df = self._df.rename(columns={'Timestamp': 'date'})
         return self
 
     # TODO: delete
@@ -128,6 +128,25 @@ class DataFormatter:
         df_to_convert['date'] = pd.to_datetime(df_to_convert['date']).dt.strftime('%Y-%m-%d')
         return df_to_convert
 
+    def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Helper function to format the DataFrame for output.
+
+        This function cleans the DataFrame, groups the data by date, and
+        aggregates the number of transactions and total revenue. Making two
+        dataframes with only the columns we care about.
+        """
+        self._clean_data()
+
+        frequency_df = self._df.groupby(self._df['date']).agg(
+            frequency=('Transaction_Amount_USD', 'count')
+        ).reset_index()
+
+        revenue_df = self._df.groupby(self._df['date']).agg(
+            revenue=('Transaction_Amount_USD', 'sum')
+        ).reset_index()
+
+        return frequency_df, revenue_df
+
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries"""
         frequency_df, revenue_df = self._helper_output_df_format()
@@ -139,25 +158,13 @@ class DataFormatter:
 
         return display_format
 
-    @staticmethod
-    def _add_back_missing(df: pd.DataFrame) -> pd.DataFrame:
-        df.set_index('date', inplace=True)
-        all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
-        df = DataFormatter._reindex_with_dates(all_dates, df)
-        return df
-
-    @staticmethod
-    def _reindex_with_dates(all_dates, df):
-        df = df.reindex(all_dates, fill_value=0)
-        df.index = df.index.date
-        df.index.name = 'date'
-        return df
-
-    def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Formats the data for out."""
-        frequency_df, revenue_df = self._helper_output_df_format()
-
-        frequency_df = DataFormatter._add_back_missing(frequency_df)
-        revenue_df = DataFormatter._add_back_missing(revenue_df)
-
-        return frequency_df, revenue_df
+    #
+    #
+    # def get_for_predicting(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+    #     """Formats the data for out."""
+    #     frequency_df, revenue_df = self._helper_output_df_format()
+    #
+    #     frequency_df = DataFormatter._add_back_missing(frequency_df)
+    #     revenue_df = DataFormatter._add_back_missing(revenue_df)
+    #
+    #     return frequency_df, revenue_df

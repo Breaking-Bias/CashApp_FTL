@@ -1,10 +1,8 @@
 import { Button } from "@mui/material";
-import logo from "./logo.png";
-// import greenBlob from "./greenBlob.svg";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
+import "@/pages/HomePage/HomePage.css";
 
-export const Desktop = (): JSX.Element => {
+const HomePage = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleUploadDataset = () => {
@@ -16,7 +14,7 @@ export const Desktop = (): JSX.Element => {
   };
   return (
     <div className="container">
-      <img alt="Logo" src={logo} />
+      <img alt="Logo" src="/logo.png" />
       <h1>Cash App</h1>
       <h1>Bias Visualization</h1>
       {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}
@@ -40,7 +38,7 @@ export const Desktop = (): JSX.Element => {
         size="large"
         className="login-button"
         onClick={handleLogin}
-        sx={{ marginButtom: 2}}
+        sx={{ marginButtom: 2 }}
       >
         Start
       </Button>
@@ -48,4 +46,4 @@ export const Desktop = (): JSX.Element => {
   );
 };
 
-export default Desktop;
+export default HomePage;

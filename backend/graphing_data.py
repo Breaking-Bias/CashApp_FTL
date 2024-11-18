@@ -26,7 +26,7 @@ class GraphingData:
         return isinstance(val, datetime.date)
 
     def get_data(self) -> pd.DataFrame:
-        return self.data
+         return self.data.copy()
     
     def is_equal(self, other: 'GraphingData') -> bool:
         if not isinstance(other, GraphingData):
