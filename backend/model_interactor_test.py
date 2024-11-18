@@ -93,9 +93,8 @@ def test_graphingdata_to_onecol(sample_graphingdata, sample_onecol):
 
 
 def test_onecol_to_graphingdata(sample_onecol, sample_graphingdata):
-    assert (ModelInteractor._onecol_to_graphingdata(sample_onecol).data
-            .equals(sample_graphingdata.data))
-    # TODO: Refrain from using .data to compare GraphingData.
+    assert (ModelInteractor._onecol_to_graphingdata(sample_onecol)
+            .equals(sample_graphingdata))
 
 
 def test_add_back_missing(sample_graphingdata_with_missing_dates):
