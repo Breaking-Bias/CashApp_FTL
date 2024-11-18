@@ -1,5 +1,7 @@
 import pytest
 import pandas as pd
+
+from graphing_data import GraphingData
 from data_formatter import DataFormatter
 from data_reader import DataReader
 
@@ -91,41 +93,26 @@ def test_unbias_does_not_mutate_original(sample_data):
                                   check_dtype=True)
 
 
-def test_get_for_display(real_data):
-    frequency_data = [{'date': '2024-05-01', 'frequency': 52},
-                      {'date': '2024-05-02', 'frequency': 48}]
-    revenue_data = [{'date': '2024-05-01', 'revenue': 1306375.68},
-                    {'date': '2024-05-02', 'revenue': 1361639.44}]
+def test_get_revenue_data(real_data):
+    revenue_data = GraphingData(pd.DataFrame({
+        'date': [pd.to_datetime('2024-05-01').date(),
+                 pd.to_datetime('2024-05-02').date()],
+        'revenue': [1306375.68, 1361639.44]
+    }))
 
-    display_data = DataFormatter(real_data).get_for_display()
+    gotten_revenue_data = DataFormatter(real_data).get_revenue_data()
 
-    assert display_data[0] == frequency_data
-    assert display_data[1] == revenue_data
+    pd.testing.assert_frame_equal(revenue_data.get_data(),
+                                  gotten_revenue_data.get_data())
 
-
-def test_get_for_predicting(real_data):
-    frequency_df = (pd.DataFrame({
+def test_get_frequency_data(real_data):
+    frequency_data = GraphingData(pd.DataFrame({
         'date': [pd.to_datetime('2024-05-01').date(),
                  pd.to_datetime('2024-05-02').date()],
         'frequency': [52, 48]
     }))
-    frequency_df.set_index('date', inplace=True)
-    revenue_df = pd.DataFrame({
-        'date': [pd.to_datetime('2024-05-01').date(),
-                 pd.to_datetime('2024-05-02').date()],
-        'revenue': [1306375.68, 1361639.44]
-    })
-    revenue_df.set_index('date', inplace=True)
 
-    prediction_data = DataFormatter(real_data).get_for_predicting()
-    pd.testing.assert_frame_equal(prediction_data[0], frequency_df)
-    pd.testing.assert_frame_equal(prediction_data[1], revenue_df)
+    gotten_frequency_data = DataFormatter(real_data).get_frequency_data()
 
-
-def test_helper_df_to_dict(sample_data):
-    sample_data = sample_data.iloc[:2, :2]
-    expected_result = [{'Customer_ID': 'C001', 'confusion_value': 'FP'},
-                       {'Customer_ID': 'C002', 'confusion_value': 'TN'}]
-
-    calculated_result = DataFormatter.helper_df_to_dict(sample_data)
-    assert calculated_result == expected_result
+    pd.testing.assert_frame_equal(frequency_data.get_data(),
+                                  gotten_frequency_data.get_data())
