@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 from graphing_data import GraphingData
 
+
 def test_valid_data_frequency():
     data = pd.DataFrame({
         "date": [pd.Timestamp("2023-01-01").date(),
@@ -11,6 +12,7 @@ def test_valid_data_frequency():
     graphing_data = GraphingData(data)
     assert graphing_data.get_data().equals(data)
 
+
 def test_valid_data_revenue():
     data = pd.DataFrame({
         "date": [pd.Timestamp("2023-01-01").date(),
@@ -19,6 +21,7 @@ def test_valid_data_revenue():
     })
     graphing_data = GraphingData(data)
     assert graphing_data.get_data().equals(data)
+
 
 def test_invalid_column_count():
     data = pd.DataFrame({
@@ -31,15 +34,17 @@ def test_invalid_column_count():
                        match="Data must have exactly 2 columns."):
         GraphingData(data)
 
+
 def test_invalid_first_column_name():
     data = pd.DataFrame({
         "wrong": [pd.Timestamp("2023-01-01").date(),
-                 pd.Timestamp("2023-01-02").date()],
+                  pd.Timestamp("2023-01-02").date()],
         "frequency": [10, 20]
     })
     with pytest.raises(AssertionError,
                        match="First column header must be 'date'."):
         GraphingData(data)
+
 
 def test_invalid_second_column_name():
     data = pd.DataFrame({
@@ -50,6 +55,7 @@ def test_invalid_second_column_name():
     with pytest.raises(AssertionError,
                        match="Second column header must be 'frequency' or 'revenue'."):
         GraphingData(data)
+
 
 def test_invalid_date_values():
     data = pd.DataFrame({

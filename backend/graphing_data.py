@@ -14,7 +14,7 @@ class GraphingData:
 
         assert data.columns[0] == "date", "First column header must be 'date'."
 
-        assert all(data.iloc[:, 0].apply(self._is_valid_date)),\
+        assert all(data.iloc[:, 0].apply(self._is_valid_date)), \
             "All values in the first column must be pd.Timestamp.date objects."
 
         assert data.columns[1] in ["frequency", "revenue"], \
@@ -26,7 +26,7 @@ class GraphingData:
         return isinstance(val, datetime.date)
 
     def get_data(self) -> pd.DataFrame:
-         return self.data.copy()
-    
+        return self.data.copy()
+
     def is_equal(self, other: 'GraphingData') -> bool:
         return self.data.equals(other.data)
