@@ -7,7 +7,6 @@ import PredictButton from "./components/PredictButton";
 import Graph from "./components/Graph";
 import { getGraphDataAPICall, getPastDataAPICall } from "../../ApiCalls";
 import {
-  DataSeries,
   FormattedBigGraphData,
   FormattedDataEntry,
   OneModeGraphData,
