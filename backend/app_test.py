@@ -30,7 +30,7 @@ def is_valid_format(response_data) -> bool:
         for item in dictionary:
             if not (isinstance(item, dict)  # "Each item in the list should be a dictionary"
             and 'date' in item # "Each dictionary should have a 'date' key"
-            and ('frequency' in item or 'revenue' in item) # "Each dictionary should have a 'value' key"
+            and ('value' in item) # "Each dictionary should have a 'value' key"
             and isinstance(item['date'], str) # "The 'date' key should have a string value"
             and date_pattern.match(item['date'])): # "The 'date' value should match the format YYYY-MM-DD"
                 print('The date value should match the format YYYY-MM-DD')
@@ -44,12 +44,12 @@ def is_valid_format(response_data) -> bool:
 
     for item in response_data[0]:
         # Check value type
-        if not isinstance(item['frequency'], (int, float)): # "The 'frequency' or 'revenue' key should have an float value"
+        if not isinstance(item['value'], (int, float)): # "The 'frequency' or 'revenue' key should have an float value"
             print("The 'frequency' or 'revenue' key should have a float value")
             return False
     for item in response_data[1]:
         # Check value type
-        if not isinstance(item['revenue'], float): # "The 'value' key should have an integer value"
+        if not isinstance(item['value'], float): # "The 'value' key should have an integer value"
             print("The 'value' key should have an integer value")
             return False
 
