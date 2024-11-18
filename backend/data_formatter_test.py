@@ -112,7 +112,7 @@ def test_get_frequency_data(real_data):
         'frequency': [52, 48]
     }))
 
-    gotten_frequency_data = DataFormatter(real_data).get_revenue_data()
+    gotten_frequency_data = DataFormatter(real_data).get_frequency_data()
 
     pd.testing.assert_frame_equal(frequency_data.get_data(),
                                   gotten_frequency_data.get_data())

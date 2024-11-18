@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from backend.difference_calculator import DifferenceCalculator
-from backend.graph_adapter import GraphAdapter
+from difference_calculator import DifferenceCalculator
+from graph_adapter import GraphAdapter
 from data_formatter import DataFormatter
 from data_reader import DataReader
 from model_interactor import ModelInteractor
