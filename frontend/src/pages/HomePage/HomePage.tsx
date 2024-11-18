@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import logo from "../../../public/logo.png";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
@@ -15,7 +14,7 @@ const HomePage = (): JSX.Element => {
   };
   return (
     <div className="container">
-      <img alt="Logo" src={logo} />
+      <img alt="Logo" src="/logo.png" />
       <h1>Cash App</h1>
       <h1>Bias Visualization</h1>
       {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}

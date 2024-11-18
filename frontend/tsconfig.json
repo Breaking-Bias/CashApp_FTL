@@ -7,11 +7,5 @@
   "compilerOptions": {
     "jsx": "react-jsx", // or "react" for React <17
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "baseUrl": "./",
-    "paths": {
-      "*": ["src/*"],
-      "*.png": ["__mocks__/fileMock.ts"]
-    }
   }
 }

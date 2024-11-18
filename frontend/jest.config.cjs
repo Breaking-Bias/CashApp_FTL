@@ -8,7 +8,5 @@ module.exports = {
   },
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy", // Handle CSS modules if needed
-    "\\.(png|jpg|jpeg|gif|svg|webp|ico|bmp|tiff)$":
-      "<rootDir>/__mocks__/fileMock.ts", // Map static assets
   },
 };
