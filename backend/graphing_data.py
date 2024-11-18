@@ -29,6 +29,4 @@ class GraphingData:
          return self.data.copy()
     
     def is_equal(self, other: 'GraphingData') -> bool:
-        if not isinstance(other, GraphingData):
-            return False
         return self.data.equals(other.data)
