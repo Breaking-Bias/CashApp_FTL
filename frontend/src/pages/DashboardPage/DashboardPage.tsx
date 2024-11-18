@@ -5,13 +5,13 @@ import GenderDropdownFilter from "./components/GenderDropdownFilter";
 import RaceDropdownFilter from "./components/RaceDropdownFilter";
 import PredictButton from "./components/PredictButton";
 import Graph from "./components/Graph";
+import { getGraphDataAPICall, getPastDataAPICall } from "../../ApiCalls";
 import {
-  getPastDataAPICall,
-  getPastDataUnbiasedAPICall,
-  predictDataAPICall,
-  predictDataUnbiasedAPICall,
-} from "../../ApiCalls";
-import { DataSeries } from "../../types";
+  DataSeries,
+  FormattedBigGraphData,
+  FormattedDataEntry,
+  OneModeGraphData,
+} from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
 import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -24,107 +24,97 @@ function DashboardPage() {
 
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
-  const [mode, setMode] = useState<string>("0");
+  const [mode, setMode] = useState<string>("1");
   const [filterGender, setFilterGender] = useState<string>("NoFilter");
   const [filterRace, setFilterRace] = useState<string>("NoFilter");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   // Data State Variables
-  const [pastData, setPastData] = useState<DataSeries>();
-  const [pastDataUnbiased, setPastDataUnbiased] = useState<DataSeries>();
-  const [predictedData, setPredictedData] = useState<DataSeries>();
-  const [predictedDataUnbiased, setPredictedDataUnbiased] =
-    useState<DataSeries>();
+  const [graphData, setGraphData] = useState<FormattedBigGraphData>();
+  const [modeGraphData, setModeGraphData] = useState<OneModeGraphData>();
+  const [pastData, setPastData] = useState<FormattedDataEntry[]>();
 
   function formatNumberForDisplay(num: number): string {
     if (num >= 1_000_000_000) {
       const billions = num / 1_000_000_000;
       return billions >= 100
-        ? `$${Math.round(billions)}B`
-        : `$${billions.toFixed(1).replace(/\.0$/, "")}B`;
+        ? `${Math.round(billions)}B`
+        : `${billions.toFixed(1).replace(/\.0$/, "")}B`;
     } else if (num >= 1_000_000) {
       const millions = num / 1_000_000;
       return millions >= 100
-        ? `$${Math.round(millions)}M`
-        : `$${millions.toFixed(1).replace(/\.0$/, "")}M`;
+        ? `${Math.round(millions)}M`
+        : `${millions.toFixed(1).replace(/\.0$/, "")}M`;
     } else if (num >= 1_000) {
       const thousands = num / 1_000;
       return thousands >= 100
-        ? `$${Math.round(thousands)}K`
-        : `$${thousands.toFixed(1).replace(/\.0$/, "")}K`;
+        ? `${Math.round(thousands)}K`
+        : `${thousands.toFixed(1).replace(/\.0$/, "")}K`;
     } else {
-      return "$" + num.toString();
+      return num.toString();
     }
   }
+
+  // async function getPastData() {
+  //   const formattedData = await getPastDataAPICall(
+  //     [filterGender, filterRace],
+  //     mode
+  //   );
+
+  //   if (formattedData) {
+  //     setPastData({
+  //       name: "Known Data",
+  //       color: "#2933f2",
+  //       data: formattedData,
+  //     });
+  //   }
+  // }
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(
-      [filterGender, filterRace],
+      {
+        filtering_factor: [filterGender, filterRace],
+        num_points: sliderValue,
+      },
       mode
     );
 
     if (formattedData) {
-      setPastData({
-        name: "Known Data",
-        color: "#2933f2",
-        data: formattedData,
-      });
+      setPastData(formattedData);
     }
   }
-  async function getPastDataUnbiased() {
-    const formattedData = await getPastDataUnbiasedAPICall(
-      [filterGender, filterRace],
-      mode
-    );
+
+  async function getGraphData() {
+    const formattedData = await getGraphDataAPICall({
+      filtering_factor: [filterGender, filterRace],
+      num_points: sliderValue,
+    });
 
     if (formattedData) {
-      setPastDataUnbiased({
-        name: "Known Data (Unbiased)",
-        color: "#f72525", //red
-        data: formattedData,
-      });
-    }
-  }
-  async function predictData() {
-    const formattedData = await predictDataAPICall(
-      [filterGender, filterRace],
-      sliderValue,
-      mode
-    );
-
-    if (formattedData) {
-      setPredictedData({
-        name: "Predicted Data",
-        color: "#030985", // dark blue
-        data: formattedData,
-      });
-    }
-  }
-  async function predictDataUnbiased() {
-    const formattedData = await predictDataUnbiasedAPICall(
-      [filterGender, filterRace],
-      sliderValue,
-      mode
-    );
-
-    if (formattedData) {
-      setPredictedDataUnbiased({
-        name: "Predicted Data (Unbiased)",
-        color: "#750101", // dark red
-        data: formattedData,
-      });
+      setGraphData(formattedData);
     }
   }
 
   function updatePrediction() {
-    getPastData();
-    getPastDataUnbiased();
-    predictData();
-    predictDataUnbiased();
+    getGraphData();
   }
 
   useEffect(() => {
+    if (mode == "0") {
+      setModeGraphData(graphData?.frequency_graph);
+    } else {
+      setModeGraphData(graphData?.revenue_graph);
+    }
+  }, [mode, graphData]);
+
+  useEffect(() => {
     getPastData();
+  }, []);
+
+  useEffect(() => {
+    if (graphData == undefined) {
+      getPastData();
+    }
   }, [mode]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -179,25 +169,62 @@ function DashboardPage() {
         justifyContent="center"
         alignItems="center"
       >
-        <Graph
-          pastData={pastData}
-          pastDataUnbiased={pastDataUnbiased}
-          predictedData={predictedData}
-          predictedDataUnbiased={predictedDataUnbiased}
-        />
+        {modeGraphData == undefined ? (
+          pastData == undefined ? (
+            <p>Loading</p>
+          ) : (
+            <Graph
+              pastData={{
+                name: "Known Data",
+                color: "blue",
+                data: pastData,
+              }}
+            />
+          )
+        ) : (
+          <Graph
+            pastData={{
+              name: "Known Data",
+              color: "blue",
+              data: modeGraphData.past_biased_line,
+            }}
+            pastDataUnbiased={{
+              name: "Known Data (Unbiased)",
+              color: "red",
+              data: modeGraphData.past_unbiased_line,
+            }}
+            predictedData={{
+              name: "Predicted Data",
+              color: "blue",
+              data: modeGraphData.predicted_biased_line,
+            }}
+            predictedDataUnbiased={{
+              name: "Predicted Data (Unbiased)",
+              color: "red",
+              data: modeGraphData.predicted_unbiased_line,
+            }}
+          />
+        )}
       </Box>
 
       <Box bgcolor="cornsilk" padding="40px">
-        <BigNumber
-          value={formatNumberForDisplay(27_100)}
-          revenueOrTransactions={mode}
-          averageOrTotal="average"
-        />
-        <BigNumber
-          value={formatNumberForDisplay(156_000_000)}
-          revenueOrTransactions={mode}
-          averageOrTotal="total"
-        />
+        {modeGraphData == undefined ? (
+          <p>no big numbers yet :(</p>
+        ) : (
+          <div>
+            <BigNumber
+              value={formatNumberForDisplay(modeGraphData.average_difference)}
+              revenueOrTransactions={mode}
+              averageOrTotal="average"
+            />
+            <BigNumber
+              value={formatNumberForDisplay(modeGraphData.total_difference)}
+              revenueOrTransactions={mode}
+              averageOrTotal="total"
+            />
+          </div>
+        )}
+
         <br />
 
         <span style={{ display: "flex", justifyContent: "space-between" }}>
