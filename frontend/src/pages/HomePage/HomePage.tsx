@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import logo from "../../assets/logo.png";
+import logo from "../../../public/logo.png";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
