@@ -128,6 +128,25 @@ class DataFormatter:
         df_to_convert['date'] = pd.to_datetime(df_to_convert['date']).dt.strftime('%Y-%m-%d')
         return df_to_convert
 
+    def _helper_output_df_format(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Helper function to format the DataFrame for output.
+
+        This function cleans the DataFrame, groups the data by date, and
+        aggregates the number of transactions and total revenue. Making two
+        dataframes with only the columns we care about.
+        """
+        self._clean_data()
+
+        frequency_df = self._df.groupby(self._df['date']).agg(
+            frequency=('Transaction_Amount_USD', 'count')
+        ).reset_index()
+
+        revenue_df = self._df.groupby(self._df['date']).agg(
+            revenue=('Transaction_Amount_USD', 'sum')
+        ).reset_index()
+
+        return frequency_df, revenue_df
+
     def get_for_display(self) -> tuple[list[dict], list[dict]]:
         """Formats the data for output, and converts to list of dictionaries"""
         frequency_df, revenue_df = self._helper_output_df_format()

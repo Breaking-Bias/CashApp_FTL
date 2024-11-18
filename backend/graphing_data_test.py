@@ -59,3 +59,14 @@ def test_invalid_date_values():
     with pytest.raises(AssertionError,
                        match="All values in the first column must be pd.Timestamp.date objects."):
         GraphingData(data)
+
+
+def test_equals():
+    data = pd.DataFrame({
+        "date": [pd.Timestamp("2023-01-01").date(),
+                 pd.Timestamp("2023-01-02").date()],
+        "frequency": [10, 20]
+    })
+    graphing_data1 = GraphingData(data)
+    graphing_data2 = GraphingData(data)
+    assert graphing_data1.equals(graphing_data2)
