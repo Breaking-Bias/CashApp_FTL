@@ -28,5 +28,5 @@ class GraphingData:
     def get_data(self) -> pd.DataFrame:
         return self.data.copy()
 
-    def is_equal(self, other: 'GraphingData') -> bool:
+    def equals(self, other: 'GraphingData') -> bool:
         return self.data.equals(other.data)
