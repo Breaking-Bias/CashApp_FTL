@@ -7,6 +7,8 @@ module.exports = {
     "^.+\\.jsx?$": "babel-jest", // Use babel-jest for JavaScript and JSX files
   },
   moduleNameMapper: {
-    "\\.(png|css|less|scss|sass)$": "identity-obj-proxy", // Handle CSS modules if needed
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy", // Handle CSS modules if needed
+    "\\.(png|jpg|jpeg|gif|svg|webp|ico|bmp|tiff)$":
+      "<rootDir>/__mocks__/fileMock.ts", // Map static assets
   },
 };
