@@ -7,27 +7,50 @@ interface Props {
   setMode: (newValue: string) => void;
 }
 
-// 0 means number of transactions, 1 means value of transactions
 function SwitchButtons({ mode, setMode }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMode(event.target.checked ? "1" : "0");
   };
 
+  // Ensure that the "tabbing" and "Enter" key toggle work together
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      // Toggle between "0" and "1" on Enter or Space
+      setMode(mode === "0" ? "1" : "0");
+    }
+  };
+
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+    <div>
+      {/* Transaction Frequency Switch */}
       <FormControlLabel
         control={
           <Switch
-            checked={mode === "1"} // "1" corresponds to Revenue
+            checked={mode === "0"}
             onChange={handleChange}
-            aria-label="Switch between Transaction Frequency and Revenue"
+            onKeyDown={handleKeyDown}  // Add onKeyDown for keyboard interactions (Enter/Space)
+            tabIndex={0}  // Make sure this switch is focusable with Tab
+            aria-label="Transaction Frequency"
           />
         }
-        label={mode === "0" ? "Transaction Frequency" : "Revenue"}
+        label="Transaction Frequency"
+      />
+      
+      {/* Revenue Switch */}
+      <FormControlLabel
+        control={
+          <Switch
+            checked={mode === "1"}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}  // Add onKeyDown for keyboard interactions (Enter/Space)
+            tabIndex={1}  // Ensure this is focusable after the first switch
+            aria-label="Revenue"
+          />
+        }
+        label="Revenue"
       />
     </div>
   );
 }
 
 export default SwitchButtons;
-
