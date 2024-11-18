@@ -51,7 +51,7 @@ class GraphAdapter:
         return result
 
     def getPredictedBiasedLine(self):
-        result = self.revenue_predicted_unbiased_data.get_data()
+        result = self.revenue_predicted_biased_data.get_data()
         result = self.helper_datetime_to_string(result)
         result = self.helper_name_for_output(result)
         result = self.helper_df_to_dict(result)
