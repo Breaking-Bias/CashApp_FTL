@@ -14,7 +14,7 @@ class GraphingData:
 
         assert data.columns[0] == "date", "First column header must be 'date'."
 
-        assert all(data.iloc[:, 0].apply(self._is_valid_date)),\
+        assert all(data.iloc[:, 0].apply(self._is_valid_date)), \
             "All values in the first column must be pd.Timestamp.date objects."
 
         assert data.columns[1] in ["frequency", "revenue"], \
