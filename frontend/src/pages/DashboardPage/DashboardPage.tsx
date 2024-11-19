@@ -128,7 +128,7 @@ function DashboardPage() {
   // PopUpGuidance
   const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
 
-  const openGuidance = () => setIsGuidanceOpen(true);
+  // const openGuidance = () => setIsGuidanceOpen(true);
   const closeGuidance = () => setIsGuidanceOpen(false);
 
   return (

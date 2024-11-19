@@ -1,4 +1,12 @@
- 
+  header {
+    grid-column: span 2; 
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+  }
+  
   /* File Selection and Upload Group */
   .file-upload-container {
     display: flex;
