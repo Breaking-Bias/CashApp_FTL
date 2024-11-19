@@ -12,7 +12,7 @@ function ExportGraphButton() {
       onClick={handleExport}
       color="success"
     >
-      Export Graph to PDF
+      Export Graph
     </Button>
   );
 }
