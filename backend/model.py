@@ -4,7 +4,8 @@ from statsmodels.tsa.arima.model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import adfuller, acf, pacf
 import plotly.express as px
 import plotly.graph_objects as go
-import data_formatter
+from data_formatter import DataFormatter
+from data_reader import DataReader
 
 MAX_FORECAST_STEPS = 100
 
@@ -18,7 +19,6 @@ class Model:
         """Only initialize self.data. forecast_df is left None.
         Assume that the user only wants prediction data for less than 100 days."""
         self.training_data = training_data
-        # self.data.set_index('date', inplace=True)
         self.forecast_df = None
 
     def predict(self):
@@ -126,10 +126,15 @@ class Model:
 
 if __name__ == '__main__':
     forecast_steps = 30
-    original_data = data_formatter.DataFormatter(pd.read_csv('data/women_bias_data.csv')).get_for_predicting()[0]
-    model = Model(original_data.copy())
+    df = ((DataFormatter(DataReader("women_bias_data.csv").read_dataset())
+           .filter_by("NoFilter","NoFilter")
+           .filter_invalid_transactions()).get_frequency_data().get_data())
+    df.set_index('date', inplace=True)
+    all_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
+    df = df.reindex(all_dates, fill_value=0)
+    df.index = df.index.date
+    df.index.name = 'date'
+    model = Model(df)
     model.predict().get_result(forecast_steps)
     model.visualize(forecast_steps)
-    # data_unbiased = original_data.copy()[original_data['Bias'] == 1]
-    # Model(data_unbiased).visualize(forecast_steps)
 
