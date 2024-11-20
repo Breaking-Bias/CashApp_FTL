@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima.model import ARIMA, ARIMAResults
+from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.stattools import adfuller, acf, pacf
 import plotly.express as px
 import plotly.graph_objects as go
 from data_formatter import DataFormatter
 from data_reader import DataReader
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 MAX_FORECAST_STEPS = 100
 
@@ -45,14 +46,16 @@ class Model:
 
         return forecast_values
 
-    def _check_stationarity(self, data) -> int:
+    @staticmethod
+    def _check_stationarity(data) -> int:
         d = 0
         data_diff = data
-        while not self._adf_test(data_diff) and d < 2:
+        while not Model._adf_test(data_diff) and d < 2:
             data_diff = data_diff.diff().dropna()
             d += 1
         return d
 
+    @staticmethod
     def _adf_test(series) -> bool:
         """Return True if the series is stationary."""
         result = adfuller(series)
@@ -65,6 +68,7 @@ class Model:
             print("The series is not stationary. Differencing may be needed.")
             return False
 
+    @staticmethod
     def _determine_lag(values: np.ndarray) -> int:
         """Return the number of lags to be included in the ARIMA model.
         The point where ACF cuts off indicates the value of q, and the one for PACF indicates p."""
@@ -75,15 +79,16 @@ class Model:
 
     def _pdq(self) -> tuple[int, int, int]:
         """Return the p, d, q value of data."""
+        # data = self.training_data
         # sample_size = len(data)
         # nlags = sample_size // 2
         # acf_values = acf(data, nlags)
         # pacf_values = pacf(data, nlags)
-        # p = self._determine_lag(pacf_values)
-        # d = self._check_stationarity(data)
-        # q = self._determine_lag(acf_values)
+        # p = Model._determine_lag(pacf_values)
+        # d = Model._check_stationarity(data)
+        # q = Model._determine_lag(acf_values)
         # return (p, d, q)
-        return (10, 2, 10)
+        return (11, 2, 10)
 
     # Currently this method is only for internal use.
     def visualize(self, forecast_steps):
@@ -124,9 +129,10 @@ class Model:
         )
         fig.show()
 
+
 if __name__ == '__main__':
     forecast_steps = 30
-    df = ((DataFormatter(DataReader("women_bias_data.csv").read_dataset())
+    df = ((DataFormatter(DataReader("synthetic_data.csv").read_dataset())
            .filter_by("NoFilter","NoFilter")
            .filter_invalid_transactions()).get_frequency_data().get_data())
     df.set_index('date', inplace=True)
@@ -137,4 +143,38 @@ if __name__ == '__main__':
     model = Model(df)
     model.predict().get_result(forecast_steps)
     model.visualize(forecast_steps)
+
+    # Prediction accuracy test
+    # Step 2: Define the range for A, B, and C
+    date_A = df.index.min()
+    date_C = df.index.max()
+    date_B = date_A + (date_C - date_A) // 2  # Choose B as the midpoint between A and C
+
+    # Step 3: Split the data
+    train_data = df.loc[date_A:date_B]
+    test_data = df.loc[date_B:date_C]
+
+    # Step 4: Train the model on data between A and B
+    model = Model(train_data)
+    model.predict().get_result(forecast_steps)  # Trains the model internally
+
+    # Step 5: Make predictions for dates between B and C
+    predictions = model.predict().get_result(len(test_data) - 1)
+
+    # Step 6: Extract the actual and predicted values for comparison
+    actual = test_data["frequency"].values  # Replace "frequency" with the actual target column name
+    predicted = predictions["mean"].values  # Replace "mean" with the column name for predictions
+
+    # Step 7: Calculate Mean Squared Error (MSE)
+    mse = mean_squared_error(actual, predicted)
+    mae = mean_absolute_error(actual, predicted)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(actual, predicted)
+
+    # Display results
+    print(f"Evaluation Metrics for Predictions between {date_B} and {date_C}:")
+    print(f"Mean Squared Error (MSE): {mse:.4f}")
+    print(f"Mean Absolute Error (MAE): {mae:.4f}")
+    print(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
+    print(f"R-squared (R²): {r2:.4f}")
 
