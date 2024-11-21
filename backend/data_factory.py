@@ -2,6 +2,9 @@ from typing import Tuple
 
 import pandas as pd
 
+from backend.graphing_data import GraphingData
+from difference_calculator import DifferenceCalculator
+from graph_adapter import GraphAdapter
 from data_formatter import DataFormatter
 from model_interactor import ModelInteractor
 from graphing_data import GraphingData
