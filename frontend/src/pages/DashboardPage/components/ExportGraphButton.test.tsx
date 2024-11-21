@@ -1,6 +1,23 @@
 import { render, screen } from "@testing-library/react";
 import ExportGraphButton from "./ExportGraphButton";
 
+jest.mock("../../../services/ExportService", () => ({
+    ExportService: {
+      exportGraphToPDF: jest.fn(),
+    },
+  }));
+  
+  beforeAll(() => {
+    window.HTMLCanvasElement.prototype.getContext = jest.fn().mockReturnValue({
+      fillRect: jest.fn(),
+      drawImage: jest.fn(),
+      getImageData: jest.fn(),
+      putImageData: jest.fn(),
+      createLinearGradient: jest.fn(),
+      createPattern: jest.fn(),
+    });
+  });
+
 describe("ExportGraphButton Component", () => {
   it("renders the button with the correct text", () => {
     render(<ExportGraphButton />);
