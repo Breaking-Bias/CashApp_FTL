@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
+import PopUpGuidance from "./components/PopUpGuidance";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -124,6 +125,12 @@ function DashboardPage() {
     setAnchorEl(null);
   };
 
+  // PopUpGuidance
+  const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
+
+  // const openGuidance = () => setIsGuidanceOpen(true);
+  const closeGuidance = () => setIsGuidanceOpen(false);
+
   return (
     <div id="grid-container">
       <header>
@@ -152,13 +159,16 @@ function DashboardPage() {
             onClose={handleClose}
             aria-label="Main menu"
           >
-            <MenuItem onClick={() => navigate("/guidance")}>
+            <MenuItem onClick={()  => setIsGuidanceOpen(true)}>
               How To Use
             </MenuItem>
             <MenuItem onClick={() => navigate("/upload-dataset")}>
               Upload Dataset
             </MenuItem>
           </Menu>
+          <div>
+            <PopUpGuidance isOpen={isGuidanceOpen} onClose={closeGuidance} />
+          </div>
         </div>
       </header>
 
