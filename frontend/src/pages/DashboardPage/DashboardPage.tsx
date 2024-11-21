@@ -159,7 +159,12 @@ function DashboardPage() {
             onClose={handleClose}
             aria-label="Main menu"
           >
-            <MenuItem onClick={()  => setIsGuidanceOpen(true)}>
+            <MenuItem
+              onClick={() => {
+                handleClose(); // Close the menu
+                setIsGuidanceOpen(true); // Open the guidance popup
+              }}
+            >
               How To Use
             </MenuItem>
             <MenuItem onClick={() => navigate("/upload-dataset")}>
