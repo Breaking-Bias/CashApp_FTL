@@ -3,9 +3,7 @@ from flask import Flask, jsonify, request
 from difference_calculator import DifferenceCalculator
 from graph_adapter import GraphAdapter
 from data_formatter import DataFormatter
-from data_reader import DataReader
 from model_interactor import ModelInteractor
-from file_uploader import FileUploader
 
 
 class UseCaseInteractor:

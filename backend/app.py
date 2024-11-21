@@ -2,13 +2,10 @@ import pandas as pd
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from difference_calculator import DifferenceCalculator
-from graph_adapter import GraphAdapter
-from data_formatter import DataFormatter
 from data_reader import DataReader
-from model_interactor import ModelInteractor
 from file_uploader import FileUploader
 from use_case_interactor import UseCaseInteractor
+from data_access_interface import DataAccessInterface
 
 
 class App:
@@ -16,6 +13,7 @@ class App:
     name_of_file: str
     read_dataset: pd.DataFrame
     use_case_interactor: UseCaseInteractor
+    data_access_interface: DataAccessInterface
 
     def __init__(self):
         self.app = Flask('app')
@@ -23,6 +21,7 @@ class App:
         self.name_of_file = 'women_bias_data.csv'
         self.read_dataset = DataReader(self.name_of_file).read_dataset()
         self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
+        self.data_access_interface = DataAccessInterface(self.app, self.name_of_file)
 
         # Register routes
         self._register_routes()
@@ -50,35 +49,14 @@ class App:
         return self.use_case_interactor.get_past_data()
 
     def upload_dataset(self):
-        """Endpoint to handle file upload."""
-        print('firstfile:', self.name_of_file)
-        # Initialize FileUploader within the route
-        file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
-
-        if 'file' not in request.files:
-            return jsonify({"message": "No file part"}), 400
-        file = request.files['file']
-        if file.filename == '':
-            return jsonify({"message": "No selected file"}), 400
-        file_path = file_uploader.save_file(file)
-        if file_path:
-            self.name_of_file = file_uploader.nameoffile
-            self.read_dataset = DataReader(self.name_of_file).read_dataset()
-            print(self.name_of_file)
-            return jsonify({"message": "File uploaded successfully", "file_path": file_path}), 200
-        else:
-            return jsonify({"message": "Invalid file format. Only CSV and XLSX are allowed."}), 400
+        return self.data_access_interface.upload_dataset()  # In this method self.read_dataset could be mutated.
 
     def get_datasets(self):
-        file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
-        try:
-            datasets = file_uploader.list_datasets()
-            return jsonify({"datasets": datasets}), 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+        return self.data_access_interface.get_datasets()
 
     def run(self):
         self.app.run()
+
 
 # Initialize the app and run it
 if __name__ == '__main__':
