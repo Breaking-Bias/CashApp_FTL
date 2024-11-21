@@ -135,9 +135,14 @@ function DashboardPage() {
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-          <h1 style={{ marginRight: "40px", color: "black" }}>
-            Showing data for
-          </h1>
+        <h1 
+          style={{ marginRight: "40px", color: "#333", fontSize: "2rem", lineHeight: "1.5", fontWeight: "bold" }}
+          aria-label="Showing data for"
+          tabIndex={1}> 
+          Showing Data For
+        </h1>
+
+
           <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
 
@@ -159,7 +164,12 @@ function DashboardPage() {
             onClose={handleClose}
             aria-label="Main menu"
           >
-            <MenuItem onClick={()  => setIsGuidanceOpen(true)}>
+            <MenuItem
+              onClick={() => {
+                handleClose(); 
+                setIsGuidanceOpen(true); 
+              }}
+            >
               How To Use
             </MenuItem>
             <MenuItem onClick={() => navigate("/upload-dataset")}>
@@ -218,7 +228,7 @@ function DashboardPage() {
 
       <Box bgcolor="cornsilk" padding="40px">
         {modeGraphData == undefined ? (
-          <p>no big numbers yet :(</p>
+          <p tabIndex={0}>no big numbers yet :(</p>
         ) : (
           <div>
             <BigNumber
@@ -237,7 +247,7 @@ function DashboardPage() {
         <br />
 
         <span style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Prediction Size:</h2>
+          <h2 tabIndex={0}>Prediction Size:</h2>
           <InfoTooltip
             title="The slider is used to adjust the prediction size. Longer timeframe when slider is on the right."
             ariaLabel="Help with prediction size slider"
@@ -251,7 +261,7 @@ function DashboardPage() {
         />
 
         <span style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Filters:</h2>
+          <h2 tabIndex={0}>Filters:</h2>
           <InfoTooltip
             title="Select the filters below to investigate a subset of the dataset."
             ariaLabel="Help with filters"

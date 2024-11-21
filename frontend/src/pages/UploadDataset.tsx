@@ -57,7 +57,7 @@ function UploadDataset() {
       </div>
 
       <div className="nav-buttons-container">
-      <button className="nav-button" onClick={() => navigate("/")}>Go to Home Page</button>
+      <button className="nav-button" onClick={() => navigate("/")}>Go to Welcome Page</button>
       <button className="nav-button" onClick={() => navigate("/graph")}>Go to Main Page</button>
       </div>
 
