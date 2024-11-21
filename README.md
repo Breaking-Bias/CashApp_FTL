@@ -44,16 +44,18 @@ Requirements:
 - Python
 
 To run the front end:
-'cd frontend'
-'npm install'
-'npm run dev'
+```
+cd frontend
+npm install
+npm run dev
+```
 
-To run server:
-TO RUN SERVER:
-
-'cd backend'
-'pip install -r requirements.txt'
-'python server.py' (or click the play button)
+To run the back end:
+```
+cd backend
+pip install -r requirements.txt
+python server.py (or click the play button)
+```
 
 # File Structure
 
