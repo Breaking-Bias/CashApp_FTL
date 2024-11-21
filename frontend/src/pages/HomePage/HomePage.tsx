@@ -8,10 +8,7 @@ const HomePage = (): JSX.Element => {
   const handleUploadDataset = () => {
     navigate("/upload-dataset"); // Route to upload dataset page
   };
-
-  const handleLogin = () => {
-    navigate("/graph");
-  };
+  
   return (
     <div className="container">
       <img alt="Logo" src="/logo.png" />
@@ -32,16 +29,6 @@ const HomePage = (): JSX.Element => {
       </Button>
       <br />
       {/* Button to go to the graph page */}
-      <Button
-        color="success"
-        variant="contained"
-        size="large"
-        className="login-button"
-        onClick={handleLogin}
-        sx={{ marginButtom: 2 }}
-      >
-        Start
-      </Button>
     </div>
   );
 };
