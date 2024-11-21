@@ -16,15 +16,6 @@ header {
   padding: 0 40px;
 }
 
-/* Help icon styling */
-.help-icon {
-  position: fixed;
-  bottom: 450px;
-  right: -120px;
-  background-color: #0000;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .popup-overlay {
   position: fixed;
@@ -47,16 +38,103 @@ header {
   text-align: center;
 }
 
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(114, 114, 114, 0.788); /* Black with slight transparency */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup container */
+.popup-content {
+  background-color: #ffffff; 
+  border-radius: 8px;
+  padding: 20px 30px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0
+  , 0, 0.3);
+  text-align: left; /* Align text to the left for better readability */
+  animation: fadeIn 0.3s ease-in-out;
+  color: #f5f5f5; /* Light font color for contrast */
+}
+
+/* Title styling */
+.popup-content h2 {
+  font-size: 1.8rem;
+  color: #000000; /* Pure white for titles */
+  margin-bottom: 20px;
+  text-align: center; /* Center the title for emphasis */
+}
+
+/* Paragraph styling */
+.popup-content p {
+  font-size: 1rem;
+  color: #000000; /* Light grey for paragraphs */
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+/* Make strong text stand out */
+.popup-content p strong {
+  color: #4BB543; /* Highlighted in gold for emphasis */
+}
+
+/* Close button styling */
 .close-button {
-  margin-top: 15px;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
+  background-color: #4BB543;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .close-button:hover {
-  background-color: #0056b3;
+  background-color: #276323;
+}
+
+.popup-content p {
+  margin-bottom: 15px; /* Adds spacing between paragraphs */
+  line-height: 1.8;    /* Improves readability */
+}
+
+.popup-content ul {
+  margin: 15px 0;      /* Space between list and paragraphs */
+  padding-left: 20px;  /* Indent lists for better hierarchy */
+}
+
+.popup-content li {
+  margin-bottom: 10px; /* Space between each list item */
+  color: #dcdcdc;      /* Consistent with the paragraph color */
+  line-height: 1.6;    /* Improve readability of list items */
+}
+
+.popup-content h3 {
+  color: #000000; /* Change this to the desired color */
+  font-size: 1rem; /* Adjust size as needed */
+  margin-top: 30px; /* Adds spacing below the heading */
+  text-align: left; /* Aligns text to the left */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

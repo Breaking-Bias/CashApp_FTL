@@ -1,5 +1,6 @@
 import React from 'react';
 // import './PopUpGuidance.css'; 
+// import '.DashboardPage.css';
 
 interface PopUpGuidanceProps {
   isOpen: boolean;
@@ -11,20 +12,30 @@ const PopUpGuidance: React.FC<PopUpGuidanceProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content">
-        <h2>How to Use the App</h2>
-        <p>Navigate through the menu to access different features.</p>
-        <p>In this page:</p> 
-        <p>Graph could be shown in either <strong>Transaction Value</strong> or <strong>Transaction Frequency</strong> by navigating the button on the top of this page.</p>
-        <p>Use <strong>Filter</strong> and <strong>Prediction Size</strong> to customize your data view.</p>
-        <p>Click on <strong>Make Forecast</strong> to visualize your data.</p>
-        <p>Click on <strong>Export Graph</strong> to get the pdf version.</p>
-        <p></p>
-        <button className="close-button" onClick={onClose}>
-          Close
-        </button>
+     <div className="popup-content">
+          <h2>How to Use the App</h2>
+          <h3>Working with Graphs</h3>
+          <p>Use the button at the top of this page to switch views in:</p>          <ul>
+            <p><strong>Transaction Value</strong></p>
+            <p><strong>Transaction Frequency</strong></p>
+          </ul>
+          
+
+          <h3>Customizing Your Graph</h3>
+          <ul>
+            <p><strong>Filter</strong>: Customize data views using filters.</p>
+            <p><strong>Prediction Size</strong>: Adjust the slider to define prediction size.</p>
+          </ul>
+
+          <h3>Actions</h3>
+          <p>Click <strong>Make Forecast</strong> to visualize data.</p>
+          <p>Click <strong>Export Graph</strong> to download a PDF version.</p>
+          
+          <button className="close-button" onClick={onClose}>Close</button>
+        </div>
+
       </div>
-    </div>
+
   );
 };
 
