@@ -4,11 +4,11 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Legend,
   ReferenceLine,
   Label,
 } from "recharts";
 import { DataSeries } from "../../../types";
+import { CYAN, PINK } from "../DashboardPage";
 
 // const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
@@ -72,104 +72,118 @@ function Graph({
   const monthTicks = generateMonthTicks(new Date(startDate), new Date(endDate));
 
   return (
-    <div id="graph-canvas">
-      {pastData == undefined ? (
-        <h1>Loading...</h1>
-      ) : (
-        <LineChart
-          width={900}
-          height={600}
-          margin={{ bottom: 50, left: 70, right: 50 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="date"
-            scale="time"
-            type="number"
-            tickFormatter={dateFormatter}
-            domain={[startDate, endDate]}
-            ticks={monthTicks}
+    <div>
+      <span
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          fontWeight: "bold",
+        }}
+      >
+        <p style={{ color: CYAN, marginRight: "30px" }}>Biased Data</p>
+        <p style={{ color: PINK }}>Unbiased Data</p>
+      </span>
+
+      <div id="graph-canvas">
+        {pastData == undefined ? (
+          <h1>Loading...</h1>
+        ) : (
+          <LineChart
+            width={900}
+            height={600}
+            margin={{ bottom: 50, left: 70, right: 50 }}
           >
-            <Label
-              value={"Time"}
-              style={{
-                fill: "black",
-                transform: "translate(0, 30px)",
-              }}
-            />
-          </XAxis>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="date"
+              scale="time"
+              type="number"
+              tickFormatter={dateFormatter}
+              domain={[startDate, endDate]}
+              ticks={monthTicks}
+            >
+              <Label
+                value={"Time"}
+                style={{
+                  fill: "black",
+                  transform: "translate(0, 30px)",
+                }}
+              />
+            </XAxis>
 
-          <YAxis dataKey="value">
-            <Label
-              value={mode == "0" ? "Number of Transactions" : "Cash Flow ($)"}
-              style={{
-                fill: "black",
-                rotate: "270deg",
-                textAnchor: "middle",
-                transform: "translate(-350px, -250px)",
-              }}
-              position="outside"
-              offset={-20}
-            />
-          </YAxis>
+            <YAxis dataKey="value">
+              <Label
+                value={mode == "0" ? "Number of Transactions" : "Cash Flow ($)"}
+                style={{
+                  fill: "black",
+                  rotate: "270deg",
+                  textAnchor: "middle",
+                  transform: "translate(-350px, -225px)",
+                }}
+                position="outside"
+              />
+            </YAxis>
 
-          <Legend layout="horizontal" verticalAlign="top" />
-
-          <Line
-            dot={false}
-            type="monotone"
-            dataKey="value"
-            data={pastData.data}
-            name={pastData.name}
-            stroke={pastData.color}
-          />
-
-          {pastDataUnbiased && (
             <Line
               dot={false}
               type="monotone"
               dataKey="value"
-              data={pastDataUnbiased.data}
-              name={pastDataUnbiased.name}
-              stroke={pastDataUnbiased.color}
+              data={pastData.data}
+              name={pastData.name}
+              stroke={pastData.color}
+              strokeWidth={2}
             />
-          )}
 
-          {predictedData && (
-            <Line
-              dot={false}
-              type="monotone"
-              dataKey="value"
-              data={predictedData.data}
-              name={predictedData.name}
-              stroke={predictedData.color}
-            />
-          )}
+            {pastDataUnbiased && (
+              <Line
+                dot={false}
+                type="monotone"
+                dataKey="value"
+                data={pastDataUnbiased.data}
+                name={pastDataUnbiased.name}
+                stroke={pastDataUnbiased.color}
+                strokeWidth={2}
+              />
+            )}
 
-          {predictedDataUnbiased && (
-            <Line
-              dot={false}
-              type="monotone"
-              dataKey="value"
-              data={predictedDataUnbiased.data}
-              name={predictedDataUnbiased.name}
-              stroke={predictedDataUnbiased.color}
-            />
-          )}
+            {predictedData && (
+              <Line
+                dot={false}
+                type="monotone"
+                dataKey="value"
+                data={predictedData.data}
+                name={predictedData.name}
+                stroke={predictedData.color}
+                strokeWidth={2}
+              />
+            )}
 
-          {predictedData && (
-            <ReferenceLine
-              x={predictedData.data[0].date.getTime()}
-              label={{
-                value: "Present",
-                position: "insideTopRight",
-                offset: 10,
-              }}
-              stroke="gray"
-            />
-          )}
-        </LineChart>
-      )}
+            {predictedDataUnbiased && (
+              <Line
+                dot={false}
+                type="monotone"
+                dataKey="value"
+                data={predictedDataUnbiased.data}
+                name={predictedDataUnbiased.name}
+                stroke={predictedDataUnbiased.color}
+                strokeWidth={2}
+              />
+            )}
+
+            {predictedData && (
+              <ReferenceLine
+                x={predictedData.data[0].date.getTime()}
+                label={{
+                  value: "Present",
+                  position: "insideTopRight",
+                  offset: 10,
+                }}
+                stroke="gray"
+              />
+            )}
+          </LineChart>
+        )}
+      </div>
     </div>
   );
 }
