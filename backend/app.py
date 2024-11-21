@@ -8,19 +8,21 @@ from data_formatter import DataFormatter
 from data_reader import DataReader
 from model_interactor import ModelInteractor
 from file_uploader import FileUploader
-from get_graph_interactor import GetGraphInteractor
+from use_case_interactor import UseCaseInteractor
 
 
 class App:
     app: Flask
     name_of_file: str
     read_dataset: pd.DataFrame
+    use_case_interactor: UseCaseInteractor
 
     def __init__(self):
         self.app = Flask('app')
         CORS(self.app)
         self.name_of_file = 'women_bias_data.csv'
         self.read_dataset = DataReader(self.name_of_file).read_dataset()
+        self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
 
         # Register routes
         self._register_routes()
@@ -42,36 +44,10 @@ class App:
         return jsonify(info)
 
     def get_graph_data(self):
-        interactor = GetGraphInteractor(self.app, self.read_dataset)
-        return interactor.get_graph_data()
+        return self.use_case_interactor.get_graph_data()
 
     def get_past_data(self):
-        formatted_past_data = (DataFormatter(self.read_dataset)
-                               .filter_invalid_transactions())
-
-        frequency_past_data_biased = formatted_past_data.get_frequency_data()
-        revenue_past_data_biased = formatted_past_data.get_revenue_data()
-
-        # Collect all the data
-        revenue_graph = GraphAdapter(revenue_past_data_biased)
-
-        frequency_graph = GraphAdapter(frequency_past_data_biased)
-
-        revenue_graph = {
-            "past_biased_line": revenue_graph.getPastBiasedLine()
-        }
-
-        frequency_graph = {
-            "past_biased_line": frequency_graph.getPastBiasedLine()
-        }
-
-        result = {
-            "revenue_graph": revenue_graph,
-            "frequency_graph": frequency_graph
-        }
-
-
-        return jsonify(result)
+        return self.use_case_interactor.get_past_data()
 
     def upload_dataset(self):
         """Endpoint to handle file upload."""
