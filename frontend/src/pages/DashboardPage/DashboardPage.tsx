@@ -19,6 +19,9 @@ import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
 import PopUpGuidance from "./components/PopUpGuidance";
 
+export const CYAN = "#00bbbb";
+export const PINK = "#ff4aa4";
+
 function DashboardPage() {
   const navigate = useNavigate();
 
@@ -54,21 +57,6 @@ function DashboardPage() {
       return num.toString();
     }
   }
-
-  // async function getPastData() {
-  //   const formattedData = await getPastDataAPICall(
-  //     [filterGender, filterRace],
-  //     mode
-  //   );
-
-  //   if (formattedData) {
-  //     setPastData({
-  //       name: "Known Data",
-  //       color: "#2933f2",
-  //       data: formattedData,
-  //     });
-  //   }
-  // }
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(
@@ -126,7 +114,7 @@ function DashboardPage() {
   };
 
   // PopUpGuidance
-  const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
+  const [isGuidanceOpen, setIsGuidanceOpen] = useState(true);
 
   // const openGuidance = () => setIsGuidanceOpen(true);
   const closeGuidance = () => setIsGuidanceOpen(false);
@@ -135,13 +123,19 @@ function DashboardPage() {
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-        <h1 
-          style={{ marginRight: "40px", color: "#333", fontSize: "2rem", lineHeight: "1.5", fontWeight: "bold" }}
-          aria-label="Showing data for"
-          tabIndex={1}> 
-          Showing Data For
-        </h1>
-
+          <h1
+            style={{
+              marginRight: "40px",
+              color: "#333",
+              fontSize: "2rem",
+              lineHeight: "1.5",
+              fontWeight: "bold",
+            }}
+            aria-label="Showing data for"
+            tabIndex={1}
+          >
+            Showing Data For
+          </h1>
 
           <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
@@ -166,8 +160,8 @@ function DashboardPage() {
           >
             <MenuItem
               onClick={() => {
-                handleClose(); 
-                setIsGuidanceOpen(true); 
+                handleClose();
+                setIsGuidanceOpen(true);
               }}
             >
               How To Use
@@ -193,33 +187,35 @@ function DashboardPage() {
             <p>Loading</p>
           ) : (
             <Graph
+              mode={mode}
               pastData={{
                 name: "Known Data",
-                color: "blue",
+                color: CYAN,
                 data: pastData,
               }}
             />
           )
         ) : (
           <Graph
+            mode={mode}
             pastData={{
               name: "Known Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.past_biased_line,
             }}
             pastDataUnbiased={{
               name: "Known Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.past_unbiased_line,
             }}
             predictedData={{
               name: "Predicted Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.predicted_biased_line,
             }}
             predictedDataUnbiased={{
               name: "Predicted Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.predicted_unbiased_line,
             }}
           />
