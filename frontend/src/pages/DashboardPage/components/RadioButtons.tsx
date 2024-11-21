@@ -8,8 +8,8 @@ interface Props {
 }
 
 function SwitchButtons({ mode, setMode }: Props) {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.checked ? "1" : "0");
+  const handleChange = () => {
+    setMode(mode === "0" ? "1" : "0");
   };
 
   // Ensure that the "tabbing" and "Enter" key toggle work together
@@ -22,32 +22,34 @@ function SwitchButtons({ mode, setMode }: Props) {
 
   return (
     <div>
-      {/* Transaction Frequency Switch */}
-      <FormControlLabel
-        control={
-          <Switch
-            checked={mode === "0"}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}  // Add onKeyDown for keyboard interactions (Enter/Space)
-            tabIndex={0}  // Make sure this switch is focusable with Tab
-            aria-label="Transaction Frequency"
-          />
-        }
-        label="Transaction Frequency"
-      />
-      
       {/* Revenue Switch */}
       <FormControlLabel
         control={
           <Switch
+            id="revenue-switch"
             checked={mode === "1"}
             onChange={handleChange}
-            onKeyDown={handleKeyDown}  // Add onKeyDown for keyboard interactions (Enter/Space)
-            tabIndex={1}  // Ensure this is focusable after the first switch
+            onKeyDown={handleKeyDown} // Add onKeyDown for keyboard interactions (Enter/Space)
+            tabIndex={1} // Ensure this is focusable after the first switch
             aria-label="Revenue"
           />
         }
         label="Revenue"
+      />
+
+      {/* Transaction Frequency Switch */}
+      <FormControlLabel
+        control={
+          <Switch
+            id="transactions-switch"
+            checked={mode === "0"}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown} // Add onKeyDown for keyboard interactions (Enter/Space)
+            tabIndex={0} // Make sure this switch is focusable with Tab
+            aria-label="Transaction Frequency"
+          />
+        }
+        label="Transaction Frequency"
       />
     </div>
   );
