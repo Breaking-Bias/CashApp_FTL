@@ -1,6 +1,8 @@
 import pandas as pd
 from difference_calculator import DifferenceCalculator
 from graph_adapter import GraphAdapter
+from data_formatter import DataFormatter
+from model_interactor import ModelInteractor
 from graphing_data import GraphingData
 from data_factory import DataFactory
 
