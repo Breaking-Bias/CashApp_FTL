@@ -1,3 +1,13 @@
+
+
+
+
+
+
+
+
+
+
 import "./DashboardPage.css";
 import { useEffect, useState } from "react";
 import Slider, { DEFAULT_SLIDER_VAL } from "./components/Slider";
@@ -126,7 +136,7 @@ function DashboardPage() {
   };
 
   // PopUpGuidance
-  const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
+  const [isGuidanceOpen, setIsGuidanceOpen] = useState(true);
 
   // const openGuidance = () => setIsGuidanceOpen(true);
   const closeGuidance = () => setIsGuidanceOpen(false);
@@ -135,13 +145,19 @@ function DashboardPage() {
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-        <h1 
-          style={{ marginRight: "40px", color: "#333", fontSize: "2rem", lineHeight: "1.5", fontWeight: "bold" }}
-          aria-label="Showing data for"
-          tabIndex={1}> 
-          Showing Data For
-        </h1>
-
+          <h1
+            style={{
+              marginRight: "40px",
+              color: "#333",
+              fontSize: "2rem",
+              lineHeight: "1.5",
+              fontWeight: "bold",
+            }}
+            aria-label="Showing data for"
+            tabIndex={1}
+          >
+            Showing Data For
+          </h1>
 
           <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
@@ -166,8 +182,8 @@ function DashboardPage() {
           >
             <MenuItem
               onClick={() => {
-                handleClose(); 
-                setIsGuidanceOpen(true); 
+                handleClose();
+                setIsGuidanceOpen(true);
               }}
             >
               How To Use
@@ -193,6 +209,7 @@ function DashboardPage() {
             <p>Loading</p>
           ) : (
             <Graph
+              mode={mode}
               pastData={{
                 name: "Known Data",
                 color: "blue",
@@ -202,6 +219,7 @@ function DashboardPage() {
           )
         ) : (
           <Graph
+            mode={mode}
             pastData={{
               name: "Known Data",
               color: "blue",

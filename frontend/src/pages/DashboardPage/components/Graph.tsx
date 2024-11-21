@@ -13,6 +13,7 @@ import { DataSeries } from "../../../types";
 // const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
 interface Props {
+  mode: string;
   pastData: DataSeries | undefined;
   pastDataUnbiased?: DataSeries | undefined;
   predictedData?: DataSeries | undefined;
@@ -20,6 +21,7 @@ interface Props {
 }
 
 function Graph({
+  mode,
   pastData,
   pastDataUnbiased,
   predictedData,
@@ -77,27 +79,34 @@ function Graph({
         <LineChart
           width={900}
           height={600}
-          margin={{ bottom: 50, left: 50, right: 50 }}
+          margin={{ bottom: 50, left: 70, right: 50 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            angle={-45}
-            textAnchor="end"
             dataKey="date"
             scale="time"
             type="number"
             tickFormatter={dateFormatter}
             domain={[startDate, endDate]}
             ticks={monthTicks}
-          />
+          >
+            <Label
+              value={"Time"}
+              style={{
+                fill: "black",
+                transform: "translate(0, 30px)",
+              }}
+            />
+          </XAxis>
 
           <YAxis dataKey="value">
             <Label
-              // value={"Number of Transactions"}
-              angle={270}
+              value={mode == "0" ? "Number of Transactions" : "Cash Flow ($)"}
               style={{
                 fill: "black",
+                rotate: "270deg",
                 textAnchor: "middle",
+                transform: "translate(-350px, -250px)",
               }}
               position="outside"
               offset={-20}
