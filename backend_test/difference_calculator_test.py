@@ -1,5 +1,5 @@
-from difference_calculator import DifferenceCalculator
-from graphing_data import GraphingData
+from backend.difference_calculator import DifferenceCalculator
+from backend.graphing_data import GraphingData
 import pandas as pd
 import pytest
 import datetime

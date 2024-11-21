@@ -1,8 +1,8 @@
 import pytest
 import pandas as pd
 import datetime
-from graphing_data import GraphingData
-from graph_adapter import GraphAdapter
+from backend.graphing_data import GraphingData
+from backend.graph_adapter import GraphAdapter
 
 # Sample data for testing
 def create_sample_data():

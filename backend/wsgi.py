@@ -1,4 +1,4 @@
-from app import App
+from backend.app import App
 
 # Initialize your App object
 application_instance = App()

@@ -1,13 +1,13 @@
 import os
 from werkzeug.utils import secure_filename
-from data_reader import DataReader
+
 
 class FileUploader:
     def __init__(self, upload_folder='data', allowed_extensions=None):
         self.upload_folder = upload_folder
         self.allowed_extensions = allowed_extensions
         self.nameoffile=None
-        
+
         # Ensure the upload folder exists
         if not os.path.exists(self.upload_folder):
             os.makedirs(self.upload_folder)
