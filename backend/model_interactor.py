@@ -1,5 +1,5 @@
-from backend.model import Model
-from backend.graphing_data import GraphingData
+from model import Model
+from graphing_data import GraphingData
 import pandas as pd
 
 

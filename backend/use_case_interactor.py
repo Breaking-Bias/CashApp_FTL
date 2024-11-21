@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from backend.get_graph_interactor import GetGraphInteractor
+from get_graph_interactor import GetGraphInteractor
 
 
 class UseCaseInteractor:

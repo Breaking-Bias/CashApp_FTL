@@ -1,9 +1,9 @@
 import pytest
 import pandas as pd
 
-from backend.graphing_data import GraphingData
-from backend.data_formatter import DataFormatter
-from backend.data_reader import DataReader
+from graphing_data import GraphingData
+from data_formatter import DataFormatter
+from data_reader import DataReader
 
 
 @pytest.fixture

@@ -62,7 +62,7 @@ def test_getinfo(client):
 
 def test_get_past_data(client):
     response = client.post('/getPastData', json={'filtering_factor': [None, None]})
-
+    
     assert response.status_code == 200
     # Ensure the response data is JSON
     try:
