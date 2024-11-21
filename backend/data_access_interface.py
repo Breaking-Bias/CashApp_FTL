@@ -5,16 +5,16 @@ from file_uploader import FileUploader
 
 class DataAccessInterface:
     app: Flask
-    name_of_file: str
+    name_of_file: str | None
 
-    def __init__(self, app: Flask, name_of_file: str):
+    def __init__(self, app: Flask):
         """app should be mutated by CORS() before calling this method."""
         self.app = app
-        self.name_of_file = name_of_file
+        self.name_of_file = None
 
     def upload_dataset(self):
         """Endpoint to handle file upload."""
-        print('firstfile:', self.name_of_file)
+        # print('firstfile:', self.name_of_file)
         # Initialize FileUploader within the route
         file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
 
