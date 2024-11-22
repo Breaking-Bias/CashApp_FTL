@@ -4,19 +4,22 @@ import "@/pages/HomePage/HomePage.css";
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate();
-
   const handleUploadDataset = () => {
-    navigate("/upload-dataset"); // Route to upload dataset page
+    navigate("/upload-dataset");
   };
-  
+
   return (
     <div className="container">
-      <img alt="Logo" src="/breakingbiaslogo.png" className="logo" />
-      <h1>Breaking Bias</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', justifyContent: 'center' }}>
+        <img 
+          alt="Logo" 
+          src="/breakingbiaslogo.png" 
+          className="logo" 
+          style={{ width: '60px', height: 'auto', margin: 0 }}
+        />
+        <h1 style={{ margin: 0 }}>Breaking Bias</h1>
+      </div>
       <h2 className="subheading">Make Better Decisions.</h2>
-      {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}
-      <br />
-      {/* Button to go to Upload Dataset */}
       <Button
         color="success"
         variant="contained"
@@ -27,8 +30,6 @@ const HomePage = (): JSX.Element => {
       >
         Upload Dataset
       </Button>
-      <br />
-      {/* Button to go to the graph page */}
     </div>
   );
 };
