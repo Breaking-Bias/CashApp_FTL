@@ -47,3 +47,6 @@ venv/
 */.pytest_cache/*
 __pycache__/
 *.pyc
+
+# response.json files
+*.json

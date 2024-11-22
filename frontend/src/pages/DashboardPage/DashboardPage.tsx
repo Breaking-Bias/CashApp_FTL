@@ -20,6 +20,9 @@ import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal.tsx"
 import * as React from "react";
 
+export const CYAN = "#00bbbb";
+export const PINK = "#ff4aa4";
+
 function DashboardPage() {
   const navigate = useNavigate();
 
@@ -55,21 +58,6 @@ function DashboardPage() {
       return num.toString();
     }
   }
-
-  // async function getPastData() {
-  //   const formattedData = await getPastDataAPICall(
-  //     [filterGender, filterRace],
-  //     mode
-  //   );
-
-  //   if (formattedData) {
-  //     setPastData({
-  //       name: "Known Data",
-  //       color: "#2933f2",
-  //       data: formattedData,
-  //     });
-  //   }
-  // }
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(
@@ -157,33 +145,35 @@ function DashboardPage() {
             <p>Loading</p>
           ) : (
             <Graph
+              mode={mode}
               pastData={{
                 name: "Known Data",
-                color: "blue",
+                color: CYAN,
                 data: pastData,
               }}
             />
           )
         ) : (
           <Graph
+            mode={mode}
             pastData={{
               name: "Known Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.past_biased_line,
             }}
             pastDataUnbiased={{
               name: "Known Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.past_unbiased_line,
             }}
             predictedData={{
               name: "Predicted Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.predicted_biased_line,
             }}
             predictedDataUnbiased={{
               name: "Predicted Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.predicted_unbiased_line,
             }}
           />
