@@ -34,10 +34,9 @@ function SwitchButtons({ mode, setMode }: Props) {
             Frequency
         </Typography>
         <FormControlLabel
-            component="h1"
             control={
                 <Switch
-                    color=""
+                    color={"success"}
                     id="revenue-switch"
                     defaultChecked
                     checked={mode === "1"}
