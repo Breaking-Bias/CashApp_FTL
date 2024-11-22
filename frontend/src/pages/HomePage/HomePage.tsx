@@ -11,9 +11,9 @@ const HomePage = (): JSX.Element => {
   
   return (
     <div className="container">
-      <img alt="Logo" src="/logo.png" />
-      <h1>Cash App</h1>
-      <h1>Bias Visualization</h1>
+      <img alt="Logo" src="/breakingbiaslogo.png" className="logo" />
+      <h1>Breaking Bias</h1>
+      <h2 className="subheading">Bias Visualization</h2>
       {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}
       <br />
       {/* Button to go to Upload Dataset */}
