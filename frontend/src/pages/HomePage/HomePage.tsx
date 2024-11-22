@@ -13,7 +13,7 @@ const HomePage = (): JSX.Element => {
     <div className="container">
       <img alt="Logo" src="/breakingbiaslogo.png" className="logo" />
       <h1>Breaking Bias</h1>
-      <h2 className="subheading">Bias Visualization</h2>
+      <h2 className="subheading">Make Better Decisions.</h2>
       {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}
       <br />
       {/* Button to go to Upload Dataset */}
