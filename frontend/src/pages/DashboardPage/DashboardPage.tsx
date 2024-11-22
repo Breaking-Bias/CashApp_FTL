@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
-import HelpModal from "./components/HelpModal.tsx"
+import HelpModal from "./components/HelpModal"
 import * as React from "react";
 
 export const CYAN = "#00bbbb";
