@@ -5,7 +5,7 @@ import GenderDropdownFilter from "./components/GenderDropdownFilter";
 import RaceDropdownFilter from "./components/RaceDropdownFilter";
 import PredictButton from "./components/PredictButton";
 import Graph from "./components/Graph";
-import { getGraphDataAPICall, getPastDataAPICall } from "../../ApiCalls";
+import { getGraphDataAPICall, getPastDataAPICall } from "../../services/ApiCalls";
 import {
   FormattedBigGraphData,
   FormattedDataEntry,
