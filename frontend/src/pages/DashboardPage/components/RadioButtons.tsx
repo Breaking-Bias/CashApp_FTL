@@ -1,6 +1,8 @@
 import React from "react";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 interface Props {
   mode: string;
@@ -23,34 +25,34 @@ function SwitchButtons({ mode, setMode }: Props) {
   return (
     <div>
       {/* Revenue Switch */}
-      <FormControlLabel
-        control={
-          <Switch
-            id="revenue-switch"
-            checked={mode === "1"}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown} // Add onKeyDown for keyboard interactions (Enter/Space)
-            tabIndex={1} // Ensure this is focusable after the first switch
-            aria-label="Revenue"
-          />
-        }
-        label="Revenue"
-      />
-
-      {/* Transaction Frequency Switch */}
-      <FormControlLabel
-        control={
-          <Switch
-            id="transactions-switch"
-            checked={mode === "0"}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown} // Add onKeyDown for keyboard interactions (Enter/Space)
-            tabIndex={0} // Make sure this switch is focusable with Tab
-            aria-label="Transaction Frequency"
-          />
-        }
-        label="Transaction Frequency"
-      />
+    <Box display="flex" justifyContent={"center"} sx={{p: 4}}>
+        <Typography variant="h4" component="h1" sx={{marginRight:2}}>
+            Graph Type:
+        </Typography>
+        <Typography variant="h5" component="h1"
+                    sx={{marginRight: "8px", marginTop: "5px"}}>
+            Frequency
+        </Typography>
+        <FormControlLabel
+            component="h1"
+            control={
+                <Switch
+                    color=""
+                    id="revenue-switch"
+                    defaultChecked
+                    checked={mode === "1"}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown} // Add onKeyDown for keyboard interactions (Enter/Space)
+                    tabIndex={0} // Ensure this is focusable after the first switch
+                    aria-label="Switch between revenue graph and frequency graph"
+                />
+            }
+            label=""
+        />
+        <Typography component="h1" variant="h5" sx={{marginLeft: "-13px", marginTop: "5px"}}>
+            Revenue
+        </Typography>
+    </Box>
     </div>
   );
 }

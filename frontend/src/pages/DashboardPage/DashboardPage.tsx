@@ -12,12 +12,13 @@ import {
   OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import { Button, Menu, MenuItem, Box } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
-import PopUpGuidance from "./components/PopUpGuidance";
+import HelpModal from "./components/HelpModal.tsx"
+import * as React from "react";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function DashboardPage() {
   const [mode, setMode] = useState<string>("1");
   const [filterGender, setFilterGender] = useState<string>("NoFilter");
   const [filterRace, setFilterRace] = useState<string>("NoFilter");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = React.useState(false);
 
   // Data State Variables
   const [graphData, setGraphData] = useState<FormattedBigGraphData>();
@@ -117,69 +118,32 @@ function DashboardPage() {
     }
   }, [mode]);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // PopUpGuidance
-  const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
-
-  // const openGuidance = () => setIsGuidanceOpen(true);
-  const closeGuidance = () => setIsGuidanceOpen(false);
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
   return (
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-        <h1 
-          style={{ marginRight: "40px", color: "#333", fontSize: "2rem", lineHeight: "1.5", fontWeight: "bold" }}
-          aria-label="Showing data for"
-          tabIndex={1}> 
-          Showing Data For
-        </h1>
 
-
-          <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
+        <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
 
-        <div id="menu-container">
-          <Button
-            variant="contained"
+        {/*add some padding*/}
+        {/* I know this is dumb */}
+        <Box sx={{ marginLeft: 50 }}/>
+
+        <HelpModal open={open} setOpen={setOpen}/>
+
+        <Button
             color="success"
-            onClick={handleClick}
-            aria-haspopup="true"
-            aria-expanded={Boolean(anchorEl)}
-            aria-controls="menu"
-            aria-label="Open menu"
-          >
-            Menu
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            aria-label="Main menu"
-          >
-            <MenuItem
-              onClick={() => {
-                handleClose(); 
-                setIsGuidanceOpen(true); 
-              }}
-            >
-              How To Use
-            </MenuItem>
-            <MenuItem onClick={() => navigate("/upload-dataset")}>
-              Upload Dataset
-            </MenuItem>
-          </Menu>
-          <div>
-            <PopUpGuidance isOpen={isGuidanceOpen} onClose={closeGuidance} />
-          </div>
-        </div>
+            variant="contained"
+            className="login-button"
+            onClick={() => navigate("/upload-dataset")}
+        >
+          Upload Dataset
+        </Button>
       </header>
 
       <Box
