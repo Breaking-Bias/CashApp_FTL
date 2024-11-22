@@ -1,8 +1,8 @@
 import pytest
 import pandas as pd
 
-from graphing_data import GraphingData
-from data_formatter import DataFormatter
+from use_case.graphing_data import GraphingData
+from interface_adapter.data_formatter import DataFormatter
 from data_reader import DataReader
 
 
