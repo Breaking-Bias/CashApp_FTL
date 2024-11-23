@@ -1,3 +1,23 @@
+/* body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #4f9f6b, white);
+  opacity: 1;
+  background-image:  
+    linear-gradient(30deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), 
+    linear-gradient(150deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), 
+    linear-gradient(30deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), 
+    linear-gradient(150deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), 
+    linear-gradient(60deg, #4f9f6b77 25%, transparent 25.5%, transparent 75%, #4f9f6b77 75%, #4f9f6b77), 
+    linear-gradient(60deg, #4f9f6b77 25%, transparent 25.5%, transparent 75%, #4f9f6b77 75%, #4f9f6b77);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+} */
+
 body {
   margin: 0;
   padding: 0;
@@ -5,15 +25,43 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #e5e5f7;
-  opacity: 1;
-  background-image:  linear-gradient(30deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), linear-gradient(150deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), linear-gradient(30deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), linear-gradient(150deg, #4f9f6b 12%, transparent 12.5%, transparent 87%, #4f9f6b 87.5%, #4f9f6b), linear-gradient(60deg, #4f9f6b77 25%, transparent 25.5%, transparent 75%, #4f9f6b77 75%, #4f9f6b77), linear-gradient(60deg, #4f9f6b77 25%, transparent 25.5%, transparent 75%, #4f9f6b77 75%, #4f9f6b77);
-  background-size: 80px 140px;
-  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  background: linear-gradient(to bottom, #39b834, white 60%); /* Green to white gradient */
+}
+
+
+body, html {
+  overflow-x: hidden;
+  scroll-padding-top: 200px;
+}
+
+.header {
+  position: fixed; /* Stays at the top of the page when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of the page */
+  background-color: #ffffff; /* Green color */
+  color: black(0, 0, 0); /* White text for contrast */
+  display: flex; /* Flexbox for layout */
+  justify-content: space-between; /* Space between elements */
+  align-items: center; /* Vertically center items */
+  padding: 10px 20px; /* Spacing around elements */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  z-index: 1000; /* Ensures it stays above other elements */
+}
+
+header a {
+  text-decoration: none;
+  color: black; 
+  font-size: 1rem; 
+  margin: 0 40px; 
+  transition: color 0.3s ease; 
+}
+
+header a:hover {
+  color: #1dde3d; /
 }
 
 .container {
-.initial-section {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -45,115 +93,103 @@ h1 {
   padding: 20px;
 }
 
-.scroll-section {
-  margin-top: 200px; /* Adjust as necessary */
-  padding: 20px;
-  position: relative;
-  overflow: auto; /* Allow scrolling for content overflow */
+#welcome {
+  text-align: center; 
+  padding: 60px 20px; 
+  color: #2b2b2b; 
+}
+
+#welcome h1 {
+  font-size: 2.5rem; /* Adjust size for headlines */
+  margin-bottom: 20px; /* Add space below the heading */
+  text-transform: uppercase; /* Make the text uppercase for emphasis */
+  letter-spacing: 1.5px; /* Add letter spacing for a modern look */
+}
+
+#welcome p {
+  font-size: 1.2rem; /* Adjust the font size for readability */
+  line-height: 1.6; /* Improve readability with line height */
+  color: #333; /* Slightly darker shade for contrast */
+  max-width: 700px; /* Limit width for better layout */
+  margin: 0 auto; /* Center the paragraph within the section */
 }
 
 
 
-.graph-container {
+.mission-section {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #e8f5e9; 
-  padding: 40px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
-  border-radius: 8px;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center; /* Center the content horizontally */
+  padding: 60px 20px; /* Add spacing */
+  gap: 20px; 
 }
 
-.graph {
-  flex: 1;
-  padding: 10px;
+.mission-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns: 50% each */
+  gap: 20px; /* Space between the columns */
+  align-items: start; /* Align items to the top */
+  max-width: 1200px; /* Limit content width for better layout */
+  margin: 0 auto; /* Center the grid */
 }
 
-.graph img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-.goal {
-  font-size: 1rem;
-  color: #333;
-  text-align: left;
-  margin: 20px;
-  max-width: 600px;
-}
-
-
-.get-started-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  color: green;
-}
-
-
-/* Graph container */
-.graph-container {
+.mission-text {
   display: flex;
-  align-items: center;
-  justify-content: space-between; /* Space between graph and paragraph */
-  background-color: #e8f5e9; /* Light green background */
-  padding: 40px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
-  border-radius: 8px;
-  margin-top: 100px;
+  flex-direction: column;
+  justify-content: flex-start; /* Align text to the top */
+  gap: 15px; /* Space between elements */
 }
 
-/* Graph styles */
-.graph {
-  flex: 1;
-  padding: 10px;
-}
-
-.graph img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Illustration paragraph */
-.illustration {
-  flex: 1;
-  padding: 20px;
+.mission-heading {
+  font-size: 3rem; /* Larger heading for emphasis */
+  color: #000000; 
+  margin-bottom: 10px;
+  margin-left: 30px
 }
 
 .goal-text {
-  font-size: 1.2rem; /* General text size */
-  color: #333; /* Dark gray for readability */
-  text-align: left; /* Align text to the left */
-  line-height: 1.5; /* Increase line spacing for readability */
-  margin: 20px 0; /* Add space above and below */
-  padding: 10px; /* Add padding for a cleaner look */
-  background-color: #f9f9f9; /* Light background for contrast */
-}
-
-.goal-text strong {
-  font-size: 1.4rem; /* Emphasize the word "Goal" */
-  color: #2e7d32; /* Use a green shade for emphasis */
-  text-align: left;
-}
-
-.goal-text .highlighted-text {
-  font-size: 1rem; /* Slightly smaller for supplementary info */
-  color: #00796b; /* Teal shade for emphasis */
-  font-style: italic; /* Differentiates the text */
-}
-
-.get-started-button {
-  position: fixed;
-  bottom: 30px;
-  right: -500px;
-  background-color: #388e3c; /* Green color for button */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 50px;
   font-size: 1.2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  line-height: 1.6;
+  color: #333;
+}
+
+.highlighted-text {
+  font-size: 1rem;
+  font-style: italic;
+  color: #555;
+}
+
+.mission-graph img {
+  max-width: 100%; /* Ensure the image is responsive */
+  border: 2px solid #ccc; /* Optional: Add a border for styling */
+  border-radius: 10px; /* Optional: Rounded corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .graph-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .illustration {
+    margin-top: 20px;
+  }
+}
+
+
+.top {
+  padding: 10px;
+  font-family: sans-serif;
+  color: white;
+  background: #4f9f6b;
+  border-radius: 100px;
+  position: sticky;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  z-index: 1000; /* Ensure it's above other content */
-}}
+  margin-bottom: 20px;
+}

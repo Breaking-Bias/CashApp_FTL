@@ -50,12 +50,12 @@ function UploadDataset() {
 
   return (
     <div className="main-class">
-      <h1 className="upload-dataset" style={{textAlign:"center", color: "#333",}}>Upload Dataset</h1>
+      
       
 
       
       <Card className="border-control"  sx={{width:"500px", padding:"40px", maxWidth:"100%", margin:"0 auto" ,border: "2px solid black", boxShadow: 3,}}>
-        <h2 className="text-xl font-semibold mb-3">Upload dataset here:</h2>
+      <h1 className="upload-dataset" style={{textAlign:"center", color: "#333", marginBottom: "20px"}}>Upload Dataset</h1>
         
         <div className="flex flex-col items-center gap-6 mb-8">
           <input 
@@ -65,22 +65,22 @@ function UploadDataset() {
           />
           <button 
             onClick={handleUpload}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="upload-button"
           >
             Upload Dataset
           </button>
         </div>
         
-        <div className="flex justify-between gap-4">
+        <div className="nav-buttons-container">
           <button 
             onClick={() => navigate("/")}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+            className="nav-button"
           >
             Back
           </button>
           <button 
             onClick={() => navigate("/graph")}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+            className="nav-button"
           >
             View Results
           </button>
