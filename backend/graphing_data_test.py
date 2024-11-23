@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from graphing_data import GraphingData
+from use_case.graphing_data import GraphingData
 
 
 def test_valid_data_frequency():
