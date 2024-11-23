@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pandas as pd
 
 from data_formatter import DataFormatter

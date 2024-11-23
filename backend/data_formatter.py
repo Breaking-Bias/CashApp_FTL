@@ -1,5 +1,5 @@
 import pandas as pd
-from graphing_data import GraphingData
+from use_case.graphing_data import GraphingData
 from filters import FilterManager, GenderFilter, RaceFilter
 
 
