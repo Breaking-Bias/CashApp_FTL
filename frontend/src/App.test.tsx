@@ -4,6 +4,6 @@ import App from "./App";
 
 test("Renders App", () => {
     render(<App />);
-    const title = screen.getByText(/Cash App/i);
+    const title = screen.getByText(/Breaking Bias/i);
     expect(title).toBeInTheDocument();
 });
