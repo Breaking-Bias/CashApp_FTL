@@ -1,32 +1,143 @@
-
-/* body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background-color: #a2c9ac83; 
-} */
-
-:root {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-.desktop-container {
+.initial-section {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%; 
+  justify-content: center;
+  background-color: #ffffff; 
   text-align: center;
+  padding: 20px;
+  margin-top: 300px;
+  margin-bottom: 200px;
 }
+
 
 h1 {
   font-size: 2.5rem;
   margin: 10px 0;
 }
 
-.login-button {
-  margin-top: 20px;
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.scroll-section {
+  margin-top: 200px; /* Adjust as necessary */
+  padding: 20px;
+  position: relative;
+  overflow: auto; /* Allow scrolling for content overflow */
+}
+
+
+
+.graph-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f5e9; 
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+  border-radius: 8px;
+}
+
+.graph {
+  flex: 1;
+  padding: 10px;
+}
+
+.graph img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.goal {
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+  margin: 20px;
+  max-width: 600px;
+}
+
+
+.get-started-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: green;
+}
+
+
+/* Graph container */
+.graph-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between graph and paragraph */
+  background-color: #e8f5e9; /* Light green background */
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+  border-radius: 8px;
+  margin-top: 100px;
+}
+
+/* Graph styles */
+.graph {
+  flex: 1;
+  padding: 10px;
+}
+
+.graph img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Illustration paragraph */
+.illustration {
+  flex: 1;
+  padding: 20px;
+}
+
+.goal-text {
+  font-size: 1.2rem; /* General text size */
+  color: #333; /* Dark gray for readability */
+  text-align: left; /* Align text to the left */
+  line-height: 1.5; /* Increase line spacing for readability */
+  margin: 20px 0; /* Add space above and below */
+  padding: 10px; /* Add padding for a cleaner look */
+  background-color: #f9f9f9; /* Light background for contrast */
+}
+
+.goal-text strong {
+  font-size: 1.4rem; /* Emphasize the word "Goal" */
+  color: #2e7d32; /* Use a green shade for emphasis */
+  text-align: left;
+}
+
+.goal-text .highlighted-text {
+  font-size: 1rem; /* Slightly smaller for supplementary info */
+  color: #00796b; /* Teal shade for emphasis */
+  font-style: italic; /* Differentiates the text */
+}
+
+.get-started-button {
+  position: fixed;
+  bottom: 30px;
+  right: -500px;
+  background-color: #388e3c; /* Green color for button */
+  color: white;
   padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+.get-started-button:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
 }
