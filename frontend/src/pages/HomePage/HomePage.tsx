@@ -11,7 +11,7 @@ const HomePage = (): JSX.Element => {
   
   return (
     <div className="container">
-      <img alt="Logo" src="/logo.png" />
+      <img alt="Logo" src="/logo.png" style={{ width: '53px', height: '53px' }} />
       <h1>Cash App</h1>
       <h1>Bias Visualization</h1>
       {/* <img className="rectangle" alt="Background" src={greenBlob} /> */}
