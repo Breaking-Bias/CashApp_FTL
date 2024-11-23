@@ -2,7 +2,7 @@ import json
 import pytest
 import re
 from datetime import datetime
-from test_pack.app import App
+from app import App
 
 
 @pytest.fixture
@@ -78,5 +78,5 @@ def test_get_past_data(client):
 def test_get_graph_data(client):
     response = client.post('/getGraphData', json={'num_points': 30, 'filtering_factor': [None, None]})
     assert response.status_code == 200
-    with open('../response_log.json', 'w') as f:
+    with open('./response_log.json', 'w') as f:
         json.dump(response.json, f, indent=4)
