@@ -60,8 +60,8 @@ const HomePage = (): JSX.Element => {
 
       {/* Welcome Section */}
       <section id="welcome">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Breaking Bias</h1>
-        <p className="text-xl mb-6">Empowering data-driven decisions by identifying and removing biases in your datasets.</p>
+        <h1 className="text-4xl font-bold mb-4">Welcome to the BVPT</h1>
+        <p className="text-xl mb-6">Your one and only Bias Visualisation and Prediction Tool .</p>
       </section>
 
       {/* How It Works Section */}
@@ -86,7 +86,7 @@ const HomePage = (): JSX.Element => {
         {/* Footer Section */}
         <footer className="py-6 bg-green-600 text-white text-center">
           <div className="flex justify-center space-x-8 mb-4"></div>
-          <p>© 2024 Breaking Bias | For more information, please contact: <a href="mailto:MrBigBoss@gmail.com" className="hover:underline">MrBigBoss@gmail.com</a></p>
+          <p>© 2024 Breaking Bias</p>
         </footer>
 
       {/* Scroll to Top Button */}
