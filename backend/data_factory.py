@@ -1,10 +1,8 @@
-from typing import Tuple
-
 import pandas as pd
 
 from data_formatter import DataFormatter
 from model_interactor import ModelInteractor
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 
 
 class DataFactory:

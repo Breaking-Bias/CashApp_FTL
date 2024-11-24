@@ -1,5 +1,5 @@
 import pandas as pd
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 
 
 class DifferenceCalculator:

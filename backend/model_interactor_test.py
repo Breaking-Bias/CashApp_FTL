@@ -1,5 +1,5 @@
 import datetime
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 from model_interactor import ModelInteractor
 import pandas as pd
 import pytest

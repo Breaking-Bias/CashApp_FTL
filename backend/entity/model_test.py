@@ -1,8 +1,5 @@
 import pytest
-from data_formatter import DataFormatter
 from data_reader import DataReader
-from model import Model
-from model_interactor import ModelInteractor
 
 
 @pytest.fixture

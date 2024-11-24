@@ -1,5 +1,5 @@
-from model import Model
-from graphing_data import GraphingData
+from entity.model import Model
+from entity.graphing_data import GraphingData
 import pandas as pd
 
 

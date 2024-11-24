@@ -1,7 +1,7 @@
 import pandas as pd
 from difference_calculator import DifferenceCalculator
 from graph_adapter import GraphAdapter
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 from data_factory import DataFactory
 
 

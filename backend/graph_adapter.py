@@ -1,5 +1,5 @@
 import pandas as pd
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 
 class GraphAdapter:
     def __init__(self, revenue_past_biased_data: GraphingData,

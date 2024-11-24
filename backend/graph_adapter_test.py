@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import datetime
-from graphing_data import GraphingData
+from entity.graphing_data import GraphingData
 from graph_adapter import GraphAdapter
 
 # Sample data for testing
