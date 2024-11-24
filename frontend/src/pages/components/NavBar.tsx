@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink for active link support
-import './Navbar.css'; // Import the corresponding CSS file for styling
+import './NavBar.css'; // Import the corresponding CSS file for styling
 
 const Navbar: React.FC = () => {
   return (
