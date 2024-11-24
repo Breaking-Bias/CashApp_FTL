@@ -20,6 +20,7 @@ function GenderDropdownFilter({ onSelectChange }: DropdownFilterProps) {
       <Select
         value={selectedOption}
         onChange={handleChange}
+        inputProps={{ "data-testid": "gender-select" }}
       >
         <MenuItem value="NoFilter">No Filter</MenuItem>
         <MenuItem value="Male">Male</MenuItem>
