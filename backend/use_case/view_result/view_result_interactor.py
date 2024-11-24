@@ -1,0 +1,5 @@
+
+
+class ViewResultInteractor:
+    dao: DataAccessObject
+    
