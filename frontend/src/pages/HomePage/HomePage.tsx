@@ -71,7 +71,7 @@ const HomePage = (): JSX.Element => {
     <div className="mission-text">
       <h2 className="mission-heading">Mission</h2>
       <p className="goal-text">
-        Provide insights into the potential revenue that could have been earned if specific bias was removed from the dataset.
+       Our tool provides insights into the potential revenue change if specific bias was removed from the dataset. 
       </p>
       <p className="highlighted-text">(represented by the shaded area)</p>
     </div>
