@@ -1,8 +1,8 @@
 import pandas as pd
 import datetime
 
-from data_access.data_access_helper.data_reader import DataReader
-from data_access.data_access_helper.file_uploader import FileUploader
+from data_access.data_reader import DataReader
+from data_access.file_uploader import FileUploader
 
 
 class DataAccessObject:

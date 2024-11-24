@@ -1,8 +1,9 @@
 import pandas as pd
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from data_access.data_access_helper.data_reader import DataReader
+from data_access.data_reader import DataReader
+from interface_adaptor.upload_file.upload_file_controller import UploadFileController
 from use_case_interactor import UseCaseInteractor
 from use_case.upload_file.upload_file_interactor import UploadFileInteractor
 
@@ -44,7 +45,12 @@ class App:
 
     def upload_dataset(self):
         """self.read_dataset is mutated."""
-        return self.data_access_interface.upload_dataset()
+        # return self.data_access_interface.upload_dataset()
+        files = request.files
+        upload_file_controller = UploadFileController(files)
+        result = upload_file_controller.execute()
+        return jsonify(result[0]), result[1]
+
 
     def get_datasets(self):
         return self.data_access_interface.get_datasets()

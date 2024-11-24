@@ -1,5 +1,5 @@
 import pytest
-from data_access.data_access_helper.data_reader import DataReader
+from data_access.data_reader import DataReader
 
 
 @pytest.fixture

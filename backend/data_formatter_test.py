@@ -3,7 +3,7 @@ import pandas as pd
 
 from entity.graphing_data import GraphingData
 from data_formatter import DataFormatter
-from data_access.data_access_helper.data_reader import DataReader
+from data_access.data_reader import DataReader
 from filter_interactor import FilterInteractor
 
 

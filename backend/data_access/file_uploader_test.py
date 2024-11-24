@@ -2,7 +2,7 @@ import os
 import pytest
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
-from data_access.data_access_helper.file_uploader import FileUploader  # Adjust this import as needed
+from data_access.file_uploader import FileUploader  # Adjust this import as needed
 
 @pytest.fixture
 def file_uploader():
