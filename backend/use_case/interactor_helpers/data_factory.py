@@ -1,8 +1,9 @@
 import pandas as pd
 
-from data_formatter import DataFormatter
-from model_interactor import ModelInteractor
-from entity.graphing_data import GraphingData
+from use_case.interactor_helpers.data_formatter import DataFormatter
+from use_case.interactor_helpers.filter_interactor import FilterInteractor
+from use_case.interactor_helpers.model_interactor import ModelInteractor
+from entity.graphing_data import GraphingData  # This import is only for type annotation purpose.
 
 
 class DataFactory:
@@ -19,12 +20,12 @@ class DataFactory:
 
     def make_biased_data(self) -> tuple[GraphingData, GraphingData,
                                         GraphingData | None, GraphingData | None]:
-        formatted_past_data = (DataFormatter(self.dataset)
+        formatted_past_data = (FilterInteractor(self.dataset)
                                .filter_by(self.filter_gender, self.filter_race)
                                .filter_invalid_transactions())
 
-        frequency_past_data_biased = formatted_past_data.get_frequency_data()
-        revenue_past_data_biased = formatted_past_data.get_revenue_data()
+        frequency_past_data_biased = DataFormatter(formatted_past_data.get_df()).get_frequency_data()
+        revenue_past_data_biased = DataFormatter(formatted_past_data.get_df()).get_revenue_data()
         if self.forecast_steps > 0:
             frequency_predicted_data_biased, revenue_predicted_data_biased = (
                 ModelInteractor((frequency_past_data_biased,
@@ -38,14 +39,14 @@ class DataFactory:
 
     def make_unbiased_data(self) -> tuple[GraphingData, GraphingData,
                                           GraphingData | None, GraphingData | None]:
-        formatted_past_data_unbiased = (DataFormatter(self.dataset)
+        formatted_past_data_unbiased = (FilterInteractor(self.dataset)
                                         .filter_by(self.filter_gender,
                                                    self.filter_race)
                                         .unbias()
                                         .filter_invalid_transactions())
 
-        frequency_past_data_unbiased = formatted_past_data_unbiased.get_frequency_data()
-        revenue_past_data_unbiased = formatted_past_data_unbiased.get_revenue_data()
+        frequency_past_data_unbiased = DataFormatter(formatted_past_data_unbiased.get_df()).get_frequency_data()
+        revenue_past_data_unbiased = DataFormatter(formatted_past_data_unbiased.get_df()).get_revenue_data()
         if self.forecast_steps > 0:
             frequency_predicted_data_unbiased, revenue_predicted_data_unbiased = (
                 ModelInteractor((frequency_past_data_unbiased,

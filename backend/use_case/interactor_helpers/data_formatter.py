@@ -1,6 +1,6 @@
 import pandas as pd
 from entity.graphing_data import GraphingData
-from entity.filters import FilterManager, GenderFilter, RaceFilter
+# from entity.filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:

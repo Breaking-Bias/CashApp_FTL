@@ -2,9 +2,9 @@ import pytest
 import pandas as pd
 
 from entity.graphing_data import GraphingData
-from data_formatter import DataFormatter
+from use_case.interactor_helpers.data_formatter import DataFormatter
 from data_access.data_reader import DataReader
-from filter_interactor import FilterInteractor
+from use_case.interactor_helpers.filter_interactor import FilterInteractor
 
 
 @pytest.fixture

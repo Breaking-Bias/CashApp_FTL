@@ -1,4 +1,4 @@
-from difference_calculator import DifferenceCalculator
+from entity.difference_calculator import DifferenceCalculator
 from entity.graphing_data import GraphingData
 import pandas as pd
 import pytest

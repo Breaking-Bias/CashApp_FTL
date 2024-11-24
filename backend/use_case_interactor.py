@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from get_graph_interactor import GetGraphInteractor
+from use_case.interactor_helpers.get_graph_interactor import GetGraphInteractor
 
 
 class UseCaseInteractor:
@@ -20,8 +20,8 @@ class UseCaseInteractor:
         result = get_graph_interactor.make_graph()
         return jsonify(result)
 
-    def get_past_data(self):
-        get_graph_interactor = GetGraphInteractor(self.dataset, "NoFilter", "NoFilter", 0)
-        result = get_graph_interactor.make_graph_only_past()
-        return jsonify(result)
+    # def get_past_data(self):
+    #     get_graph_interactor = GetGraphInteractor(self.dataset, "NoFilter", "NoFilter", 0)
+    #     result = get_graph_interactor.make_graph_only_past()
+    #     return jsonify(result)
 

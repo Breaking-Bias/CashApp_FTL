@@ -1,5 +1,5 @@
 import pandas as pd
-from entity.graphing_data import GraphingData
+from entity.graphing_data import GraphingData  # This import is only for type annotation purpose.
 
 
 class DifferenceCalculator:
