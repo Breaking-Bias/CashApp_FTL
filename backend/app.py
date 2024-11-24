@@ -12,14 +12,17 @@ TEST_FILE_NAME = 'women_bias_data.csv'
 
 class App:
     app: Flask
-    data_access_interface: UploadFileInteractor
+    upload_file_controller: UploadFileController
+
+    # data_access_interface: UploadFileInteractor
     read_dataset: pd.DataFrame
     use_case_interactor: UseCaseInteractor
 
     def __init__(self):
         self.app = Flask('app')
         CORS(self.app)
-        self.data_access_interface = UploadFileInteractor(self.app)
+        self.upload_file_controller = UploadFileController(request.files)
+        # self.data_access_interface = UploadFileInteractor(self.app)
         self.read_dataset = DataReader(self.data_access_interface.name_of_file
                                        or TEST_FILE_NAME).read_dataset()
         self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
@@ -46,14 +49,13 @@ class App:
     def upload_dataset(self):
         """self.read_dataset is mutated."""
         # return self.data_access_interface.upload_dataset()
-        files = request.files
-        upload_file_controller = UploadFileController(files)
-        result = upload_file_controller.execute()
+        result = self.upload_file_controller.execute()
         return jsonify(result[0]), result[1]
 
-
     def get_datasets(self):
-        return self.data_access_interface.get_datasets()
+        # return self.data_access_interface.get_datasets()
+        result = self.upload_file_controller.get_datasets_from_interactor()
+        return jsonify(result[0]), result[1]
 
     def get_graph_data(self):
         return self.use_case_interactor.get_graph_data()

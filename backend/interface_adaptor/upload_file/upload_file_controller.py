@@ -10,3 +10,6 @@ class UploadFileController:
 
     def execute(self):
         return self.upload_file_interactor.upload_dataset(self.files)
+
+    def get_datasets_from_interactor(self):
+        return self.upload_file_interactor.get_datasets_from_data_access()

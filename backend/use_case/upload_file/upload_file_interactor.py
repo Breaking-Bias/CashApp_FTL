@@ -30,7 +30,7 @@ class UploadFileInteractor:
             return {"message": "Invalid file format. Only CSV and XLSX are allowed."}, 400
 
     @staticmethod
-    def get_datasets():
+    def get_datasets_from_data_access():
         file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
         try:
             datasets = file_uploader.list_datasets()
