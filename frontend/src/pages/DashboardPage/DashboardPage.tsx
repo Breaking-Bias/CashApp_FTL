@@ -12,8 +12,7 @@ import {
   OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import { Button, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
@@ -25,7 +24,6 @@ export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
 
 function DashboardPage() {
-  const navigate = useNavigate();
 
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
