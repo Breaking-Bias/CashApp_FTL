@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
-from data_reader import DataReader
-from file_uploader import FileUploader
+from data_access.data_access_helper.data_reader import DataReader
+from data_access.data_access_helper.file_uploader import FileUploader
 
 
-class DataAccessInterface:
+class UploadFileInteractor:
     app: Flask
     name_of_file: str | None
 

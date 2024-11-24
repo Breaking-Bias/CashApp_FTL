@@ -1,9 +1,14 @@
 import pandas as pd
 import datetime
 
+from data_access.data_access_helper.data_reader import DataReader
+from data_access.data_access_helper.file_uploader import FileUploader
+
 
 class DataAccessObject:
     df: pd.DataFrame
+    data_reader: DataReader
+    file_uploader: FileUploader
 
     def __init__(self, df: pd.DataFrame):
         self.df = df
