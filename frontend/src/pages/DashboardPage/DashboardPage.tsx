@@ -19,6 +19,7 @@ import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
 import * as React from "react";
+import { GraphDescription } from "./components/ScreenReaderOnly";
 
 export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
@@ -179,6 +180,17 @@ function DashboardPage() {
           />
         )}
       </Box>
+
+      {modeGraphData && (
+        <Box bgcolor="cornsilk" padding="40px">
+          <GraphDescription
+            modeGraphData={modeGraphData}
+            mode={mode}
+            filterGender={filterGender}
+            filterRace={filterRace}
+          />
+        </Box>
+      )}
 
       <Box bgcolor="cornsilk" padding="40px">
         {modeGraphData == undefined ? (
