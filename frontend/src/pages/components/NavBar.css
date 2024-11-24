@@ -1,0 +1,67 @@
+/* Navbar styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    background-color: #ffffff; 
+    color: black; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+  }
+  
+  .header nav {
+    display: flex; 
+    align-items: center;  }
+  .nav-links {
+    display: flex; 
+  }
+  .nav-links a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: black; 
+    font-weight: 500; 
+  }
+  .nav-links a:hover {
+    color: #007bff; 
+  }
+  .nav-links .active {
+    color: #007bff;
+    font-weight: bold; 
+    border-bottom: 2px solid #007bff; /
+  }
+  
+  .login-button {
+    margin-left: 20px; 
+  }
+
+  /* Optional: Make navbar links and button responsive */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column; /* Stack elements vertically on small screens */
+      align-items: flex-start; /* Align items to the start */
+    }
+  
+    .header nav {
+      width: 100%; /* Full width for nav links */
+      margin-top: 10px;
+    }
+  
+    .header .nav-links {
+      flex-direction: column; /* Stack the nav links vertically */
+      width: 100%;
+    }
+  
+    .header .nav-links a {
+      margin: 5px 0; /* Reduce spacing for smaller screens */
+    }
+  
+    .header .login-button {
+      margin-top: 10px; /* Adds some space between the button and links on mobile */
+    }
+  }
+  

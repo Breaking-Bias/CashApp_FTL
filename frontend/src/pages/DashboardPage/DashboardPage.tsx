@@ -19,6 +19,7 @@ import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
 import * as React from "react";
+import Navbar from "../components/NavBar";
 
 export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
@@ -120,18 +121,10 @@ function DashboardPage() {
 
         {/*add some padding*/}
         {/* I know this is dumb */}
-        <Box sx={{ marginLeft: 50 }}/>
+        <Box sx={{ marginLeft: 50, paddingTop: '220px'}}/>
 
         <HelpModal open={open} setOpen={setOpen}/>
-
-        <Button
-            color="success"
-            variant="contained"
-            className="login-button"
-            onClick={() => navigate("/upload-dataset")}
-        >
-          Upload Dataset
-        </Button>
+        <Navbar/>
       </header>
 
       <Box
