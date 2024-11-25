@@ -180,17 +180,14 @@ function DashboardPage() {
           />
         )}
       </Box>
-
       {modeGraphData && (
-        <Box bgcolor="cornsilk" padding="40px">
-          <GraphDescription
-            modeGraphData={modeGraphData}
-            mode={mode}
-            filterGender={filterGender}
-            filterRace={filterRace}
-          />
-        </Box>
-      )}
+    <GraphDescription
+      modeGraphData={modeGraphData}
+      mode={mode}
+      filterGender={filterGender}
+      filterRace={filterRace}
+    />
+)}
 
       <Box bgcolor="cornsilk" padding="40px">
         {modeGraphData == undefined ? (
