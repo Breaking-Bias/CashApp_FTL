@@ -2,7 +2,7 @@ import json
 import pytest
 import re
 from datetime import datetime
-from app import App
+from app.app import App
 
 
 @pytest.fixture
