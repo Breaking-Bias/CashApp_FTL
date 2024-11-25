@@ -1,42 +1,36 @@
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 
 interface Props {
-  value: string;
-  averageOrTotal: "average" | "total";
-  revenueOrTransactions: string;
+    value: string;
+    averageOrTotal: "daily" | "total";
+    revenueOrTransactions: string;
 }
 
 export default function BigNumber({
-  value,
-  averageOrTotal,
-  revenueOrTransactions,
-}: Props) {
-  return (
-    <Box display="flex" alignItems="center" justifyContent="space-evenly">
-      <p
-        style={{
-          fontSize: "4rem",
-          fontWeight: "bold",
-          color: "black",
-          margin: 0,
-        }}
-      >
-        {revenueOrTransactions == "1" && "$"}
-        {value}
-      </p>
-      <p>
-        {averageOrTotal}
-        <br />
-        {revenueOrTransactions == "0" ? "transactions" : "revenue"}
-      </p>
-      {/*<InfoTooltip*/}
-      {/*  title={`The ${averageOrTotal} difference between biased and unbiased ${*/}
-      {/*    revenueOrTransactions == "0" ? "transactions" : "revenue"*/}
-      {/*  }.`}*/}
-      {/*  ariaLabel={`Help with ${averageOrTotal} ${*/}
-      {/*    revenueOrTransactions == "0" ? "transactions" : "revenue"*/}
-      {/*  }`}*/}
-      {/*/>*/}
-    </Box>
-  );
+                                      value,
+                                      averageOrTotal,
+                                      revenueOrTransactions,
+                                  }: Props) {
+    return (
+        <Box aria-live="polite" display="flex" alignItems="center" justifyContent="space-evenly">
+            <p
+                style={{
+                    fontSize: "4rem",
+                    fontWeight: "bold",
+                    color: "black",
+                    margin: 0,
+                }}
+            >
+                {revenueOrTransactions == "1" && "$"}
+                {value}
+            </p>
+            <p>
+                Potential&nbsp;
+                {averageOrTotal}
+                <br/>
+                {revenueOrTransactions == "0" ? "transaction volume" : "cash-flow"}
+                &nbsp;incr.
+            </p>
+        </Box>
+    );
 }
