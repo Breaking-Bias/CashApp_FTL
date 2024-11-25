@@ -22,8 +22,9 @@ function GenderDropdownFilter({onSelectChange}: DropdownFilterProps) {
 
     return (
             <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
-                <InputLabel sx={{ml: 2}} >Gender</InputLabel>
+                <InputLabel id="gender-filter" aria-label="gender to analyse" sx={{ml: 2}} >Gender</InputLabel>
                 <Select
+                    id="gender-filter"
                     value={selectedOption}
                     onChange={handleChange}
                     variant={"filled"}>
