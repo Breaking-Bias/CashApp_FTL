@@ -96,16 +96,15 @@ function DashboardPage() {
       <Navbar/>
       </header>
       <header>
-        <span style={{ display: "center" }}>
-
-        <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
-        </span>
-
-        <HelpModal open={open} setOpen={setOpen}/>
-      </header>
+      <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: '80px', width: '100%' }}>
+        <div style={{ marginRight: '20px' }}>
+          <RadioButtons mode={mode} setMode={setMode} />
+        </div>
+        <HelpModal open={open} setOpen={setOpen} />
+      </span>
+    </header>
 
       <Box
-        bgcolor="beige"
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -150,7 +149,7 @@ function DashboardPage() {
         )}
       </Box>
 
-      <Box bgcolor="cornsilk" padding="40px">
+      <Box padding="40px">
         {modeGraphData == undefined ? (
           <p tabIndex={0}>no big numbers yet :(</p>
         ) : (

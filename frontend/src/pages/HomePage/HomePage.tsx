@@ -17,17 +17,6 @@ const HomePage = (): JSX.Element => {
 
   return (
     <div className="home-page">
-      {/* Header Section */}
-      {/* <header className="header">
-        <p><strong> Breaking Bias</strong></p>
-        <div>
-          <a href="#Start">Start</a>
-          <a href="#welcome">Welcome</a>
-          <a href="#mission">Mission</a>
-          <a href="Upload Dataset">Upload Dataset</a>
-          <a href="graph">Graph</a>
-        </div>
-      </header> */}
        <header>
       <Navbar/>
       </header>

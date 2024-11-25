@@ -9,7 +9,7 @@
 
 header {
   grid-column: span 2; 
-  background-color: antiquewhite;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
