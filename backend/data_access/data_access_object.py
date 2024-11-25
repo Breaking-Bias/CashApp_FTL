@@ -1,34 +1,24 @@
 import pandas as pd
-import datetime
-
-from data_access.data_reader import DataReader
-from data_access.file_uploader import FileUploader
+import os
 
 
+# TODO: May need to change csv file depending on our final data file.
 class DataAccessObject:
-    df: pd.DataFrame
-    data_reader: DataReader
-    file_uploader: FileUploader
+    """Data Access Object for reading the dataset.
+    Reads csv files and returns as a pandas DataFrame.
+    """
+    file_name: str
 
-    def __init__(self, df: pd.DataFrame):
-        self.df = df
+    def __init__(self, file_name: str):
+        self.file_name = file_name
+        self.dataset = self._read_dataset()
 
-    def get_data(self) -> pd.DataFrame:
-        return self.df
-
-    def get_column(self, column_name: str) -> pd.Series:
-        return self.df[column_name]
-
-    def get_row(self, index: int) -> pd.Series:
-        return self.df.iloc[index]
-
-    def get_rows(self, start: int, end: int) -> pd.DataFrame:
-        return self.df.iloc[start:end]
-
-    def get_rows_by_date(self, start_date: datetime.date, end_date: datetime.date) -> pd.DataFrame:
-        mask = (self.df['Date'] >= start_date) & (self.df['Date'] <= end_date)
-        return self.df.loc[mask]
-
-    def get_column_by_date(self, column_name: str, start_date: datetime.date, end_date: datetime.date) -> pd.Series:
-        mask = (self.df['Date'] >= start_date) & (self.df['Date'] <= end_date)
-        return self.df.loc[mask, column_name]
+    def read_dataset(self):
+        try:
+            dataset_path = os.path.join(os.path.dirname(__file__),
+                                        "data", self.file_name)
+            dataset = pd.read_csv(dataset_path)
+            return dataset
+        except FileNotFoundError:
+            print(f"Error: The file {dataset_path} does not exist.")
+            return None
