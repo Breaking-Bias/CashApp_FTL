@@ -12,20 +12,19 @@ import {
   OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import { Button, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
 import * as React from "react";
+import Navbar from "../components/NavBar";
 import { formatNumberForDisplay } from "../utils/numberUtils";
 
 export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
 
 function DashboardPage() {
-  const navigate = useNavigate();
 
   // Component State Variables
   const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
@@ -101,18 +100,10 @@ function DashboardPage() {
 
         {/*add some padding*/}
         {/* I know this is dumb */}
-        <Box sx={{ marginLeft: 50 }}/>
+        <Box sx={{ marginLeft: 50, paddingTop: '220px'}}/>
 
         <HelpModal open={open} setOpen={setOpen}/>
-
-        <Button
-            color="success"
-            variant="contained"
-            className="login-button"
-            onClick={() => navigate("/upload-dataset")}
-        >
-          Upload Dataset
-        </Button>
+        <Navbar/>
       </header>
 
       <Box

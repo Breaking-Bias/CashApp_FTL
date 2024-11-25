@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./UploadDataset.css"
 import { Card } from '@mui/material';
+import Navbar from './components/NavBar'
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
@@ -50,9 +51,7 @@ function UploadDataset() {
 
   return (
     <div className="main-class">
-      
-      
-
+      <Navbar />
       
       <Card className="border-control"  sx={{width:"500px", padding:"40px", maxWidth:"100%", margin:"0 auto" ,border: "2px solid black", boxShadow: 3,}}>
       <h1 className="upload-dataset" style={{textAlign:"center", color: "#333", marginBottom: "20px"}}>Upload Dataset</h1>
