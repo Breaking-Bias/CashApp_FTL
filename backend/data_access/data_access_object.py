@@ -11,12 +11,11 @@ class DataAccessObject:
 
     def __init__(self, file_name: str):
         self.file_name = file_name
-        self.dataset = self._read_dataset()
+        self.dataset = self.read_dataset()
 
     def read_dataset(self):
         try:
-            dataset_path = os.path.join(os.path.dirname(__file__),
-                                        "data", self.file_name)
+            dataset_path = os.path.join(os.path.dirname(__file__), "data", self.file_name)
             dataset = pd.read_csv(dataset_path)
             return dataset
         except FileNotFoundError:

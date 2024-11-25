@@ -2,7 +2,7 @@ import pandas as pd
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from data_access.data_reader import DataReader
+from data_access.data_access_object import DataAccessObject
 from interface_adaptor.upload_file.upload_file_controller import UploadFileController
 from interface_adaptor.view_result.view_result_controller import ViewResultController
 from use_case_interactor import UseCaseInteractor

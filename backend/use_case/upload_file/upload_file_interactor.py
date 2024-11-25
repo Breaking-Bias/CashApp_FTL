@@ -1,4 +1,4 @@
-from data_access.data_reader import DataReader
+from data_access.data_access_object import DataAccessObject
 from data_access.file_uploader import FileUploader
 
 
@@ -23,7 +23,7 @@ class UploadFileInteractor:
         file_path = file_uploader.save_file(file)
         if file_path:
             self.name_of_file = file_uploader.nameoffile
-            # self.app.read_dataset = DataReader(self.name_of_file).read_dataset()
+            # self.app.read_dataset = DataAccessObject(self.name_of_file).read_dataset()
             print(self.name_of_file)
             return {"message": "File uploaded successfully", "file_path": file_path}, 200
         else:
