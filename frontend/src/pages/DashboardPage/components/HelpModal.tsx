@@ -52,6 +52,27 @@ export default function HelpModal({open, setOpen}: Props) {
                                 aria-hidden="true">
                         How to Use the App
                     </Typography>
+                    <Typography id="introduction" variant="body1" component="h2" aria-hiddle="true" sx={{textAlign: "center"}}
+                                tabIndex={0}>
+                        Our tool provides insights into the potential revenue change if specific
+                        bias was removed from the dataset. (represented
+                        by the shaded area)
+                    </Typography>
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 400,
+                            width: 600,
+                            display: 'block',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                        }}
+                        alt="Example bias visualisation"
+                        src="/Revenue Gain.png"
+                        aria-label='Line chart with a shaded area between unbiased and biased Cashflow or Transacton Value over time'
+                        tabIndex={0}
+                    />
+
                     <Typography id="working-with-the-graph" variant="h5"
                                 tabIndex={0}
                                 component="h2" sx={style_subheading}>
@@ -96,29 +117,6 @@ export default function HelpModal({open, setOpen}: Props) {
                         <p>Click <strong>Export Graph</strong> to download a PDF
                             version.</p>
                     </Typography>
-                    <Typography id="actions" variant="h5" component="h2"
-                                sx={style_subheading} tabIndex={0}>
-                        Graphical Illustration:
-                    </Typography>
-                    <Typography id="introduction" variant="body1" component="h2" aria-hiddle="true" sx={{textAlign: "center"}}
-                                tabIndex={0}>
-                        Our tool provides insights into the potential revenue change if specific
-                        bias was removed from the dataset. (represented
-                        by the shaded area)
-                    </Typography>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 400,
-                            width: 600,
-                            display: 'block',
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                        }}
-                        alt="Example bias visualisation"
-                        src="/Revenue Gain.png"
-                        aria-label='Line chart with a shaded area between unbiased and biased Cashflow or Transacton Value over time'
-                    />
                     <Button
                         onClick={handleClose}
                         variant="contained"

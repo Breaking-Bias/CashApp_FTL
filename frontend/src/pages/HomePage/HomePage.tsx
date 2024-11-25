@@ -2,6 +2,8 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "@/pages/HomePage/HomePage.css";
 import Card from '@mui/material/Card';
+import Navbar from "../components/NavBar";
+
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -16,13 +18,18 @@ const HomePage = (): JSX.Element => {
   return (
     <div className="home-page">
       {/* Header Section */}
-      <header className="header">
+      {/* <header className="header">
         <p><strong> Breaking Bias</strong></p>
         <div>
           <a href="#Start">Start</a>
           <a href="#welcome">Welcome</a>
           <a href="#mission">Mission</a>
+          <a href="Upload Dataset">Upload Dataset</a>
+          <a href="graph">Graph</a>
         </div>
+      </header> */}
+       <header>
+      <Navbar/>
       </header>
 
       {/* Button to go to Upload Dataset */}
@@ -58,16 +65,13 @@ const HomePage = (): JSX.Element => {
         </div>
       
 
-      {/* Welcome Section */}
       <section id="welcome">
         <h1 className="text-4xl font-bold mb-4">Welcome to the BVPT</h1>
         <p className="text-xl mb-6">Your one and only Bias Visualisation and Prediction Tool .</p>
       </section>
 
-      {/* How It Works Section */}
       <section id="mission" className="mission-section">
   <div className="mission-content">
-    {/* Left Side: Mission and Text */}
     <div className="mission-text">
       <h2 className="mission-heading">Mission</h2>
       <p className="goal-text">
@@ -76,7 +80,6 @@ const HomePage = (): JSX.Element => {
       <p className="highlighted-text">(represented by the shaded area)</p>
     </div>
 
-    {/* Right Side: Graph */}
     <div className="mission-graph">
       <img src="Revenue Gain.png" alt="Graph Illustration" />
     </div>

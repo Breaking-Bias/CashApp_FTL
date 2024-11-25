@@ -93,17 +93,15 @@ function DashboardPage() {
   return (
     <div id="grid-container">
       <header>
-        <span style={{ display: "flex" }}>
+      <Navbar/>
+      </header>
+      <header>
+        <span style={{ display: "center" }}>
 
         <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
 
-        {/*add some padding*/}
-        {/* I know this is dumb */}
-        <Box sx={{ marginLeft: 50, paddingTop: '220px'}}/>
-
         <HelpModal open={open} setOpen={setOpen}/>
-        <Navbar/>
       </header>
 
       <Box
