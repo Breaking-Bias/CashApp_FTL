@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import InfoTooltip from "./InfoTooltip";
 
 interface Props {
   value: string;
@@ -30,14 +29,14 @@ export default function BigNumber({
         <br />
         {revenueOrTransactions == "0" ? "transactions" : "revenue"}
       </p>
-      <InfoTooltip
-        title={`The ${averageOrTotal} difference between biased and unbiased ${
-          revenueOrTransactions == "0" ? "transactions" : "revenue"
-        }.`}
-        ariaLabel={`Help with ${averageOrTotal} ${
-          revenueOrTransactions == "0" ? "transactions" : "revenue"
-        }`}
-      />
+      {/*<InfoTooltip*/}
+      {/*  title={`The ${averageOrTotal} difference between biased and unbiased ${*/}
+      {/*    revenueOrTransactions == "0" ? "transactions" : "revenue"*/}
+      {/*  }.`}*/}
+      {/*  ariaLabel={`Help with ${averageOrTotal} ${*/}
+      {/*    revenueOrTransactions == "0" ? "transactions" : "revenue"*/}
+      {/*  }`}*/}
+      {/*/>*/}
     </Box>
   );
 }
