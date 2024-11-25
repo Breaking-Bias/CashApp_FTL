@@ -25,12 +25,13 @@ function Slider({sliderValue, setSliderValue}: Props) {
             Adjust the prediction size, in number of days.
             </span>}
                  enterDelay={500}
-                 leaveDelay={200}>
+                 leaveDelay={200}
+        aria-hidden="true">
             <SliderMUI
                 data-testid="forecast-slider"
                 min={MIN_SLIDER_VAL}
                 max={MAX_SLIDER_VAL}
-                aria-label="Default"
+                aria-label="Adjust the prediction size, in number of days."
                 valueLabelDisplay="auto"
                 value={sliderValue}
                 onChange={handleChange}
