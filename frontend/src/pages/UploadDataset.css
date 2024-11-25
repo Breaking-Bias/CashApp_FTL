@@ -48,9 +48,9 @@ button.upload-button:hover {
 
 .nav-buttons-container {
   display: flex;
-  justify-content: center;   /* Center buttons horizontally */
-  align-items: center;       /* Center buttons vertically */
-  gap: 10px;                 /* Space between buttons */
+  justify-content: center;   
+  align-items: center;       
+  gap: 10px;                 
 }
 
 button.nav-button {

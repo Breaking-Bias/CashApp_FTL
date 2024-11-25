@@ -82,15 +82,11 @@ header {
   margin-bottom: 15px;
 }
 
-/* Make strong text stand out */
-.popup-content p strong {
-  color: #4BB543; /* Highlighted in gold for emphasis */
-}
 
 /* Close button styling */
 .close-button {
-  background-color: #4BB543;
-  color: #fff;
+  background-color: success;
+  color: #000000;
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
