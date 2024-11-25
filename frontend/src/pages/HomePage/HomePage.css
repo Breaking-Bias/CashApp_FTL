@@ -25,7 +25,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #39b834, white 60%); /* Green to white gradient */
+  background: linear-gradient(to bottom, #39b834, white 60%); 
 }
 
 
@@ -35,18 +35,18 @@ body, html {
 }
 
 .header {
-  position: fixed; /* Stays at the top of the page when scrolling */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Full width of the page */
-  background-color: #ffffff; /* Green color */
-  color: black(0, 0, 0); /* White text for contrast */
-  display: flex; /* Flexbox for layout */
-  justify-content: space-between; /* Space between elements */
-  align-items: center; /* Vertically center items */
-  padding: 10px 20px; /* Spacing around elements */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index: 1000; /* Ensures it stays above other elements */
+  width: 100%;
+  background-color: #ffffff; 
+  color: black(0, 0, 0); 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 10px 20px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  z-index: 1000; 
 }
 
 header a {
@@ -100,18 +100,18 @@ h1 {
 }
 
 #welcome h1 {
-  font-size: 2.5rem; /* Adjust size for headlines */
-  margin-bottom: 20px; /* Add space below the heading */
-  text-transform: uppercase; /* Make the text uppercase for emphasis */
-  letter-spacing: 1.5px; /* Add letter spacing for a modern look */
+  font-size: 2.5rem; 
+  margin-bottom: 20px; 
+  text-transform: uppercase; 
+  letter-spacing: 1.5px; /
 }
 
 #welcome p {
-  font-size: 1.2rem; /* Adjust the font size for readability */
-  line-height: 1.6; /* Improve readability with line height */
-  color: #333; /* Slightly darker shade for contrast */
-  max-width: 700px; /* Limit width for better layout */
-  margin: 0 auto; /* Center the paragraph within the section */
+  font-size: 1.2rem; 
+  line-height: 1.6; 
+  color: #333; 
+  max-width: 700px; 
+  margin: 0 auto; 
 }
 
 
