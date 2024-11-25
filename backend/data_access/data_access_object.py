@@ -13,7 +13,7 @@ class DataAccessObject:
         self.file_name = file_name
         self.dataset = self._read_dataset()
 
-    def read_dataset(self):
+    def _read_dataset(self):
         try:
             dataset_path = os.path.join(os.path.dirname(__file__),
                                         "data", self.file_name)
