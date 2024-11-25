@@ -34,8 +34,10 @@ class DataFactory:
         else:
             frequency_predicted_data_biased, revenue_predicted_data_biased = None, None
 
-        return (frequency_past_data_biased, revenue_past_data_biased,
-                frequency_predicted_data_biased, revenue_predicted_data_biased)
+        return (frequency_past_data_biased, 
+                revenue_past_data_biased,
+                frequency_predicted_data_biased, 
+                revenue_predicted_data_biased)
 
     def make_unbiased_data(self) -> tuple[GraphingData, GraphingData,
                                           GraphingData | None, GraphingData | None]:
@@ -55,6 +57,7 @@ class DataFactory:
         else:
             frequency_predicted_data_unbiased, revenue_predicted_data_unbiased = None, None
 
-        return (frequency_past_data_unbiased, revenue_past_data_unbiased,
+        return (frequency_past_data_unbiased, 
+                revenue_past_data_unbiased,
                 frequency_predicted_data_unbiased,
                 revenue_predicted_data_unbiased)
