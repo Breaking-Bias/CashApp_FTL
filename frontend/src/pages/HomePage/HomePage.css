@@ -118,30 +118,30 @@ h1 {
 
 .mission-section {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
-  justify-content: center; /* Center the content horizontally */
-  padding: 60px 20px; /* Add spacing */
+  align-items: flex-start; 
+  justify-content: center; 
+  padding: 60px 20px; 
   gap: 20px; 
 }
 
 .mission-content {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns: 50% each */
-  gap: 20px; /* Space between the columns */
-  align-items: start; /* Align items to the top */
-  max-width: 1200px; /* Limit content width for better layout */
-  margin: 0 auto; /* Center the grid */
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px; 
+  align-items: start; 
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 .mission-text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align text to the top */
-  gap: 15px; /* Space between elements */
+  justify-content: flex-start; 
+  gap: 15px; 
 }
 
 .mission-heading {
-  font-size: 3rem; /* Larger heading for emphasis */
+  font-size: 3rem; 
   color: #000000; 
   margin-bottom: 10px;
   margin-left: 30px
@@ -160,10 +160,10 @@ h1 {
 }
 
 .mission-graph img {
-  max-width: 100%; /* Ensure the image is responsive */
-  border: 2px solid #ccc; /* Optional: Add a border for styling */
-  border-radius: 10px; /* Optional: Rounded corners */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  max-width: 100%; 
+  border: 2px solid #ccc; 
+  border-radius: 10px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 
