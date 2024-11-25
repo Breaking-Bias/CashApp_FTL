@@ -1,4 +1,3 @@
-from data_access.data_reader import DataReader
 from data_access.file_uploader import FileUploader
 
 
