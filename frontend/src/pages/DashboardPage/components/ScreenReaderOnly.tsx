@@ -3,6 +3,8 @@ import { Alert, AlertTitle } from '@mui/material';
 import { GraphAnalysisService } from '../../../services/GraphAnalysisService'
 import "./ScreenReaderOnly.css";
 
+//Created two interfaces, this satisfied the L in solid 
+
 interface ModeGraphData {
   average_difference: number;
   total_difference: number;
@@ -10,6 +12,7 @@ interface ModeGraphData {
   predicted_biased_line: Array<{ value: number }>;
   predicted_unbiased_line: Array<{ value: number }>;
 }
+//Small and focused interfaces
 
 interface GraphDescriptionProps {
   modeGraphData: ModeGraphData;
@@ -17,7 +20,7 @@ interface GraphDescriptionProps {
   filterGender: string;
   filterRace: string;
 }
-
+// divided up the three components, ie the summary stats, trend analalysis (percentage logic) and details about the filters
 const SummaryStatistics: React.FC<{ 
   metricType: string, 
   averageDifference: number, 
@@ -47,6 +50,8 @@ const TrendAnalysis: React.FC<{
     predictedBiasedLine, 
     predictedUnbiasedLine
   );
+
+  // I'm sure there's an easier way, but this is to call the logic service here, so the final return statement is cleaner
 
   return (
     <div
