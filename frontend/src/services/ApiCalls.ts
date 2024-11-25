@@ -1,4 +1,4 @@
-import { AlmostFormattedDataEntry, BigGraphData, FormattedBigGraphData, FormattedDataEntry, PastData } from "./types";
+import { AlmostFormattedDataEntry, BigGraphData, FormattedBigGraphData, FormattedDataEntry, PastData } from "../types";
 
 const SERVER_URL = process.env.VITE_SERVER_URL;
 
@@ -23,7 +23,7 @@ export async function getPastDataAPICall(params: object, mode: string) {
         
         // Turns the ISO dates into JavaScript date objects   
         const formattedData: FormattedDataEntry[] = rawData.map(
-            (entry) => ({
+            (entry: { date: string; value: number }) => ({
                 date: new Date(entry.date),
                 value: entry.value,
             })
