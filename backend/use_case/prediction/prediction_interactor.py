@@ -9,14 +9,12 @@ from entity.graphing_data import GraphingData
 
 class PredictionInteractor:
     original_dataset: pd.DataFrame
-    filter_gender: str
-    filter_race: str
     forecast_steps: int
     prediction_dataset: pd.DataFrame
 
-    def __init__(self, original_dataset: pd.DataFrame):
-        original_dataset = original_dataset
-        forecast_steps: forecast_steps
+    def __init__(self, original_dataset: pd.DataFrame, forecast_steps: int):
+        self.original_dataset = original_dataset
+        self.forecast_steps = forecast_steps
         self.prediction_dataset = self.make_prediction(original_dataset)
 
     def make_prediction(self, original_dataset: pd.DataFrame) -> tuple[GraphingData, 
