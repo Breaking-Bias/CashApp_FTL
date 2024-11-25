@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./UploadDataset.css"
+import { Card } from '@mui/material';
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
@@ -48,24 +49,51 @@ function UploadDataset() {
   };
 
   return (
-    <div>
-      <h2>Upload Dataset</h2>
+    <div className="main-class">
+      <h1 className="upload-dataset" style={{textAlign:"center", color: "#333",}}>Upload Dataset</h1>
+      
 
-      <div className="file-upload-container">
-        <input type="file" onChange={handleFileChange} />
-        <button className="upload-button" onClick={handleUpload}>Upload Dataset</button>
-      </div>
-
-      <div className="nav-buttons-container">
-      <button className="nav-button" onClick={() => navigate("/")}>Go to Welcome Page</button>
-      <button className="nav-button" onClick={() => navigate("/graph")}>Go to Main Page</button>
-      </div>
-
-      <p className={message.includes("successfully") ?"success" : "error"}>
-        {message}
-      </p>
+      
+      <Card className="border-control"  sx={{width:"500px", padding:"40px", maxWidth:"100%", margin:"0 auto" ,border: "2px solid black", boxShadow: 3,}}>
+        <h2 className="text-xl font-semibold mb-3">Upload dataset here:</h2>
+        
+        <div className="flex flex-col items-center gap-6 mb-8">
+          <input 
+            type="file"
+            onChange={handleFileChange}
+            className="w-full max-w-md p-2 border rounded"
+          />
+          <button 
+            onClick={handleUpload}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Upload Dataset
+          </button>
+        </div>
+        
+        <div className="flex justify-between gap-4">
+          <button 
+            onClick={() => navigate("/")}
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            Back
+          </button>
+          <button 
+            onClick={() => navigate("/graph")}
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            View Results
+          </button>
+        </div>
+        
+        <p className={`mt-4 text-center ${
+          message.includes("successfully") ? "text-green-600" : "text-red-600"
+        }`}>
+          {message}
+        </p>
+      </Card>
     </div>
   );
-}
+};
 
 export default UploadDataset;

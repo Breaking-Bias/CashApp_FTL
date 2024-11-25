@@ -5,19 +5,24 @@ import GenderDropdownFilter from "./components/GenderDropdownFilter";
 import RaceDropdownFilter from "./components/RaceDropdownFilter";
 import PredictButton from "./components/PredictButton";
 import Graph from "./components/Graph";
-import { getGraphDataAPICall, getPastDataAPICall } from "../../ApiCalls";
+import { getGraphDataAPICall, getPastDataAPICall } from "../../services/ApiCalls";
 import {
   FormattedBigGraphData,
   FormattedDataEntry,
   OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import { Button, Menu, MenuItem, Box } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import RadioButtons from "./components/RadioButtons";
 import InfoTooltip from "./components/InfoTooltip";
 import BigNumber from "./components/BigNumber";
-import PopUpGuidance from "./components/PopUpGuidance";
+import HelpModal from "./components/HelpModal"
+import * as React from "react";
+import { formatNumberForDisplay } from "../utils/numberUtils";
+
+export const CYAN = "#00bbbb";
+export const PINK = "#ff4aa4";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -27,48 +32,13 @@ function DashboardPage() {
   const [mode, setMode] = useState<string>("1");
   const [filterGender, setFilterGender] = useState<string>("NoFilter");
   const [filterRace, setFilterRace] = useState<string>("NoFilter");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = React.useState(false);
 
   // Data State Variables
   const [graphData, setGraphData] = useState<FormattedBigGraphData>();
   const [modeGraphData, setModeGraphData] = useState<OneModeGraphData>();
   const [pastData, setPastData] = useState<FormattedDataEntry[]>();
 
-  function formatNumberForDisplay(num: number): string {
-    if (num >= 1_000_000_000) {
-      const billions = num / 1_000_000_000;
-      return billions >= 100
-        ? `${Math.round(billions)}B`
-        : `${billions.toFixed(1).replace(/\.0$/, "")}B`;
-    } else if (num >= 1_000_000) {
-      const millions = num / 1_000_000;
-      return millions >= 100
-        ? `${Math.round(millions)}M`
-        : `${millions.toFixed(1).replace(/\.0$/, "")}M`;
-    } else if (num >= 1_000) {
-      const thousands = num / 1_000;
-      return thousands >= 100
-        ? `${Math.round(thousands)}K`
-        : `${thousands.toFixed(1).replace(/\.0$/, "")}K`;
-    } else {
-      return num.toString();
-    }
-  }
-
-  // async function getPastData() {
-  //   const formattedData = await getPastDataAPICall(
-  //     [filterGender, filterRace],
-  //     mode
-  //   );
-
-  //   if (formattedData) {
-  //     setPastData({
-  //       name: "Known Data",
-  //       color: "#2933f2",
-  //       data: formattedData,
-  //     });
-  //   }
-  // }
 
   async function getPastData() {
     const formattedData = await getPastDataAPICall(
@@ -117,69 +87,32 @@ function DashboardPage() {
     }
   }, [mode]);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // PopUpGuidance
-  const[isGuidanceOpen, setIsGuidanceOpen] = useState(true);
-
-  // const openGuidance = () => setIsGuidanceOpen(true);
-  const closeGuidance = () => setIsGuidanceOpen(false);
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
   return (
     <div id="grid-container">
       <header>
         <span style={{ display: "flex" }}>
-        <h1 
-          style={{ marginRight: "40px", color: "#333", fontSize: "2rem", lineHeight: "1.5", fontWeight: "bold" }}
-          aria-label="Showing data for"
-          tabIndex={1}> 
-          Showing Data For
-        </h1>
 
-
-          <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
+        <RadioButtons mode={mode} setMode={setMode}></RadioButtons>
         </span>
 
-        <div id="menu-container">
-          <Button
-            variant="contained"
+        {/*add some padding*/}
+        {/* I know this is dumb */}
+        <Box sx={{ marginLeft: 50 }}/>
+
+        <HelpModal open={open} setOpen={setOpen}/>
+
+        <Button
             color="success"
-            onClick={handleClick}
-            aria-haspopup="true"
-            aria-expanded={Boolean(anchorEl)}
-            aria-controls="menu"
-            aria-label="Open menu"
-          >
-            Menu
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            aria-label="Main menu"
-          >
-            <MenuItem
-              onClick={() => {
-                handleClose(); 
-                setIsGuidanceOpen(true); 
-              }}
-            >
-              How To Use
-            </MenuItem>
-            <MenuItem onClick={() => navigate("/upload-dataset")}>
-              Upload Dataset
-            </MenuItem>
-          </Menu>
-          <div>
-            <PopUpGuidance isOpen={isGuidanceOpen} onClose={closeGuidance} />
-          </div>
-        </div>
+            variant="contained"
+            className="login-button"
+            onClick={() => navigate("/upload-dataset")}
+        >
+          Upload Dataset
+        </Button>
       </header>
 
       <Box
@@ -193,33 +126,35 @@ function DashboardPage() {
             <p>Loading</p>
           ) : (
             <Graph
+              mode={mode}
               pastData={{
                 name: "Known Data",
-                color: "blue",
+                color: CYAN,
                 data: pastData,
               }}
             />
           )
         ) : (
           <Graph
+            mode={mode}
             pastData={{
               name: "Known Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.past_biased_line,
             }}
             pastDataUnbiased={{
               name: "Known Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.past_unbiased_line,
             }}
             predictedData={{
               name: "Predicted Data",
-              color: "blue",
+              color: CYAN,
               data: modeGraphData.predicted_biased_line,
             }}
             predictedDataUnbiased={{
               name: "Predicted Data (Unbiased)",
-              color: "red",
+              color: PINK,
               data: modeGraphData.predicted_unbiased_line,
             }}
           />
