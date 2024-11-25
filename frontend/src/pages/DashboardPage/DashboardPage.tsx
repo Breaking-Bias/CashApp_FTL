@@ -162,13 +162,13 @@ function DashboardPage() {
 
             <Box bgcolor="cornsilk" padding="40px">
                 {modeGraphData == undefined ? (
-                    <p>no big numbers yet :(</p>
+                    <p>Waiting for forecast to display summary</p>
                 ) : (
                     <div>
                         <BigNumber
                             value={formatNumberForDisplay(modeGraphData.average_difference)}
                             revenueOrTransactions={mode}
-                            averageOrTotal="average"
+                            averageOrTotal="daily"
                         />
                         <BigNumber
                             value={formatNumberForDisplay(modeGraphData.total_difference)}
@@ -185,7 +185,6 @@ function DashboardPage() {
                 <Slider
                     sliderValue={sliderValue}
                     setSliderValue={setSliderValue}
-                    aria-labelledby="prediction-size-label"
                 />
 
                 <h2>Filters:</h2>
@@ -199,11 +198,10 @@ function DashboardPage() {
                          leaveDelay={200}>
                     <Box>
                         <GenderDropdownFilter
-                            aria-label="Gender filter options"
+                            aria-label="gender to analyse"
                             onSelectChange={(value: string) => setFilterGender(value)}
                         />
                         <RaceDropdownFilter
-                            aria-label="Race filter options"
                             onSelectChange={(value: string) => setFilterRace(value)}
                         />
                     </Box>
