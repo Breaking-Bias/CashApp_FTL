@@ -164,7 +164,7 @@ function DashboardPage() {
                 {modeGraphData == undefined ? (
                     <p>Waiting for forecast to display summary</p>
                 ) : (
-                    <div>
+                    <div aria-live="polite">
                         <BigNumber
                             value={formatNumberForDisplay(modeGraphData.average_difference)}
                             revenueOrTransactions={mode}

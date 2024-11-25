@@ -12,25 +12,27 @@ export default function BigNumber({
                                       revenueOrTransactions,
                                   }: Props) {
     return (
-        <Box aria-live="polite" display="flex" alignItems="center" justifyContent="space-evenly">
-            <p
-                style={{
+            <Box display="flex" alignItems="center"
+                 justifyContent="space-evenly">
+                {/*TODO: Make this aria label dynamic*/}
+                <p aria-label="Potential daily"
+                    style={{
                     fontSize: "4rem",
                     fontWeight: "bold",
                     color: "black",
                     margin: 0,
                 }}
-            >
-                {revenueOrTransactions == "1" && "$"}
-                {value}
-            </p>
-            <p>
-                Potential&nbsp;
-                {averageOrTotal}
-                <br/>
-                {revenueOrTransactions == "0" ? "transaction volume" : "cash-flow"}
-                &nbsp;incr.
-            </p>
-        </Box>
+                >
+                    {revenueOrTransactions == "1" && "$"}
+                    {value}
+                </p>
+                <p aria-hidden="true">
+                    Potential&nbsp;
+                    {averageOrTotal}
+                    <br/>
+                    {revenueOrTransactions == "0" ? "transaction volume" : "cash-flow"}
+                    &nbsp;incr.
+                </p>
+            </Box>
     );
 }
