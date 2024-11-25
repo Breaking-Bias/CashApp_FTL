@@ -1,6 +1,6 @@
 import pandas as pd
-from graphing_data import GraphingData
-from filters import FilterManager, GenderFilter, RaceFilter
+from entity.graphing_data import GraphingData
+# from entity.filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:
@@ -52,37 +52,7 @@ class DataFormatter:
     def get_formatted_df(self) -> pd.DataFrame:
         return self._df
 
-    def unbias(self) -> 'DataFormatter':
-        """Removes bias by flipping FP to TN, only for 'Bias' rows"""
-        self._df = self._df.apply(DataFormatter._unbias_row, axis=1)
-        return self
 
-    @staticmethod
-    def _unbias_row(row):
-        if row['confusion_value'] == 'FP' and row['Bias'] == 1:
-            row['confusion_value'] = 'TN'
-            row['Bias'] = 0
-        return row
-
-    def filter_by(self, filter_gender: str = None, filter_race:
-                  str = None, filter_state: str = None) -> 'DataFormatter':
-        """Filters the DataFrame based on gender, race, or state."""
-        filters = [GenderFilter(filter_gender),
-                   RaceFilter(filter_race)]
-
-        filter_manager = FilterManager(self._df, filters)
-        self._df = filter_manager.apply_filters()
-
-        return self
-
-    def filter_invalid_transactions(self) -> 'DataFormatter':
-        """Creates a new dataset without any rows marked as blocked
-         (i.e. False Positive (incorrectly blocked),
-          True Positive (correctly blocked))
-        """
-        self._df = self._df[(self._df['confusion_value'] != 'FP')
-                            & (self._df['confusion_value'] != 'TP')]
-        return self
 
     def get_revenue_data(self) -> GraphingData:
         """Returns a GraphingData object with the revenue data."""

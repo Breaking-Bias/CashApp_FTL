@@ -1,6 +1,6 @@
 import os
 from werkzeug.utils import secure_filename
-from data_reader import DataReader
+# from data_reader import DataReader
 
 class FileUploader:
     def __init__(self, upload_folder='data', allowed_extensions=None):

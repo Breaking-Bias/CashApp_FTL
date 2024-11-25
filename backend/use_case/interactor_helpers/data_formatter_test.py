@@ -1,9 +1,10 @@
 import pytest
 import pandas as pd
 
-from graphing_data import GraphingData
-from data_formatter import DataFormatter
-from data_reader import DataReader
+from entity.graphing_data import GraphingData
+from use_case.interactor_helpers.data_formatter import DataFormatter
+from data_access.data_reader import DataReader
+from use_case.interactor_helpers.filter_interactor import FilterInteractor
 
 
 @pytest.fixture
@@ -26,7 +27,7 @@ def real_data():
 
 def test_unbias(sample_data):
     """Test the unbias function."""
-    unbiased_df = DataFormatter(sample_data).unbias().get_formatted_df()
+    unbiased_df = FilterInteractor(sample_data).unbias().get_df()
 
     # Check that the first row has been modified and bias undone
     assert (unbiased_df.iloc[0, 1] == 'TN')
@@ -38,7 +39,7 @@ def test_unbias(sample_data):
 def test_unbias_no_fp_values(sample_data):
     """Edge case: Test unbias with no 'FP' values to modify."""
     no_fp_data = sample_data[sample_data['confusion_value'] == 'TN']
-    unbiased_df = DataFormatter(no_fp_data).unbias().get_formatted_df()
+    unbiased_df = FilterInteractor(no_fp_data).unbias().get_df()
     pd.testing.assert_frame_equal(unbiased_df, no_fp_data)
 
 
@@ -46,34 +47,34 @@ def test_unbias_all_fp_values(sample_data):
     """Edge case: Test unbias with all 'FP' values."""
     all_fp_data = sample_data.copy()
     all_fp_data['confusion_value'] = 'FP'
-    unbiased_df = DataFormatter(all_fp_data).unbias().get_formatted_df()
+    unbiased_df = FilterInteractor(all_fp_data).unbias().get_df()
     assert (unbiased_df['confusion_value'] == 'TN').sum() == (
                 all_fp_data['Bias'] == 1).sum()
 
 
 def test_filter_by_factor(sample_data):
     """Test the filter_by_factor function."""
-    filtered_df = DataFormatter(sample_data).filter_by(
-        'Female').get_formatted_df()
+    filtered_df = FilterInteractor(sample_data).filter_by(
+        'Female').get_df()
     assert len(filtered_df) == 3
     assert (filtered_df['Gender'] == 'Female').all()
 
 
 def test_filter_by_factor_no_matching_values(sample_data):
     """Edge case: Test filter_by_factor with no matching values."""
-    filtered_df = DataFormatter(sample_data).filter_by(
+    filtered_df = FilterInteractor(sample_data).filter_by(
         'Nonexistent_gender',
         'Nonexistent_race',
         'Nonexistent_state'
-    ).get_formatted_df()
+    ).get_df()
     assert filtered_df.equals(sample_data)  # Should return the original dataset
 
 
 def test_filter_by_factor_all_rows_match(sample_data):
     """Edge case: Test filter_by_factor where all rows match the value."""
     all_female_data = sample_data[sample_data['Gender'] == 'Female']
-    filtered_df = DataFormatter(sample_data).filter_by(
-        'Female').get_formatted_df()
+    filtered_df = FilterInteractor(sample_data).filter_by(
+        'Female').get_df()
     pd.testing.assert_frame_equal(filtered_df, all_female_data)
 
 
@@ -83,7 +84,7 @@ def test_unbias_does_not_mutate_original(sample_data):
     original_data_copy = sample_data.copy()
 
     # Call the unbias function
-    unbiased_df = DataFormatter(sample_data).unbias().get_formatted_df()
+    unbiased_df = FilterInteractor(sample_data).unbias().get_df()
 
     # Mutate created df
     unbiased_df['Transaction_Amount_USD'] = 0

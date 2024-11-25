@@ -1,7 +1,7 @@
 import pandas as pd
-from difference_calculator import DifferenceCalculator
-from graph_adapter import GraphAdapter
-from graphing_data import GraphingData
+from entity.difference_calculator import DifferenceCalculator
+from use_case.interactor_helpers.graph_adapter import GraphAdapter
+from entity.graphing_data import GraphingData
 from data_factory import DataFactory
 
 
@@ -52,7 +52,7 @@ class GetGraphInteractor:
         }
         return result
 
-    def make_graph(self) -> dict[str, GraphAdapter]:
+    def make_graph(self) -> dict[str, dict[str, list[dict]]]:
         difference_dict = self._calculate_difference()
         revenue_total_difference = difference_dict["revenue_total_difference"]
         revenue_average_difference = difference_dict["revenue_average_difference"]

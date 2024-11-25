@@ -1,17 +1,13 @@
-import pandas as pd
-import os
-from data_reader import DataReader
-from data_access.data_access_object import DataAccessObject
+from use_case.view_result.view_result_interactor import ViewResultInteractor
 
 
 class ViewResultController:
     """Controller for the view_result use case
     """
-    view_result_use_case = ViewResultUseCase
+    view_result_interactor: ViewResultInteractor
 
+    def __init__(self, file_name: str):
+        self.view_result_interactor = ViewResultInteractor(file_name)
 
-        
-    def execute(self):
-        """executes the view_result use case
-        """
-        view_result_use_case
+    def get_past_data_from_interactor(self):
+        return self.view_result_interactor.get_past_data()

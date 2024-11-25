@@ -1,6 +1,6 @@
 import datetime
-from graphing_data import GraphingData
-from model_interactor import ModelInteractor
+from entity.graphing_data import GraphingData
+from use_case.interactor_helpers.model_interactor import ModelInteractor
 import pandas as pd
 import pytest
 
