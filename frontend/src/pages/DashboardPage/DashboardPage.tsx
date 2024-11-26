@@ -171,7 +171,7 @@ function DashboardPage() {
     />
       )}
 
-      <Box bgcolor="cornsilk" padding="40px">
+      <Box padding="40px">
                 {modeGraphData == undefined ? (
                     <p>Waiting for forecast to display summary</p>
                 ) : (
