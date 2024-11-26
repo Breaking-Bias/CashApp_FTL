@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from pathlib import Path
 
 
 # TODO: May need to change csv file depending on our final data file.
@@ -15,7 +16,10 @@ class DataAccessObject:
 
     def read_dataset(self):
         try:
-            dataset_path = os.path.join(os.path.dirname(__file__), "data", self.file_name)
+            # dataset_path = os.path.join(os.path.dirname(__file__),
+            #                             "data", self.file_name)
+            current_dir = Path(__file__).resolve().parent
+            dataset_path = current_dir.parent / "data" / self.file_name
             dataset = pd.read_csv(dataset_path)
             return dataset
         except FileNotFoundError:

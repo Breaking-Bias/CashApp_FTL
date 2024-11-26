@@ -1,8 +1,8 @@
 import pandas as pd
-from backend.entity.difference_calculator import DifferenceCalculator
-from backend.use_case.interactor_helpers.graph_adapter import GraphAdapter
-from backend.entity.graphing_data import GraphingData
-from backend.use_case.interactor_helpers.data_factory import DataFactory
+from use_case.interactor_helpers.data_factory import DataFactory
+from entity.difference_calculator import DifferenceCalculator
+from use_case.interactor_helpers.graph_adapter import GraphAdapter
+from entity.graphing_data import GraphingData
 
 
 class GetGraphInteractor:

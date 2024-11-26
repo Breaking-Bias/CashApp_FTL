@@ -3,7 +3,7 @@ import pandas as pd
 
 from entity.graphing_data import GraphingData
 from use_case.interactor_helpers.data_formatter import DataFormatter
-from data_access.data_reader import DataReader
+from data_access.data_access_object import DataAccessObject
 from use_case.interactor_helpers.filter_interactor import FilterInteractor
 
 
@@ -21,7 +21,7 @@ def sample_data():
 
 @pytest.fixture
 def real_data():
-    real_data = DataReader("women_bias_data_test.csv").read_dataset().head(100)
+    real_data = DataAccessObject("women_bias_data_test.csv").read_dataset().head(100)
     return real_data
 
 

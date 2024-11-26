@@ -1,4 +1,3 @@
-from data_access.data_access_object import DataAccessObject
 from data_access.file_uploader import FileUploader
 
 

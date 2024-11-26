@@ -1,11 +1,11 @@
 from use_case.upload_file.upload_file_interactor import UploadFileInteractor
 
 class UploadFileController:
-    # files, not putting type annotation here, otherwise the import statement would violate Dependency Inversion Rule
+    # files
     upload_file_interactor: UploadFileInteractor
     filename: str | None
 
-    def __init__(self, files):
+    def __init__(self, files=None):
         self.files = files
         self.upload_file_interactor = UploadFileInteractor()
         self.filename = None

@@ -1,15 +1,15 @@
 import pandas as pd
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from werkzeug.datastructures import FileStorage
+import io
 
 from data_access.data_access_object import DataAccessObject
 from interface_adaptor.upload_file.upload_file_controller import UploadFileController
 from interface_adaptor.view_result.view_result_controller import ViewResultController
 from use_case_interactor import UseCaseInteractor
-from use_case.upload_file.upload_file_interactor import UploadFileInteractor
 
 TEST_FILE_NAME = 'women_bias_data.csv'
-
 
 class App:
     app: Flask
@@ -24,12 +24,12 @@ class App:
     def __init__(self):
         self.app = Flask('app')
         CORS(self.app)
-        self.upload_file_controller = UploadFileController(request.files)
+        self.upload_file_controller = UploadFileController()
         self.file_name = TEST_FILE_NAME
         self.view_result_controller = ViewResultController(self.file_name)
-        # self.data_access_interface = UploadFileInteractor(self.app)
-        # self.read_dataset = DataReader(self.data_access_interface.name_of_file
-        #                                or TEST_FILE_NAME).read_dataset()
+        # following are temporary
+        self.read_dataset = DataAccessObject(self.upload_file_controller.filename
+                                       or TEST_FILE_NAME).read_dataset()
         self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
 
 
