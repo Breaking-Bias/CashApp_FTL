@@ -84,9 +84,9 @@ function Graph({
         <p style={{ color: PINK }}>Unbiased Data</p>
       </span>
 
-      <div id="graph-canvas">
+      <div id="graph-canvas" data-testid="graph-canvas">
         {pastData == undefined ? (
-          <h1>Loading...</h1>
+          <h1 data-testid="loading-test-id">Loading...</h1>
         ) : (
           <LineChart
             width={900}

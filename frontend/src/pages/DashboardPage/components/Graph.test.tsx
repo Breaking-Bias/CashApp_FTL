@@ -8,18 +8,6 @@ jest.mock("../DashboardPage", () => ({
   PINK: "#FFC0CB",
 }));
 
-// jest.mock('recharts', () => {
-//     const OriginalModule = jest.requireActual('recharts')
-//     return {
-//         ...OriginalModule,
-//         ResponsiveContainer: ({ children }) => (
-//             <OriginalModule.ResponsiveContainer width={800} height={800}>
-//                 {children}
-//             </OriginalModule.ResponsiveContainer>
-//         ),
-//     }
-// })
-
 describe("Graph Component", () => {
   const mockPastData: DataSeries = {
     name: "Past Data",
@@ -68,48 +56,34 @@ describe("Graph Component", () => {
       />
     );
 
-    expect(screen.getByTestId("graph-line-1")).toBeInTheDocument();
+    expect(screen.getByTestId("graph-canvas")).toBeInTheDocument();
   });
 
-  //   it("renders the graph with past and predicted data", () => {
-  //     render(
-  //       <Graph
-  //         mode="1"
-  //         pastData={mockPastData}
-  //         predictedData={mockPredictedData}
-  //       />
-  //     );
+  it("Renders the loading state when pastData is undefined", () => {
+    render(<Graph mode="1" pastData={undefined} />);
 
-  //     // Check if legends for Biased and Unbiased Data are displayed
-  //     expect(screen.getByText("Biased Data")).toBeInTheDocument();
-  //     expect(screen.getByText("Unbiased Data")).toBeInTheDocument();
+    expect(screen.getByTestId("loading-test-id")).toBeInTheDocument();
+  });
 
-  //     // Check if the X-axis label "Time" is present
-  //     expect(screen.getByText("Time")).toBeInTheDocument();
+  it("Renders legend and axes", () => {
+    render(
+      <Graph
+        mode="1"
+        pastData={mockPastData}
+        predictedData={mockPredictedData}
+        pastDataUnbiased={mockPastDataUnbiased}
+        predictedDataUnbiased={mockPredictedDataUnbiased}
+      />
+    );
 
-  //     // Check if the Y-axis label is correct based on mode
-  //     expect(screen.getByText("Cash Flow ($)")).toBeInTheDocument();
-  //   });
+    // Check if legends for Biased and Unbiased Data are displayed
+    expect(screen.getByText("Biased Data")).toBeInTheDocument();
+    expect(screen.getByText("Unbiased Data")).toBeInTheDocument();
 
-  //   it("renders unbiased data line if provided", () => {
-  //     const mockPastDataUnbiased: DataSeries = {
-  //       name: "Past Unbiased Data",
-  //       color: "#00FF00",
-  //       data: [
-  //         { date: new Date("2023-01-01"), value: 120 },
-  //         { date: new Date("2023-02-01"), value: 220 },
-  //       ],
-  //     };
+    // Check if the X-axis label "Time" is present
+    expect(screen.getByText("Time")).toBeInTheDocument();
 
-  //     render(
-  //       <Graph
-  //         mode="0"
-  //         pastData={mockPastData}
-  //         pastDataUnbiased={mockPastDataUnbiased}
-  //       />
-  //     );
-
-  //     // Check if unbiased data is included
-  //     expect(screen.getByText("Unbiased Data")).toBeInTheDocument();
-  //   });
+    // Check if the Y-axis label is correct based on mode
+    expect(screen.getByText("Cash Flow ($)")).toBeInTheDocument();
+  });
 });
