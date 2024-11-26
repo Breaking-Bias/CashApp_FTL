@@ -12,8 +12,7 @@ import {
     OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import {Button, Box, Tooltip} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { Box, Tooltip} from "@mui/material";
 import GraphTypeButtons from "./components/GraphTypeButtons";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
@@ -28,7 +27,7 @@ export const PINK = "#ff4aa4";
 
 function DashboardPage() {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
   // Component State Variables
@@ -106,7 +105,16 @@ function DashboardPage() {
             <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
         </div>
         <HelpModal open={open} setOpen={setOpen} />
+        {/* <Button
+        color="success"
+        variant="contained"
+        className="login-button"
+        onClick={() => navigate("/upload-dataset")}
+    >
+        Upload Dataset
+    </Button> */}
       </span>
+      
     </header>
 
       <Box
@@ -153,6 +161,15 @@ function DashboardPage() {
           />
         )}
       </Box>
+    
+      {modeGraphData && (
+    <GraphDescription
+      modeGraphData={modeGraphData}
+      mode={mode}
+      filterGender={filterGender}
+      filterRace={filterRace}
+    />
+      )}
 
       <Box bgcolor="cornsilk" padding="40px">
                 {modeGraphData == undefined ? (
