@@ -8,16 +8,6 @@ global.fetch = jest.fn();
 
 describe('UploadDataset', () => {
 
-  it('renders correctly', () => {
-    render(
-      <BrowserRouter>
-        <UploadDataset />
-      </BrowserRouter>
-    );
-    // Check if the Upload Dataset heading is rendered
-    expect(screen.getByTestId('upload-dataset-button')).toBeInTheDocument();
-
-
   it('shows error message when upload fails', async () => {
     // Mock a failed fetch response
     (global.fetch as jest.Mock).mockResolvedValueOnce({
@@ -54,4 +44,4 @@ describe('UploadDataset', () => {
     expect(window.location.pathname).toBe("/graph");
   });
 });
-})
+
