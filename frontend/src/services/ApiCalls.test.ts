@@ -23,7 +23,7 @@ describe("getPastDataAPICall", () => {
         const result = await getPastDataAPICall(params, "0");
         
         expect(result).toEqual(mockResponse);
-        expect(getPastDataAPICall).toHaveBeenCalledWith(params, "0");
+        expect(getPastDataAPICall).toHaveBeenCalledWith(params, "0");        
     });
 });
 
