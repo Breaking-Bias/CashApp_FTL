@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import GraphDescription from "./ScreenReaderOnly";
 
 describe("ScreenReaderOnly", () => {
-  it("Renders the graph type buttons properly", () => {
+  it("Renders the alert properly", () => {
     const modeGraphData = {
       average_difference: 10,
       total_difference: 48,
