@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Switch from "@mui/material/Switch";
+import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 
 const style = {
     position: 'absolute',
@@ -46,7 +46,6 @@ export default function HelpModal({open, setOpen}: Props) {
             >
                 <Box sx={style}>
                     <Typography id="instructions-title" variant="h3"
-                                tabIndex={0}
                                 component="h1" color="success"
                                 fontWeight={"bold"} marginBottom={3}
                                 aria-hidden="true">
@@ -74,32 +73,25 @@ export default function HelpModal({open, setOpen}: Props) {
                     />
 
                     <Typography id="working-with-the-graph" variant="h5"
-                                tabIndex={0}
                                 component="h2" sx={style_subheading}>
                         Use the button at the top of this page to switch views:
                     </Typography>
-                    <Box display="flex" justifyContent={"center"} tabIndex={0}>
-                        <Typography variant="body1"
-                                    sx={{marginLeft: "8px", marginTop: "6px"}}>
-                            Frequency
-                        </Typography>
-                        <Switch
-                            color="success"
-                            defaultChecked
-                            id="revenue-switch"
-                            disabled
-                            aria-label="switch"
-                        />
-                        <Typography variant="body1" sx={{marginLeft: "8px", marginTop: "6px"}}>
-                            Revenue
-                        </Typography>
+                    <Box display="flex" justifyContent={"center"}>
+                    <ToggleButtonGroup
+                        color="success"
+                        disabled
+                        exclusive
+                        aria-label="Graph type"
+                    >
+                        <ToggleButton value="1">Revenue</ToggleButton>
+                        <ToggleButton value="0">Frequency</ToggleButton>
+                    </ToggleButtonGroup>
                     </Box>
                     <Typography id="customizing-the-graph" variant="h5"
-                                tabIndex={0}
                                 component="h2" sx={style_subheading}>
                         Customizing Your Graph:
                     </Typography>
-                    <Typography id="actions" variant="body1" tabIndex={0}>
+                    <Typography id="actions" variant="body1">
                         <p><strong>Filter</strong>: Customize data views
                             using filters.
                         </p>
@@ -108,10 +100,10 @@ export default function HelpModal({open, setOpen}: Props) {
                         </p>
                     </Typography>
                     <Typography id="actions" variant="h5" component="h2"
-                                sx={style_subheading} tabIndex={0}>
+                                sx={style_subheading}>
                         Actions:
                     </Typography>
-                    <Typography id="actions" variant="body1" tabIndex={0}>
+                    <Typography id="actions" variant="body1">
                         <p>Click <strong>Make Forecast</strong> to visualize
                             data.</p>
                         <p>Click <strong>Export Graph</strong> to download a PDF
