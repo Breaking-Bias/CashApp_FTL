@@ -10,4 +10,5 @@ class ViewResultController:
         self.view_result_interactor = ViewResultInteractor(file_name)
 
     def get_past_data_from_interactor(self):
-        return self.view_result_interactor.get_past_data()
+        result = self.view_result_interactor.make_graph_only_past()
+        return result
