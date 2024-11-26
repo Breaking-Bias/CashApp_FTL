@@ -22,20 +22,16 @@ function RaceDropdownFilter({ onSelectChange }: DropdownFilterProps) {
 
   return (
     <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
-      <InputLabel
-        id="race-filter"
-        aria-label="ethnicity to analyse"
-        sx={{ ml: 2 }}
-      >
+      <InputLabel aria-label="ethnicity to analyse" sx={{ ml: 2 }}>
         Ethnicity
       </InputLabel>
       <Select
-        id="race-filter"
         value={selectedOption}
         onChange={handleChange}
         variant={"filled"}
+        inputProps={{ "data-testid": "race-select" }}
       >
-        <MenuItem value="">No Ethnicity Filter</MenuItem>
+        <MenuItem value="NoFilter">No Ethnicity Filter</MenuItem>
         <MenuItem value="Black">Black</MenuItem>
         <MenuItem value="White">White</MenuItem>
         <MenuItem value="Asian">Asian</MenuItem>
