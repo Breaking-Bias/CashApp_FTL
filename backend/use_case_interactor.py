@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from use_case.interactor_helpers.get_graph_interactor import GetGraphInteractor
+from backend.use_case.prediction.prediction_interactor import PredictionInteractor
 
 
 class UseCaseInteractor:
@@ -16,7 +16,7 @@ class UseCaseInteractor:
         filter_gender = request.get_json()['filtering_factor'][0]
         filter_race = request.get_json()['filtering_factor'][1]
         forecast_steps = request.get_json()['num_points']
-        get_graph_interactor = GetGraphInteractor(self.dataset, filter_gender, filter_race, forecast_steps)
+        get_graph_interactor = PredictionInteractor(self.dataset, filter_gender, filter_race, forecast_steps)
         result = get_graph_interactor.make_graph()
         return jsonify(result)
 
@@ -24,4 +24,3 @@ class UseCaseInteractor:
     #     get_graph_interactor = GetGraphInteractor(self.dataset, "NoFilter", "NoFilter", 0)
     #     result = get_graph_interactor.make_graph_only_past()
     #     return jsonify(result)
-

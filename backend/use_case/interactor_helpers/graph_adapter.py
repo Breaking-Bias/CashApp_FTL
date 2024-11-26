@@ -57,11 +57,3 @@ class GraphAdapter:
         result = self.helper_df_to_dict(result)
         return result
     
-
-    
-
-        
-    
-
-
-

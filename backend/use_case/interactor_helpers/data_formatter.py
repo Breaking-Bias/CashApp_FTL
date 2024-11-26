@@ -1,6 +1,5 @@
 import pandas as pd
 from entity.graphing_data import GraphingData
-# from entity.filters import FilterManager, GenderFilter, RaceFilter
 
 
 class DataFormatter:
@@ -51,8 +50,6 @@ class DataFormatter:
 
     def get_formatted_df(self) -> pd.DataFrame:
         return self._df
-
-
 
     def get_revenue_data(self) -> GraphingData:
         """Returns a GraphingData object with the revenue data."""
