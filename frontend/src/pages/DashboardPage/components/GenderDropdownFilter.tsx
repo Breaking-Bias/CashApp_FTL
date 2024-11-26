@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface DropdownFilterProps {
   onSelectChange: (value: string) => void;
@@ -15,14 +21,21 @@ function GenderDropdownFilter({ onSelectChange }: DropdownFilterProps) {
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>Gender</InputLabel>
+    <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
+      <InputLabel
+        id="gender-filter"
+        aria-label="gender to analyse"
+        sx={{ ml: 2 }}
+      >
+        Gender
+      </InputLabel>
       <Select
+        id="gender-filter"
         value={selectedOption}
         onChange={handleChange}
-        inputProps={{ "data-testid": "gender-select" }}
+        variant={"filled"}
       >
-        <MenuItem value="NoFilter">No Filter</MenuItem>
+        <MenuItem value="">No Filter</MenuItem>
         <MenuItem value="Male">Male</MenuItem>
         <MenuItem value="Female">Female</MenuItem>
         <MenuItem value="Non-Binary">Non-Binary</MenuItem>

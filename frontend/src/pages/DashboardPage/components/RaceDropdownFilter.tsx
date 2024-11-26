@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface DropdownFilterProps {
   onSelectChange: (value: string) => void;
@@ -15,14 +21,21 @@ function RaceDropdownFilter({ onSelectChange }: DropdownFilterProps) {
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>Race</InputLabel>
+    <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
+      <InputLabel
+        id="race-filter"
+        aria-label="ethnicity to analyse"
+        sx={{ ml: 2 }}
+      >
+        Ethnicity
+      </InputLabel>
       <Select
+        id="race-filter"
         value={selectedOption}
         onChange={handleChange}
-        inputProps={{ "data-testid": "race-select" }}
+        variant={"filled"}
       >
-        <MenuItem value="NoFilter">No Filter</MenuItem>
+        <MenuItem value="">No Ethnicity Filter</MenuItem>
         <MenuItem value="Black">Black</MenuItem>
         <MenuItem value="White">White</MenuItem>
         <MenuItem value="Asian">Asian</MenuItem>
