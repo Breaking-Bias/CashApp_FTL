@@ -20,6 +20,7 @@ function RaceDropdownFilter({ onSelectChange }: DropdownFilterProps) {
       <Select
         value={selectedOption}
         onChange={handleChange}
+        inputProps={{ "data-testid": "race-select" }}
       >
         <MenuItem value="NoFilter">No Filter</MenuItem>
         <MenuItem value="Black">Black</MenuItem>
