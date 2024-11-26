@@ -18,8 +18,12 @@ class DataFactory:
         self.filter_race = filter_race
         self.forecast_steps = forecast_steps
 
-    def make_biased_data(self) -> tuple[GraphingData, GraphingData,
-                                        GraphingData | None, GraphingData | None]:
+    def make_biased_data(self) -> tuple[GraphingData, 
+                                        GraphingData,
+                                        GraphingData | None, 
+                                        GraphingData | None]:
+        
+        # Filtering to be moved to prediction_controller.py
         formatted_past_data = (FilterInteractor(self.dataset)
                                .filter_by(self.filter_gender, self.filter_race)
                                .filter_invalid_transactions())
@@ -39,11 +43,14 @@ class DataFactory:
                 frequency_predicted_data_biased, 
                 revenue_predicted_data_biased)
 
-    def make_unbiased_data(self) -> tuple[GraphingData, GraphingData,
-                                          GraphingData | None, GraphingData | None]:
+    def make_unbiased_data(self) -> tuple[GraphingData, 
+                                          GraphingData,
+                                          GraphingData | None, 
+                                          GraphingData | None]:
+        
+        # Filtering to be moved to prediction_controller.py
         formatted_past_data_unbiased = (FilterInteractor(self.dataset)
-                                        .filter_by(self.filter_gender,
-                                                   self.filter_race)
+                                        .filter_by(self.filter_gender, self.filter_race)
                                         .unbias()
                                         .filter_invalid_transactions())
 
