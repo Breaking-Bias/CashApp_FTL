@@ -181,11 +181,13 @@ function DashboardPage() {
                             value={formatNumberForDisplay(modeGraphData.average_difference)}
                             revenueOrTransactions={mode}
                             averageOrTotal="daily"
+                            forExport ={true}
                         />
                         <BigNumber
                             value={formatNumberForDisplay(modeGraphData.total_difference)}
                             revenueOrTransactions={mode}
                             averageOrTotal="total"
+                            forExport={true}
                         />
                     </div>
                 )}

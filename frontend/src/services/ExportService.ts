@@ -1,6 +1,5 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import {v4 as uuid4} from 'uuid'
 
 export const ExportService = {
   exportGraphToPDF: async (
