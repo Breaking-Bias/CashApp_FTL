@@ -1,4 +1,4 @@
-from backend.use_case.prediction.old_prediction_interactor import PredictionInteractor
+from backend.junk_folder.old_prediction_interactor import PredictionInteractor
 from use_case.interactor_helpers.filter_interactor import FilterInteractor
 import pandas as pd
 
