@@ -1,39 +1,106 @@
 import pandas as pd
-from use_case.interactor_helpers.model_interactor import ModelInteractor
+from use_case.interactor_helpers.data_factory import DataFactory
+from entity.difference_calculator import DifferenceCalculator
+from use_case.interactor_helpers.graph_adapter import GraphAdapter
 from entity.graphing_data import GraphingData
-from use_case.interactor_helpers.get_graph_interactor import GetGraphInteractor
 
 
 class PredictionInteractor:
-    original_dataset: pd.DataFrame
-    forecast_steps: int
-    prediction_dataset: pd.DataFrame
+    dataset: pd.DataFrame
+    forecase_steps: int
 
-    def __init__(self, original_dataset: pd.DataFrame, forecast_steps: int):
-        self.original_dataset = original_dataset
-        self.forecast_steps = forecast_steps
-        self.prediction_dataset = self.make_prediction(original_dataset)
+    frequency_past_data_biased: GraphingData
+    revenue_past_data_biased: GraphingData
+    frequency_predicted_data_biased: GraphingData
+    revenue_predicted_data_biased: GraphingData
+    frequency_past_data_unbiased: GraphingData
+    revenue_past_data_unbiased: GraphingData
+    frequency_predicted_data_unbiased: GraphingData
+    revenue_predicted_data_unbiased: GraphingData
 
-    def make_prediction(self, original_dataset: pd.DataFrame) -> tuple[GraphingData, 
-                                                                        GraphingData, 
-                                                                        GraphingData, 
-                                                                        GraphingData]:
-        """Makes a prediction based on the original dataset,
-        and returns four datasets: 
-        
-        - frequency_predicted_data_biased
-        - revenue_predicted_data_biased
-        - frequency_predicted_data_unbiased
-        - revenue_predicted_data_unbiased
-        """
-        # model_interactor = ModelInteractor(original_dataset)
-        # frequency_predicted_data_biased, revenue_predicted_data_biased = model_interactor.execute(self.forecast_steps)
-        # frequency_predicted_data_unbiased, revenue_predicted_data_unbiased = model_interactor.execute(self.forecast_steps)
-        # return (frequency_predicted_data_biased, 
-        #         revenue_predicted_data_biased, 
-        #         frequency_predicted_data_unbiased, 
-        #         revenue_predicted_data_unbiased)       
-        
-        get_graph_interactor = GetGraphInteractor(self.dataset, filter_gender, filter_race, forecast_steps)
-        result = get_graph_interactor.make_graph()
+    def __init__(self, dataset: pd.DataFrame, forecast_steps: int):
+        data_factory = DataFactory(dataset, forecast_steps)
+
+        (self.frequency_past_data_biased,
+         self.revenue_past_data_biased,
+         self.frequency_predicted_data_biased,
+         self.revenue_predicted_data_biased) \
+            = data_factory.make_biased_data()
+
+        (self.frequency_past_data_unbiased,
+         self.revenue_past_data_unbiased,
+         self.frequency_predicted_data_unbiased,
+         self.revenue_predicted_data_unbiased) \
+            = data_factory.make_unbiased_data()
+
+    def _calculate_difference(self) -> dict[str, int]:
+        # Calculate difference between biased and unbiased data
+        revenue_difference_calculator_past = DifferenceCalculator(
+            self.revenue_past_data_unbiased, self.revenue_past_data_biased)
+        revenue_difference_calculator_predicted = DifferenceCalculator(
+            self.revenue_predicted_data_unbiased, self.revenue_predicted_data_biased)
+
+        frequency_difference_calculator_past = DifferenceCalculator(
+            self.frequency_past_data_unbiased, self.frequency_past_data_biased)
+        frequency_difference_calculator_predicted = DifferenceCalculator(
+            self.frequency_predicted_data_unbiased, self.frequency_predicted_data_biased)
+
+        result = {
+            "revenue_total_difference":
+                revenue_difference_calculator_past.volume_difference() +
+                revenue_difference_calculator_predicted.volume_difference(),
+            "revenue_average_difference":
+                revenue_difference_calculator_past.average_difference() +
+                revenue_difference_calculator_predicted.average_difference(),
+            "frequency_total_difference":
+                frequency_difference_calculator_past.volume_difference() +
+                frequency_difference_calculator_predicted.volume_difference(),
+            "frequency_average_difference":
+                frequency_difference_calculator_past.average_difference() +
+                frequency_difference_calculator_predicted.average_difference(),
+        }
+        return result
+
+    def make_graph(self) -> dict[str, dict[str, list[dict]]]:
+        difference_dict = self._calculate_difference()
+        revenue_total_difference = difference_dict["revenue_total_difference"]
+        revenue_average_difference = difference_dict["revenue_average_difference"]
+        frequency_total_difference = difference_dict["frequency_total_difference"]
+        frequency_average_difference = difference_dict["frequency_average_difference"]
+
+        # Collect all the data
+        revenue_graph = GraphAdapter(self.revenue_past_data_biased,
+                                     self.revenue_predicted_data_biased,
+                                     self.revenue_past_data_unbiased,
+                                     self.revenue_predicted_data_unbiased)
+
+        frequency_graph = GraphAdapter(self.frequency_past_data_biased,
+                                       self.frequency_predicted_data_biased,
+                                       self.frequency_past_data_unbiased,
+                                       self.frequency_predicted_data_unbiased)
+
+        revenue_graph = {
+            "past_biased_line": revenue_graph.getPastBiasedLine(),
+            "predicted_biased_line": revenue_graph.getPredictedBiasedLine(),
+            "past_unbiased_line": revenue_graph.getPastUnbiasedLine(),
+            "predicted_unbiased_line": revenue_graph.getPredictedUnbiasedLine(),
+
+            "total_difference": revenue_total_difference,
+            "average_difference": revenue_average_difference,
+        }
+
+        frequency_graph = {
+            "past_biased_line": frequency_graph.getPastBiasedLine(),
+            "predicted_biased_line": frequency_graph.getPredictedBiasedLine(),
+            "past_unbiased_line": frequency_graph.getPastUnbiasedLine(),
+            "predicted_unbiased_line": frequency_graph.getPredictedUnbiasedLine(),
+
+            "total_difference": frequency_total_difference,
+            "average_difference": frequency_average_difference,
+        }
+
+        result = {
+            "revenue_graph": revenue_graph,
+            "frequency_graph": frequency_graph
+        }
         return result
