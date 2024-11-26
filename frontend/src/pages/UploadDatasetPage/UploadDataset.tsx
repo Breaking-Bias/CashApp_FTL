@@ -66,6 +66,7 @@ function UploadDataset() {
           <button 
             onClick={handleUpload}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            data-testid="upload-dataset-button"
           >
             Upload Dataset
           </button>
