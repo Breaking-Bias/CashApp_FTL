@@ -18,7 +18,8 @@ import GraphTypeButtons from "./components/GraphTypeButtons";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
 import * as React from "react";
-import {formatNumberForDisplay} from "../utils/numberUtils";
+import { GraphDescription } from "./components/ScreenReaderOnly";
+import { formatNumberForDisplay } from "../utils/numberUtils";
 
 export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
@@ -159,12 +160,23 @@ function DashboardPage() {
                     />
                 )}
             </Box>
+      {modeGraphData && (
+    <GraphDescription
+      modeGraphData={modeGraphData}
+      mode={mode}
+      filterGender={filterGender}
+      filterRace={filterRace}
+    />
+)}
 
             <Box bgcolor="cornsilk" padding="40px">
                 {modeGraphData == undefined ? (
                     <p>Waiting for forecast to display summary</p>
                 ) : (
-                    <div aria-live="polite">
+                    // comment out aria-live read
+                    // since graph reader replaces this
+                    // <div aria-live="polite">
+                    <div>
                         <BigNumber
                             value={formatNumberForDisplay(modeGraphData.average_difference)}
                             revenueOrTransactions={mode}
