@@ -7,15 +7,19 @@ import io
 from data_access.data_access_object import DataAccessObject
 from interface_adaptor.upload_file.upload_file_controller import UploadFileController
 from interface_adaptor.view_result.view_result_controller import ViewResultController
+from interface_adaptor.prediction.prediction_controller import PredictionController
+
+# this use case interactor should be removed later on
 from use_case_interactor import UseCaseInteractor
 
 TEST_FILE_NAME = 'women_bias_data.csv'
 
 class App:
     app: Flask
-    upload_file_controller: UploadFileController
     file_name: str
+    upload_file_controller: UploadFileController
     view_result_controller: ViewResultController
+    prediction_controller: PredictionController
 
     # data_access_interface: UploadFileInteractor
     # read_dataset: pd.DataFrame
@@ -26,10 +30,15 @@ class App:
         CORS(self.app)
         self.upload_file_controller = UploadFileController()
         self.file_name = TEST_FILE_NAME
-        self.view_result_controller = ViewResultController(self.file_name)
+        self.view_result_controller = ViewResultController(self.file_name, )
         # following are temporary
         self.read_dataset = DataAccessObject(self.upload_file_controller.filename
                                        or TEST_FILE_NAME).read_dataset()
+        
+        filter_gender = request.get_json()['filtering_factor'][0]
+        filter_race = request.get_json()['filtering_factor'][1]
+        forecast_steps = request.get_json()['num_points']
+        self.prediction_controller = PredictionController(self.read_dataset, filter_gender, filter_race, forecast_steps)
         self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
 
 
@@ -65,12 +74,17 @@ class App:
         return jsonify(result[0]), result[1]
 
     def get_graph_data(self):
-        return self.use_case_interactor.get_graph_data()
+        result = self.use_case_interactor.get_graph_data()
+        return result
 
     def get_past_data(self):
         # return self.use_case_interactor.get_past_data()
         result = self.view_result_controller.get_past_data_from_interactor()
         return jsonify(result)
+    
+    def get_prediction_data(self):
+        result = self.prediction_controller.execute()
+        return result
 
     def run(self):
         self.app.run()
