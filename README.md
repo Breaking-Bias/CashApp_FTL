@@ -59,6 +59,7 @@ python server.py (or click the play button)
 
 # File Structure
 
+```
 backend/
 ├── app/
 │   └── app.py
@@ -90,6 +91,7 @@ backend/
 │   │   └── upload_file_interactor.py
 │   ├── view_result/
 │   │   └── view_result_interactor.py
+```
 
 # License
 
