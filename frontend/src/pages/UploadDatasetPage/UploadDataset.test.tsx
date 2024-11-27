@@ -1,47 +1,95 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';  // For navigation
-import UploadDataset from './UploadDataset';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import UploadDataset from "./UploadDataset";
 
-// Mock the fetch function for testing
-global.fetch = jest.fn();
+// Typecasting fetch as a Jest mock
+global.fetch = jest.fn() as jest.Mock;
 
-describe('UploadDataset', () => {
+describe("UploadDataset - handleUpload", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  it('shows error message when upload fails', async () => {
-    // Mock a failed fetch response
+  it("displays a success message on successful file upload", async () => {
+    render(
+      <BrowserRouter>
+        <UploadDataset />
+      </BrowserRouter>
+    );
+
+    const fileInput = screen.getByTestId("test-file-input");
+    const uploadButton = screen.getByTestId("upload-dataset-button");
+
+    // Simulate file selection
+    const testFile = new File(["dummy content"], "test.csv", {
+      type: "text/csv",
+    });
+    fireEvent.change(fileInput, { target: { files: [testFile] } });
+
+    // Mock a successful upload response
     (global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false
+      ok: true,
+      json: async () => ({ message: "File uploaded successfully!" }),
     });
 
-    render(
-      <BrowserRouter>
-        <UploadDataset />
-      </BrowserRouter>
-    );
+    // Trigger upload
+    fireEvent.click(uploadButton);
 
-    // // Wait for the error message
-    // await waitFor(() => {
-    //   expect(screen.getByText(/Error uploading file. Please try again./i)).toBeInTheDocument();
-    // });
+    // Wait for the success message
+    await waitFor(() => {
+      expect(
+        screen.getByText("File uploaded successfully!")
+      ).toBeInTheDocument();
+    });
   });
 
-
-  // navigation tests
-  it('navigates to the correct page when "Back" or "View Results" is clicked', () => {
+  it("displays an error message on server failure", async () => {
     render(
       <BrowserRouter>
         <UploadDataset />
       </BrowserRouter>
     );
 
-    // Simulate "Back" button click
-    fireEvent.click(screen.getByText(/Back/i));
-    expect(window.location.pathname).toBe("/");
+    const fileInput = screen.getByTestId("test-file-input");
+    const uploadButton = screen.getByTestId("upload-dataset-button");
 
-    // Simulate "View Results" button click
-    fireEvent.click(screen.getByText(/View Results/i));
-    expect(window.location.pathname).toBe("/graph");
+    // Simulate file selection
+    const testFile = new File(["dummy content"], "test.csv", {
+      type: "text/csv",
+    });
+    fireEvent.change(fileInput, { target: { files: [testFile] } });
+
+    // Mock a failed upload response
+    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
+
+    // Trigger upload
+    fireEvent.click(uploadButton);
+
+    // Wait for the error message
+    await waitFor(() => {
+      expect(
+        screen.getByText("Failed to upload the file. Server returned error.")
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("displays an error message when no file is selected", async () => {
+    render(
+      <BrowserRouter>
+        <UploadDataset />
+      </BrowserRouter>
+    );
+
+    const uploadButton = screen.getByTestId("upload-dataset-button");
+
+    // Trigger upload without selecting a file
+    fireEvent.click(uploadButton);
+
+    // Wait for the no-file-selected message
+    await waitFor(() => {
+      expect(
+        screen.getByText("Please select a file to upload.")
+      ).toBeInTheDocument();
+    });
   });
 });
-
