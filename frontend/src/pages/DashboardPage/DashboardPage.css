@@ -5,6 +5,7 @@
   grid-template-rows: 1fr 7fr;
   width: 100vw;
   height: 100vh;
+  background-color: beige;
 }
 
 header {
@@ -19,7 +20,6 @@ header {
 
 /* Close button styling */
 .close-button {
-  background-color: success;
   color: #000000;
   border: none;
   padding: 10px 20px;

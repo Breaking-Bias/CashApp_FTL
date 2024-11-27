@@ -155,7 +155,7 @@ function DashboardPage() {
                     />
                 )}
 
-            <Box padding="40px">
+            <Box padding="40px" bgcolor="moccasin">
                 <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
 
                 {modeGraphData == undefined ? (
