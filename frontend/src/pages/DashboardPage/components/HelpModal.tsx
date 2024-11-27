@@ -52,7 +52,7 @@ export default function HelpModal({open, setOpen}: Props) {
                                 aria-hidden="true">
                         How to Use the App
                     </Typography>
-                    <Typography id="introduction" variant="body1" component="h2" aria-hiddle="true" sx={{textAlign: "center"}}
+                    <Typography id="introduction" variant="body1" component="h2" aria-hidden="true" sx={{textAlign: "center"}}
                                 tabIndex={0}>
                         Our tool provides insights into the potential revenue change if specific
                         bias was removed from the dataset. (represented
