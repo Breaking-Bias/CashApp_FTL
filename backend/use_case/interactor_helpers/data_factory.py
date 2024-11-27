@@ -8,6 +8,10 @@ from entity.graphing_data import GraphingData
 
 
 class DataFactory:
+    """
+    Responsible for creating the data for the prediction use case.
+    Manages the filtering workflows and creating unbiased/biased data.
+    """
     dataset: pd.DataFrame
     filter_gender: str
     filter_race: str
@@ -38,6 +42,7 @@ class DataFactory:
             )
 
     def filter_biased(self) -> pd.DataFrame:
+        """Used to create biased dataset for DataFormatter to format."""
         filtered_biased_dataset = (
             FilterInteractor(self.dataset.copy())
             .filter_by(self.filter_gender, self.filter_race)
@@ -47,6 +52,7 @@ class DataFactory:
         return result
 
     def filter_unbiased(self) -> pd.DataFrame:
+        """Used to create unbiased dataset for DataFormatter to format."""
         filtered_unbiased_dataset = (
             FilterInteractor(self.dataset.copy())
             .filter_by(self.filter_gender, self.filter_race)
@@ -60,6 +66,7 @@ class DataFactory:
                                         GraphingData,
                                         GraphingData | None,
                                         GraphingData | None]:
+        """The biased data creation workflow"""
 
         if self.forecast_steps > 0:
             (
@@ -84,6 +91,7 @@ class DataFactory:
                                           GraphingData,
                                           GraphingData | None,
                                           GraphingData | None]:
+        """The unbiased data creation workflow"""
 
         if self.forecast_steps > 0:
             (

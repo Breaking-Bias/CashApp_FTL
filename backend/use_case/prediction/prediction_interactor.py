@@ -7,6 +7,7 @@ from entity.graphing_data import GraphingData
 
 
 class PredictionInteractor:
+    """Interactor for the prediction use case."""
     dataset: pd.DataFrame
     forecase_steps: int
 
@@ -19,9 +20,15 @@ class PredictionInteractor:
     frequency_predicted_data_unbiased: GraphingData
     revenue_predicted_data_unbiased: GraphingData
 
-    def __init__(self, file_name: str, filter_gender: str, filter_race: str, forecast_steps: int):
+    def __init__(self, file_name: str,
+                 filter_gender: str,
+                 filter_race: str,
+                 forecast_steps: int):
         self.dataset = DataAccessObject(file_name).read_dataset()
-        data_factory = DataFactory(self.dataset, filter_gender, filter_race, forecast_steps)
+        data_factory = DataFactory(self.dataset,
+                                   filter_gender,
+                                   filter_race,
+                                   forecast_steps)
 
         (self.frequency_past_data_biased,
          self.revenue_past_data_biased,
@@ -36,17 +43,24 @@ class PredictionInteractor:
             = data_factory.make_unbiased_data()
 
     def _calculate_difference(self) -> dict[str, int]:
-        # Calculate difference between biased and unbiased data
-        
-        revenue_difference_calculator_past = DifferenceCalculator(
-            self.revenue_past_data_unbiased, self.revenue_past_data_biased)
-        revenue_difference_calculator_predicted = DifferenceCalculator(
-            self.revenue_predicted_data_unbiased, self.revenue_predicted_data_biased)
+        """Calculate difference between biased and unbiased data"""
 
+        revenue_difference_calculator_past = DifferenceCalculator(
+            self.revenue_past_data_unbiased,
+            self.revenue_past_data_biased
+        )
+        revenue_difference_calculator_predicted = DifferenceCalculator(
+            self.revenue_predicted_data_unbiased,
+            self.revenue_predicted_data_biased
+        )
         frequency_difference_calculator_past = DifferenceCalculator(
-            self.frequency_past_data_unbiased, self.frequency_past_data_biased)
+            self.frequency_past_data_unbiased,
+            self.frequency_past_data_biased
+        )
         frequency_difference_calculator_predicted = DifferenceCalculator(
-            self.frequency_predicted_data_unbiased, self.frequency_predicted_data_biased)
+            self.frequency_predicted_data_unbiased,
+            self.frequency_predicted_data_biased
+        )
 
         result = {
             "revenue_total_difference":
@@ -65,11 +79,21 @@ class PredictionInteractor:
         return result
 
     def make_prediction(self) -> dict[str, dict[str, list[dict]]]:
+        """Creates complete data for the prediction use case."""
+
         difference_dict = self._calculate_difference()
-        revenue_total_difference = difference_dict["revenue_total_difference"]
-        revenue_average_difference = difference_dict["revenue_average_difference"]
-        frequency_total_difference = difference_dict["frequency_total_difference"]
-        frequency_average_difference = difference_dict["frequency_average_difference"]
+        revenue_total_difference = (
+            difference_dict["revenue_total_difference"]
+            )
+        revenue_average_difference = (
+            difference_dict["revenue_average_difference"]
+            )
+        frequency_total_difference = (
+            difference_dict["frequency_total_difference"]
+            )
+        frequency_average_difference = (
+            difference_dict["frequency_average_difference"]
+            )
 
         # Collect all the data
         revenue_graph = GraphAdapter(self.revenue_past_data_biased,
@@ -86,7 +110,8 @@ class PredictionInteractor:
             "past_biased_line": revenue_graph.getPastBiasedLine(),
             "predicted_biased_line": revenue_graph.getPredictedBiasedLine(),
             "past_unbiased_line": revenue_graph.getPastUnbiasedLine(),
-            "predicted_unbiased_line": revenue_graph.getPredictedUnbiasedLine(),
+            "predicted_unbiased_line": (
+                revenue_graph.getPredictedUnbiasedLine()),
 
             "total_difference": revenue_total_difference,
             "average_difference": revenue_average_difference,
@@ -96,7 +121,8 @@ class PredictionInteractor:
             "past_biased_line": frequency_graph.getPastBiasedLine(),
             "predicted_biased_line": frequency_graph.getPredictedBiasedLine(),
             "past_unbiased_line": frequency_graph.getPastUnbiasedLine(),
-            "predicted_unbiased_line": frequency_graph.getPredictedUnbiasedLine(),
+            "predicted_unbiased_line": (
+                frequency_graph.getPredictedUnbiasedLine()),
 
             "total_difference": frequency_total_difference,
             "average_difference": frequency_average_difference,
