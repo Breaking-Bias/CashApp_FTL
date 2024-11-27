@@ -72,7 +72,7 @@ function UploadDataset() {
           <input
             type="file"
             onChange={handleFileChange}
-            className="w-full max-w-md p-2 border rounded"
+            className="p-2 border rounded w-full max-w-md"
             aria-label="Choose a file to upload"
             aria-describedby="file-upload-description"
           />
@@ -110,6 +110,7 @@ function UploadDataset() {
           className={`mt-4 text-center ${
             message.includes("successfully") ? "text-green-600" : "text-red-600"
           }`}
+          aria-live='polite'
         >
           {message}
         </p>
