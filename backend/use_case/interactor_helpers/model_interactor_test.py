@@ -131,4 +131,3 @@ def test_execute(sample_training_data):
     pred_frequency, pred_revenue = model_interactor.execute(forecast_steps=3)
     assert isinstance(pred_frequency, GraphingData)
     assert isinstance(pred_revenue, GraphingData)
-

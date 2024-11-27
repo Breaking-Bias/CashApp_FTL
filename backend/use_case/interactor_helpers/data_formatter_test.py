@@ -21,7 +21,9 @@ def sample_data():
 
 @pytest.fixture
 def real_data():
-    real_data = DataAccessObject("women_bias_data_test.csv").read_dataset().head(100)
+    real_data = (DataAccessObject("women_bias_data_test.csv")
+                 .read_dataset()
+                 .head(100))
     return real_data
 
 
@@ -67,7 +69,8 @@ def test_filter_by_factor_no_matching_values(sample_data):
         'Nonexistent_race',
         'Nonexistent_state'
     ).get_df()
-    assert filtered_df.equals(sample_data)  # Should return the original dataset
+    # Should return the original dataset
+    assert filtered_df.equals(sample_data)
 
 
 def test_filter_by_factor_all_rows_match(sample_data):
@@ -105,6 +108,7 @@ def test_get_revenue_data(real_data):
 
     pd.testing.assert_frame_equal(revenue_data.get_data(),
                                   gotten_revenue_data.get_data())
+
 
 def test_get_frequency_data(real_data):
     frequency_data = GraphingData(pd.DataFrame({
