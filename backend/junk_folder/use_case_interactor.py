@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from backend.use_case.prediction.prediction_interactor import PredictionInteractor
+from use_case.prediction.prediction_interactor import PredictionInteractor
 
 
 class UseCaseInteractor:

@@ -1,4 +1,5 @@
 from use_case.view_result.view_result_interactor import ViewResultInteractor
+from flask import Flask, jsonify, request
 
 
 class ViewResultController:
@@ -6,9 +7,10 @@ class ViewResultController:
     """
     view_result_interactor: ViewResultInteractor
 
-    def __init__(self, file_name: str):
-        self.view_result_interactor = ViewResultInteractor(file_name)
+    def __init__(self):
+        self.view_result_interactor = ViewResultInteractor()
 
-    def get_past_data_from_interactor(self):
+    def execute(self, file_name: str):
+        self.view_result_interactor = ViewResultInteractor(file_name=file_name)
         result = self.view_result_interactor.make_graph_only_past()
-        return result
+        return jsonify(result)

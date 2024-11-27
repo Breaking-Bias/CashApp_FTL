@@ -1,15 +1,16 @@
 import pandas as pd
 
 from data_access.data_access_object import DataAccessObject
-from backend.use_case.prediction.prediction_interactor import PredictionInteractor
-from backend.use_case.interactor_helpers.graph_adapter import GraphAdapter
+from use_case.interactor_helpers.graph_adapter import GraphAdapter
 from use_case.interactor_helpers.data_factory import DataFactory
 
+TEST_FILE_NAME = 'women_bias_data.csv'
 
 class ViewResultInteractor:
     dataset: pd.DataFrame
+    data_factory: DataFactory
 
-    def __init__(self, file_name: str):
+    def __init__(self, file_name=TEST_FILE_NAME):
         self.dataset = DataAccessObject(file_name).read_dataset()
         self.data_factory = DataFactory(self.dataset, 0)
 

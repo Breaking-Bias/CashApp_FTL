@@ -1,16 +1,12 @@
-import pandas as pd
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from werkzeug.datastructures import FileStorage
-import io
 
-from data_access.data_access_object import DataAccessObject
 from interface_adaptor.upload_file.upload_file_controller import UploadFileController
 from interface_adaptor.view_result.view_result_controller import ViewResultController
 from interface_adaptor.prediction.prediction_controller import PredictionController
 
 # this use case interactor should be removed later on
-from use_case_interactor import UseCaseInteractor
+from junk_folder.use_case_interactor import UseCaseInteractor
 
 TEST_FILE_NAME = 'women_bias_data.csv'
 
@@ -29,17 +25,14 @@ class App:
         self.app = Flask('app')
         CORS(self.app)
         self.upload_file_controller = UploadFileController()
-        self.file_name = TEST_FILE_NAME
-        self.view_result_controller = ViewResultController(self.file_name, )
+        # self.file_name = TEST_FILE_NAME
+        self.view_result_controller = ViewResultController()
+        self.prediction_controller = PredictionController()
         # following are temporary
-        self.read_dataset = DataAccessObject(self.upload_file_controller.filename
-                                       or TEST_FILE_NAME).read_dataset()
-        
-        filter_gender = request.get_json()['filtering_factor'][0]
-        filter_race = request.get_json()['filtering_factor'][1]
-        forecast_steps = request.get_json()['num_points']
-        self.prediction_controller = PredictionController(self.read_dataset, filter_gender, filter_race, forecast_steps)
-        self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
+        # self.read_dataset = DataAccessObject(self.upload_file_controller.filename
+        #                                or TEST_FILE_NAME).read_dataset()
+        #
+        # self.use_case_interactor = UseCaseInteractor(self.app, self.read_dataset)
 
 
         # Register routes
@@ -61,31 +54,26 @@ class App:
         return jsonify(info)
 
     def upload_dataset(self):
-        """mutating many fields in App"""
-        # return self.data_access_interface.upload_dataset()
+        """mutating self.file_name"""
         result = self.upload_file_controller.execute()
         self.file_name = self.upload_file_controller.filename
-        self.view_result_controller = ViewResultController(self.file_name)
-        return jsonify(result[0]), result[1]
+        # self.view_result_controller = ViewResultController(self.file_name)
+        return result
 
     def get_datasets(self):
         # return self.data_access_interface.get_datasets()
-        result = self.upload_file_controller.get_datasets_from_interactor()
-        return jsonify(result[0]), result[1]
-    
-    # TODO: We don't need this anymore
-    def get_graph_data(self):
-        result = self.use_case_interactor.get_graph_data()
-        return result
+        return self.upload_file_controller.get_datasets_from_interactor()
+
+    # def get_graph_data(self):
+    #     result = self.use_case_interactor.get_graph_data()
+    #     return jsonify(result)
 
     def get_past_data(self):
         # return self.use_case_interactor.get_past_data()
-        result = self.view_result_controller.get_past_data_from_interactor()
-        return jsonify(result)
+        return self.view_result_controller.execute(self.file_name)
     
-    def get_prediction_data(self):
-        result = self.prediction_controller.execute()
-        return jsonify(result)
+    def get_graph_data(self):
+        return self.prediction_controller.execute(self.file_name)
 
     def run(self):
         self.app.run()
