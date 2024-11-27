@@ -36,13 +36,13 @@ button {
 }
 
 button.upload-button {
-  background-color: #2b902e;
+  background-color: #365d36;
   color: white;
   position: center
 }
 
 button.upload-button:hover {
-  background-color: #276323;
+  background-color: #20411e;
   transform: scale(1.05);
 }
 
@@ -54,12 +54,12 @@ button.upload-button:hover {
 }
 
 button.nav-button {
-  background-color: #2b902e;
+  background-color: #365d36; 
   color: white;
 }
 
 button.nav-button:hover {
-  background-color: #276323;
+  background-color:  #20411e;
   transform: scale(1.05);
 }
 

@@ -30,11 +30,11 @@
 }
 
 .nav-links a:hover {
-  color: #4f9f6b;
+  color: #387f44;
 }
 
 .nav-links .active {
-  color: #4f9f6b;
+  color: #387f44;
   font-weight: bold;
   border-bottom: 2px solid #4f9f6b;
 }
