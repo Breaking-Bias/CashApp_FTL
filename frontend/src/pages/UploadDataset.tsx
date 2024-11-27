@@ -115,6 +115,7 @@ function UploadDataset() {
           className={`mt-4 text-center ${
             message.includes("successfully") ? "text-green-600" : "text-red-600"
           }`}
+          aria-live='polite'
         >
           {message}
         </p>
