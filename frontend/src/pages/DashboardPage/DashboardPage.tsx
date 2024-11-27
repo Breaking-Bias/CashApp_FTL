@@ -156,19 +156,7 @@ function DashboardPage() {
                 )}
 
             <Box padding="40px">
-                <span style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingTop: '80px',
-                    width: '100%'
-                }}>
-                  <div style={{marginRight: '20px'}}>
-                      <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
-                  </div>
-
-
-                </span>
+                <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
 
                 {modeGraphData == undefined ? (
                     <p>Waiting for forecast to display summary</p>
