@@ -12,20 +12,23 @@ import {
     OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import {Button, Box, Tooltip} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {Box, Tooltip} from "@mui/material";
 import GraphTypeButtons from "./components/GraphTypeButtons";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
 import * as React from "react";
-import { GraphDescription } from "./components/ScreenReaderOnly";
-import { formatNumberForDisplay } from "../utils/numberUtils";
+import {GraphDescription} from "./components/ScreenReaderOnly";
+import {formatNumberForDisplay} from "../utils/numberUtils";
+import Navbar from "../components/NavBar";
+
 
 export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
 
 function DashboardPage() {
-    const navigate = useNavigate();
+
+    // const navigate = useNavigate();
+
 
     // Component State Variables
     const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
@@ -94,29 +97,11 @@ function DashboardPage() {
     return (
         <div id="grid-container">
             <header>
-        <span style={{display: "flex"}}>
-
-        <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
-        </span>
-
-                {/*add some padding*/}
-                {/* I know this is dumb */}
-                <Box sx={{marginLeft: 50}}/>
-
-                <HelpModal open={open} setOpen={setOpen}/>
-
-                <Button
-                    color="success"
-                    variant="contained"
-                    className="login-button"
-                    onClick={() => navigate("/upload-dataset")}
-                >
-                    Upload Dataset
-                </Button>
+                <Navbar/>
             </header>
 
+            <div id="grid-container" style={{paddingTop: 100}}>
             <Box
-                bgcolor="beige"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -160,16 +145,19 @@ function DashboardPage() {
                     />
                 )}
             </Box>
-      {modeGraphData && (
-    <GraphDescription
-      modeGraphData={modeGraphData}
-      mode={mode}
-      filterGender={filterGender}
-      filterRace={filterRace}
-    />
-)}
 
-            <Box bgcolor="cornsilk" padding="40px">
+                {modeGraphData && (
+                    <GraphDescription
+                        modeGraphData={modeGraphData}
+                        mode={mode}
+                        filterGender={filterGender}
+                        filterRace={filterRace}
+                    />
+                )}
+
+            <Box padding="40px">
+                <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
+
                 {modeGraphData == undefined ? (
                     <p>Waiting for forecast to display summary</p>
                 ) : (
@@ -203,8 +191,8 @@ function DashboardPage() {
 
                 <Tooltip title={
                     <span style={{fontSize: "14px"}}>
-            Will present only data on the selected filter.
-            </span>}
+                    Will present only data on the selected filter.
+                    </span>}
                          placement="top"
                          enterDelay={500}
                          leaveDelay={200}>
@@ -226,15 +214,19 @@ function DashboardPage() {
                         marginTop: "40px",
                     }}
                 >
-          <PredictButton
-              onClick={updatePrediction}
-              aria-label="Update prediction"
-          />
-          <ExportGraphButton aria-label="Export graph"/>
-        </span>
+                    <PredictButton
+                        onClick={updatePrediction}
+                        aria-label="Update prediction"
+                    />
+                    <HelpModal open={open} setOpen={setOpen}/>
+                    <ExportGraphButton aria-label="Export graph"/>
+                </span>
             </Box>
         </div>
-    );
+
+</div>
+)
+    ;
 }
 
 export default DashboardPage;

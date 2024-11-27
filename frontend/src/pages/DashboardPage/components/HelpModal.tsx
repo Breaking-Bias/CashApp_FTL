@@ -14,6 +14,8 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    maxHeight: '80vh',
+    overflowY: 'auto'
 };
 
 const style_subheading = {
@@ -35,7 +37,8 @@ export default function HelpModal({open, setOpen}: Props) {
         <div>
             <Button color="success"
                     variant="contained"
-                    onClick={handleOpen}>Help</Button>
+                    onClick={handleOpen}
+            >Help</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -45,9 +48,31 @@ export default function HelpModal({open, setOpen}: Props) {
                 <Box sx={style}>
                     <Typography id="instructions-title" variant="h3"
                                 component="h1" color="success"
-                                fontWeight={"bold"} marginBottom={3}>
+                                fontWeight={"bold"} marginBottom={3}
+                                aria-hidden="true">
                         How to Use the App
                     </Typography>
+                    <Typography id="introduction" variant="body1" component="h2" aria-hidden="true" sx={{textAlign: "center"}}
+                                tabIndex={0}>
+                        Our tool provides insights into the potential revenue change if specific
+                        bias was removed from the dataset. (represented
+                        by the shaded area)
+                    </Typography>
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 400,
+                            width: 600,
+                            display: 'block',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                        }}
+                        alt="Example bias visualisation"
+                        src="/Revenue Gain.png"
+                        aria-label='Line chart with a shaded area between unbiased and biased Cashflow or Transacton Value over time'
+                        tabIndex={0}
+                    />
+
                     <Typography id="working-with-the-graph" variant="h5"
                                 component="h2" sx={style_subheading}>
                         Use the button at the top of this page to switch views:
@@ -85,6 +110,22 @@ export default function HelpModal({open, setOpen}: Props) {
                         <p>Click <strong>Export Graph</strong> to download a PDF
                             version.</p>
                     </Typography>
+                    <Button
+                        onClick={handleClose}
+                        variant="contained"
+                        color="success" 
+                        sx={{
+                            display: 'block',
+                            margin: '20px auto 0',
+                            backgroundColor: 'green',  
+                            color: 'white',     
+                            '&:hover': {
+                            backgroundColor: 'darkgreen', 
+                            }
+                        }}
+                        >
+                        Close
+                    </Button>
                 </Box>
             </Modal>
         </div>
