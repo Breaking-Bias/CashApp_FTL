@@ -1,5 +1,5 @@
 from use_case.view_result.view_result_interactor import ViewResultInteractor
-from flask import Flask, jsonify, request
+from flask import jsonify
 
 
 class ViewResultController:

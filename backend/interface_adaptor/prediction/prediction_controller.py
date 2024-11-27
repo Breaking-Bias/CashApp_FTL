@@ -1,5 +1,5 @@
 from use_case.prediction.prediction_interactor import PredictionInteractor
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 
 
 class PredictionController:
