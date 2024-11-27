@@ -52,8 +52,8 @@ export default function HelpModal({open, setOpen}: Props) {
                                 aria-hidden="true">
                         How to Use the App
                     </Typography>
-                    <Typography id="introduction" variant="body1" component="h2" aria-hidden="true" sx={{textAlign: "center"}}
-                                tabIndex={0}>
+                    <Typography id="introduction" variant="body1" component="h2"
+                                aria-hidden="true" sx={{textAlign: "center"}}>
                         Our tool provides insights into the potential revenue change if specific
                         bias was removed from the dataset. (represented
                         by the shaded area)
@@ -69,8 +69,9 @@ export default function HelpModal({open, setOpen}: Props) {
                         }}
                         alt="Example bias visualisation"
                         src="/Revenue Gain.png"
-                        aria-label='Line chart with a shaded area between unbiased and biased Cashflow or Transacton Value over time'
-                        tabIndex={0}
+                        aria-label='Line chart with a shaded area between
+                         unbiased and biased Cashflow or Transacton Volume
+                         over time'
                     />
 
                     <Typography id="working-with-the-graph" variant="h5"
