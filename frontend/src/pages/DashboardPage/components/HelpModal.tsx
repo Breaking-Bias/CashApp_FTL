@@ -38,7 +38,6 @@ export default function HelpModal({open, setOpen}: Props) {
             <Button color="success"
                     variant="contained"
                     onClick={handleOpen}
-                    sx={{width: 150}}
             >Help</Button>
             <Modal
                 open={open}
