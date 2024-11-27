@@ -25,7 +25,6 @@ export const CYAN = "#00bbbb";
 export const PINK = "#ff4aa4";
 
 function DashboardPage() {
-    const navigate = useNavigate();
 
     // Component State Variables
     const [sliderValue, setSliderValue] = useState<number>(DEFAULT_SLIDER_VAL);
@@ -105,14 +104,14 @@ function DashboardPage() {
 
                 <HelpModal open={open} setOpen={setOpen}/>
 
-                <Button
+                {/* <Button
                     color="success"
                     variant="contained"
                     className="login-button"
                     onClick={() => navigate("/upload-dataset")}
                 >
                     Upload Dataset
-                </Button>
+                </Button> */}
             </header>
 
             <Box
