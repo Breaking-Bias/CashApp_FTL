@@ -100,7 +100,7 @@ function DashboardPage() {
                 <Navbar/>
             </header>
 
-            <div id="grid-container" style={{paddingTop: 200}}>
+            <div id="grid-container" style={{paddingTop: 100}}>
             <Box
                 display="flex"
                 justifyContent="center"
