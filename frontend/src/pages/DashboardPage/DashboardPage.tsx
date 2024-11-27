@@ -159,14 +159,14 @@ function DashboardPage() {
                     />
                 )}
             </Box>
-      {modeGraphData && (
-    <GraphDescription
-      modeGraphData={modeGraphData}
-      mode={mode}
-      filterGender={filterGender}
-      filterRace={filterRace}
-    />
-)}
+                {modeGraphData && (
+                <GraphDescription
+                modeGraphData={modeGraphData}
+                mode={mode}
+                filterGender={filterGender}
+                filterRace={filterRace}
+                />
+            )}
 
             <Box bgcolor="cornsilk" padding="40px">
                 {modeGraphData == undefined ? (
@@ -196,6 +196,7 @@ function DashboardPage() {
                 <Slider
                     sliderValue={sliderValue}
                     setSliderValue={setSliderValue}
+                    data-testid="slider"
                 />
 
                 <h2>Filters:</h2>

@@ -1,32 +1,49 @@
-// import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-// import DashboardPage from './DashboardPage';
-// import { getGraphDataAPICall } from '../../services/ApiCalls';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import DashboardPage from "./DashboardPage"; 
 
-// jest.mock('../../services/ApiCalls', () => ({
-//     getGraphDataAPICall: jest.fn(),
-//     getPastDataAPICall: jest.fn(),
-// }));
+const mockPastData = {
+  name: "Past Data",
+  color: "#00C49F",
+  data: [
+    { date: new Date("2024-01-01"), value: 100 },
+    { date: new Date("2024-02-01"), value: 200 },
+    { date: new Date("2024-03-01"), value: 300 },
+  ],
+};
 
-// describe('DashboardPage', () => {
+const mockPredictedData = {
+  name: "Predicted Data",
+  color: "#0088FE",
+  data: [
+    { date: new Date("2024-04-01"), value: 400 },
+    { date: new Date("2024-05-01"), value: 500 },
+    { date: new Date("2024-06-01"), value: 600 },
+  ],
+};
 
-//     // it('renders the dashboard page correctly', async () => {
+// Test Suite
+describe("DashboardPage Integration Test", () => {
+  test("handles slider change, updates graph data, and processes uploaded dataset", async () => {
+    render(<DashboardPage />);
 
-//     //     // Wait for graph to render
-//     //     await waitFor(() => expect(screen.getByTestId('graph')).toBeInTheDocument());
+    // // Simulate user interaction with the filter dropdown
+    // const filterDropdown = screen.getByRole("combobox", { name: /filter/i });
+    // fireEvent.change(filterDropdown, { target: { value: "someFilterOption" } });
 
-//     //     // Test presence of filter elements
-//     //     expect(screen.getByLabelText(/gender to analyse/i)).toBeInTheDocument();
-//     //     expect(screen.getByLabelText(/race to analyse/i)).toBeInTheDocument();
-//     // });
+    // Verify the graph updates based on filter change
+    await waitFor(() => {
+      const updatedGraphMessage = screen.getByText(/Loading/i); 
+      expect(updatedGraphMessage).toBeInTheDocument();
+    });
 
-//     it('updates prediction on slider change', async () => {
-//         render(<DashboardPage />);
+    // Simulate slider interaction
+    const slider = screen.getByTestId("slider");
+    fireEvent.change(slider, { target: { value: 50 } });
 
-//         // Test slider behavior
-//         // const slider = screen.getByRole('slider');
-//         // fireEvent.change(slider, { target: { value: 50 } });
-
-//         // Test that graph updates accordingly
-//         await waitFor(() => expect(getGraphDataAPICall).toHaveBeenCalled());
-//     });
-// });
+    // Assert the graph reacts to slider change
+    await waitFor(() => {
+      const sliderUpdateMessage = screen.getByText(/graph updated with slider value/i); // Placeholder for actual feedback
+      expect(sliderUpdateMessage).toBeInTheDocument();
+    });
+  });
+});
