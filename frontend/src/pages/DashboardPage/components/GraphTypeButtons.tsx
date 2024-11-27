@@ -29,8 +29,8 @@ function GraphTypeButtons({ mode, setMode }: Props) {
             onChange={handleChange}
             aria-label="Graph type"
         >
-            <ToggleButton value="1">Revenue</ToggleButton>
-            <ToggleButton value="0">Frequency</ToggleButton>
+            <ToggleButton value="1">Cash Flow</ToggleButton>
+            <ToggleButton value="0">Trans. Volume</ToggleButton>
         </ToggleButtonGroup>
     </Box>
     </div>
