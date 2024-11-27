@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./UploadDataset.css";
 import { Card } from '@mui/material';
-import Navbar from './components/NavBar';
+import Navbar from '../../components/NavBar.tsx';
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);

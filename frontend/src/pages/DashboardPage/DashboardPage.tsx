@@ -1,25 +1,25 @@
 import "./DashboardPage.css";
 import {useEffect, useState} from "react";
-import Slider, {DEFAULT_SLIDER_VAL} from "./components/Slider";
-import GenderDropdownFilter from "./components/GenderDropdownFilter";
-import RaceDropdownFilter from "./components/RaceDropdownFilter";
-import PredictButton from "./components/PredictButton";
-import Graph from "./components/Graph";
+import Slider, {DEFAULT_SLIDER_VAL} from "../../components/dashboardcomponents/Slider";
+import GenderDropdownFilter from "../../components/dashboardcomponents/GenderDropdownFilter";
+import RaceDropdownFilter from "../../components/dashboardcomponents/RaceDropdownFilter";
+import PredictButton from "../../components/dashboardcomponents/PredictButton";
+import Graph from "../../components/dashboardcomponents/Graph";
 import {getGraphDataAPICall, getPastDataAPICall} from "../../services/ApiCalls";
 import {
     FormattedBigGraphData,
     FormattedDataEntry,
     OneModeGraphData,
 } from "../../types";
-import ExportGraphButton from "./components/ExportGraphButton";
+import ExportGraphButton from "../../components/dashboardcomponents/ExportGraphButton";
 import {Box, Tooltip} from "@mui/material";
-import GraphTypeButtons from "./components/GraphTypeButtons";
-import BigNumber from "./components/BigNumber";
-import HelpModal from "./components/HelpModal"
+import GraphTypeButtons from "../../components/dashboardcomponents/GraphTypeButtons";
+import BigNumber from "../../components/dashboardcomponents/BigNumber";
+import HelpModal from "../../components/dashboardcomponents/HelpModal"
 import * as React from "react";
-import {GraphDescription} from "./components/ScreenReaderOnly";
+import {GraphDescription} from "../../components/dashboardcomponents/ScreenReaderOnly";
 import {formatNumberForDisplay} from "../utils/numberUtils";
-import Navbar from "../components/NavBar";
+import Navbar from "../../components/NavBar.tsx";
 
 
 export const CYAN = "#00bbbb";

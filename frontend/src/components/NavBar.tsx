@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
           {/* Home Link with Dropdown */}
           <div className="dropdown-container">
             <NavLink
-              to="/"
+              to="/frontend/public"
               className={({ isActive }) => (isActive ? 'active' : '')}
               onClick={toggleDropdown} // Toggle dropdown when "Home" is clicked
             >

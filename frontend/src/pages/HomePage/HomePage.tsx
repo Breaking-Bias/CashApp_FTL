@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "@/pages/HomePage/HomePage.css";
 import Card from '@mui/material/Card';
-import Navbar from "../components/NavBar";
+import Navbar from "../../components/NavBar.tsx";
 
 
 const HomePage = (): JSX.Element => {

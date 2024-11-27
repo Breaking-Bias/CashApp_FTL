@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
-import { GraphAnalysisService } from '../../../services/GraphAnalysisService'
+import { GraphAnalysisService } from '../../services/GraphAnalysisService.tsx'
 import "./ScreenReaderOnly.css";
 
 //Created two interfaces, this satisfied the L in solid 

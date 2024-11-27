@@ -7,8 +7,8 @@ import {
     ReferenceLine,
     Label,
 } from "recharts";
-import {DataSeries} from "../../../types";
-import {CYAN, PINK} from "../DashboardPage";
+import {DataSeries} from "../../types.ts";
+import {CYAN, PINK} from "../../pages/DashboardPage/DashboardPage.tsx";
 import Typography from "@mui/material/Typography";
 import {Box} from "@mui/material";
 

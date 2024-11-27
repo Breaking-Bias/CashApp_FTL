@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { ExportService } from "../../../services/ExportService";
+import { ExportService } from "../../services/ExportService.ts";
 
 function ExportGraphButton() {
   function handleExport() {
