@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import "./UploadDataset.css"
+import "./UploadDataset.css";
 import { Card } from '@mui/material';
-import Navbar from './components/NavBar'
+import Navbar from './components/NavBar';
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
-  // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFile(event.target.files[0]);
-      setMessage(""); 
+      setMessage("");  
     }
   };
 
-  // Handle file upload to backend
   const handleUpload = async () => {
     if (!file) {
       setMessage("Please select a file to upload.");
@@ -33,15 +31,12 @@ function UploadDataset() {
         body: formData,
       });
       
-      // Check if the response is successful
       if (!response.ok) {
         setMessage("Failed to upload the file. Server returned error.");
         return;
       }
-    
       const result = await response.json();
     
-      // Update UI with a success or error message only
       setMessage(result.message || "File uploaded successfully!");
     } catch (error) {
       setMessage("Error uploading file. Please try again.");
@@ -53,46 +48,74 @@ function UploadDataset() {
     <div className="main-class">
       <Navbar />
       
-      <Card className="border-control"  sx={{width:"500px", padding:"40px", maxWidth:"100%", margin:"0 auto" ,border: "2px solid black", boxShadow: 3,}}>
-      <h1 className="upload-dataset" style={{textAlign:"center", color: "#333", marginBottom: "20px"}}>Upload Dataset</h1>
+      <Card
+        className="border-control"
+        sx={{
+          width: "500px",
+          padding: "40px",
+          maxWidth: "100%",
+          margin: "0 auto",
+          border: "2px solid black",
+          boxShadow: 3,
+        }}
+      >
+        <h1
+          className="upload-dataset"
+          style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}
+        >
+          Upload Dataset
+        </h1>
         
         <div className="flex flex-col items-center gap-6 mb-8">
-          <input 
+          {/* Label for file input */}
+          <label className="sr-only" htmlFor="file-upload">Choose a Dataset to Upload</label>
+          <input
             type="file"
             onChange={handleFileChange}
             className="w-full max-w-md p-2 border rounded"
+            aria-label="Choose a file to upload"
+            aria-describedby="file-upload-description"
           />
-          <button 
+          <span id="file-upload-description" className="sr-only">
+            Select a file from your device to upload.
+          </span>
+
+          <button
             onClick={handleUpload}
             className="upload-button"
+            aria-label="Upload Dataset"
           >
             Upload Dataset
           </button>
         </div>
         
         <div className="nav-buttons-container">
-          <button 
+          <button
             onClick={() => navigate("/")}
             className="nav-button"
+            aria-label="Back to home"
           >
             Back
           </button>
-          <button 
+          <button
             onClick={() => navigate("/graph")}
             className="nav-button"
+            aria-label="View Results"
           >
             View Results
           </button>
         </div>
         
-        <p className={`mt-4 text-center ${
-          message.includes("successfully") ? "text-green-600" : "text-red-600"
-        }`}>
+        <p
+          className={`mt-4 text-center ${
+            message.includes("successfully") ? "text-green-600" : "text-red-600"
+          }`}
+        >
           {message}
         </p>
       </Card>
     </div>
   );
-};
+}
 
 export default UploadDataset;
