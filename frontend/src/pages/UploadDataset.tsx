@@ -26,7 +26,7 @@ function UploadDataset() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://breakingbiasbigboss.zapto.org/upload-dataset', {
+      const response = await fetch(`${process.env.VITE_SERVER_URL}`, {
         method: 'POST',
         body: formData,
       });
