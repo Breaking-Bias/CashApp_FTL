@@ -12,7 +12,7 @@ class ViewResultInteractor:
 
     def __init__(self, file_name=TEST_FILE_NAME):
         self.dataset = DataAccessObject(file_name).read_dataset()
-        self.data_factory = DataFactory(self.dataset, 0)
+        self.data_factory = DataFactory(self.dataset, "NoFilter", "NoFilter", 0)
 
     # def get_past_data(self):
     #     prediction_interactor = PredictionInteractor(self.dataset, 0)

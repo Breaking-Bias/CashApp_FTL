@@ -7,11 +7,12 @@ class UploadFileController:
     filename: str | None
 
     def __init__(self):
-        self.files = request.files
+        self.files = None
         self.upload_file_interactor = UploadFileInteractor()
         self.filename = None
 
     def execute(self):
+        self.files = request.files
         result = self.upload_file_interactor.upload_dataset(self.files)
         self.filename = result.name_of_file
         return jsonify(result[0]), result[1]

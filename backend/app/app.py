@@ -25,7 +25,7 @@ class App:
         self.app = Flask('app')
         CORS(self.app)
         self.upload_file_controller = UploadFileController()
-        # self.file_name = TEST_FILE_NAME
+        self.file_name = TEST_FILE_NAME
         self.view_result_controller = ViewResultController()
         self.prediction_controller = PredictionController()
         # following are temporary

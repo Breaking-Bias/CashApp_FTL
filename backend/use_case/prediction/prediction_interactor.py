@@ -5,7 +5,6 @@ from entity.difference_calculator import DifferenceCalculator
 from use_case.interactor_helpers.graph_adapter import GraphAdapter
 from entity.graphing_data import GraphingData
 
-
 class PredictionInteractor:
     """Interactor for the prediction use case."""
     dataset: pd.DataFrame
