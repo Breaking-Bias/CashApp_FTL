@@ -1,6 +1,5 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
 export const ExportService = {
   exportGraphToPDF: (elementId:string) => {
     const doc = new jsPDF();
