@@ -23,14 +23,16 @@ class PredictionController:
         filtered_biased_dataset = (FilterInteractor(self.original_dataset)
                                 .filter_by(self.filter_gender, self.filter_race)
                                 .filter_invalid_transactions())
-        return filtered_biased_dataset
+        result = filtered_biased_dataset.df
+        return result
 
     def filter_unbiased(self) -> pd.DataFrame:
         filtered_unbiased_dataset = (FilterInteractor(self.original_dataset)
                                 .filter_by(self.filter_gender, self.filter_race)
                                 .unbias()
                                 .filter_invalid_transactions())
-        return filtered_unbiased_dataset
+        result = filtered_unbiased_dataset.df
+        return result
 
     def execute(self) -> dict[str, dict[str, list[dict]]]:
         """Returns a dictionary containing:
@@ -39,4 +41,3 @@ class PredictionController:
         Note that revenue_graph and frequency_graph are the formatted
         """
         return self.prediction_interactor.make_prediction()
-    

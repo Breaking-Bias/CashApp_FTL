@@ -72,7 +72,8 @@ class App:
         # return self.data_access_interface.get_datasets()
         result = self.upload_file_controller.get_datasets_from_interactor()
         return jsonify(result[0]), result[1]
-
+    
+    # TODO: We don't need this anymore
     def get_graph_data(self):
         result = self.use_case_interactor.get_graph_data()
         return result
@@ -84,7 +85,7 @@ class App:
     
     def get_prediction_data(self):
         result = self.prediction_controller.execute()
-        return result
+        return jsonify(result)
 
     def run(self):
         self.app.run()

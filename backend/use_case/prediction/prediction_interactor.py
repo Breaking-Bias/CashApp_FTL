@@ -61,7 +61,7 @@ class PredictionInteractor:
         }
         return result
 
-    def make_graph(self) -> dict[str, dict[str, list[dict]]]:
+    def make_prediction(self) -> dict[str, dict[str, list[dict]]]:
         difference_dict = self._calculate_difference()
         revenue_total_difference = difference_dict["revenue_total_difference"]
         revenue_average_difference = difference_dict["revenue_average_difference"]

@@ -4,17 +4,17 @@ from entity.filters import FilterManager, GenderFilter, RaceFilter
 
 
 class FilterInteractor:
-    _df: pd.DataFrame
+    df: pd.DataFrame
 
     def __init__(self, df_to_format: pd.DataFrame):
-        self._df = df_to_format.copy()
+        self.df = df_to_format.copy()
 
     def get_df(self) -> pd.DataFrame:
-        return self._df
+        return self.df
 
     def unbias(self) -> 'FilterInteractor':
         """Removes bias by flipping FP to TN, only for 'Bias' rows"""
-        self._df = self._df.apply(FilterInteractor._unbias_row, axis=1)
+        self.df = self.df.apply(FilterInteractor._unbias_row, axis=1)
         return self
 
     @staticmethod
@@ -30,8 +30,8 @@ class FilterInteractor:
         filters = [GenderFilter(filter_gender),
                    RaceFilter(filter_race)]
 
-        filter_manager = FilterManager(self._df, filters)
-        self._df = filter_manager.apply_filters()
+        filter_manager = FilterManager(self.df, filters)
+        self.df = filter_manager.apply_filters()
 
         return self
 
@@ -40,6 +40,6 @@ class FilterInteractor:
          (i.e. False Positive (incorrectly blocked),
           True Positive (correctly blocked))
         """
-        self._df = self._df[(self._df['confusion_value'] != 'FP')
-                            & (self._df['confusion_value'] != 'TP')]
+        self.df = self.df[(self.df['confusion_value'] != 'FP')
+                          & (self.df['confusion_value'] != 'TP')]
         return self

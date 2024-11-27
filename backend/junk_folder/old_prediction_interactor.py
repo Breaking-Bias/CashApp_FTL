@@ -47,5 +47,5 @@ class PredictionInteractor:
         #         revenue_predicted_data_unbiased)
 
         get_graph_interactor = PredictionInteractor(self.dataset, self.forecast_steps)
-        result = get_graph_interactor.make_graph()
+        result = get_graph_interactor.make_prediction()
         return result

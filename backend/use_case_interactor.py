@@ -17,7 +17,7 @@ class UseCaseInteractor:
         filter_race = request.get_json()['filtering_factor'][1]
         forecast_steps = request.get_json()['num_points']
         get_graph_interactor = PredictionInteractor(self.dataset, filter_gender, filter_race, forecast_steps)
-        result = get_graph_interactor.make_graph()
+        result = get_graph_interactor.make_prediction()
         return jsonify(result)
 
     # def get_past_data(self):
