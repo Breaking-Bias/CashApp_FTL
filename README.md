@@ -59,7 +59,37 @@ python server.py (or click the play button)
 
 # File Structure
 
-TODO
+backend/
+├── app/
+│   └── app.py
+├── data_access/
+│   ├── data_access_object.py
+│   └── file_uploader.py
+├── entity/
+│   ├── difference_calculator.py
+│   ├── filters.py
+│   ├── graphing_data.py
+│   └── model.py
+├── interface_adaptor/
+│   ├── prediction/
+│   │   └── prediction_controller.py
+│   ├── upload_file/
+│   │   └── upload_file_controller.py
+│   └── view_result/
+│       └── view_result_controller.py
+├── use_case/
+│   ├── interactor_helpers/
+│   │   ├── data_factory.py
+│   │   ├── data_formatter.py
+│   │   ├── filter_interactor.py
+│   │   ├── graph_adapter.py
+│   │   └── model_interactor.py
+│   ├── prediction/
+│   │   └── prediction_interactor.py
+│   ├── upload_file/
+│   │   └── upload_file_interactor.py
+│   ├── view_result/
+│   │   └── view_result_interactor.py
 
 # License
 
@@ -77,4 +107,4 @@ This project is licensed under the MIT License
 
 # Acknowledgments
 
-Special thanks to ...
+...
