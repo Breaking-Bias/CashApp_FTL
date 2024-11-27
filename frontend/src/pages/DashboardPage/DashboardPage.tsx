@@ -95,7 +95,7 @@ function DashboardPage() {
     }, []);
 
     return (
-        <div id="grid-container" style={{overflow: "hidden"}}>
+        <div id="grid-container">
             <header>
                 <Navbar/>
             </header>
