@@ -6,7 +6,7 @@ from interface_adaptor.view_result.view_result_controller import ViewResultContr
 from interface_adaptor.prediction.prediction_controller import PredictionController
 
 # this use case interactor should be removed later on
-from junk_folder.use_case_interactor import UseCaseInteractor
+# from junk_folder.use_case_interactor import UseCaseInteractor
 
 TEST_FILE_NAME = 'women_bias_data.csv'
 
@@ -19,7 +19,7 @@ class App:
 
     # data_access_interface: UploadFileInteractor
     # read_dataset: pd.DataFrame
-    use_case_interactor: UseCaseInteractor
+    # use_case_interactor: UseCaseInteractor
 
     def __init__(self):
         self.app = Flask('app')
