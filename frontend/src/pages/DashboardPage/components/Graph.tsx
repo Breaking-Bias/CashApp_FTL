@@ -12,7 +12,6 @@ import { CYAN, PINK } from "../DashboardPage";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 
-// const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
 interface Props {
   mode: string;
@@ -32,32 +31,27 @@ function Graph({
   function getGraphDomain() {
     if (pastData) {
       const start = pastData.data[0].date.getTime();
-
       let end;
       if (predictedData) {
         end = predictedData.data.slice(-1)[0].date.getTime();
       } else {
         end = pastData.data.slice(-1)[0].date.getTime();
       }
-
       return [start, end];
     }
     return [0, 0];
   }
 
-  // Generate ticks for the first day of each month
   const generateMonthTicks = (startDate: Date, endDate: Date) => {
     const ticks = [];
     const current = new Date(startDate);
     current.setDate(1);
-    current.setMonth(current.getMonth() + 1); // Move to the next month
+    current.setMonth(current.getMonth() + 1);
 
-    // Generate ticks for the first day of each month within the range
     while (current <= endDate) {
       ticks.push(current.getTime());
-      current.setMonth(current.getMonth() + 1); // Move to the next month
+      current.setMonth(current.getMonth() + 1);
     }
-
     return ticks;
   };
 
@@ -69,7 +63,6 @@ function Graph({
     });
   };
 
-  // Get the domain from pastData and predictedData
   const [startDate, endDate] = getGraphDomain();
   const monthTicks = generateMonthTicks(new Date(startDate), new Date(endDate));
 
@@ -77,22 +70,57 @@ function Graph({
     <div>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box width="900px">
-          <Typography component="h1" variant="h4" align="center">
-            Transactions {mode == "0" ? "Transaction Volume" : "Cash Flow"} Over
-            Time
+          <Typography 
+            component="h1" 
+            variant="h4" 
+            align="center"
+            sx={{
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontWeight: 600,
+              fontSize: '1.75rem',
+              color: '#1a2027',
+              marginBottom: '1rem'
+            }}
+          >
+            {mode === "0" ? "Transaction Volume" : "Cash Flow"} Over Time
           </Typography>
         </Box>
-        <Box display="flex" justifyContent="center">
-          <p style={{ color: CYAN, marginRight: "30px", fontWeight: 700 }}>
+        <Box display="flex" justifyContent="center" sx={{ marginBottom: '2rem' }}>
+          <Typography 
+            sx={{ 
+              color: CYAN, 
+              marginRight: '30px', 
+              fontWeight: 600,
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: '0.9rem'
+            }}
+          >
             Biased Data
-          </p>
-          <p style={{ color: PINK, fontWeight: 700 }}>Unbiased Data</p>
+          </Typography>
+          <Typography 
+            sx={{ 
+              color: PINK, 
+              fontWeight: 600,
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: '0.9rem'
+            }}
+          >
+            Unbiased Data
+          </Typography>
         </Box>
       </Box>
 
       <div id="graph-canvas">
-        {pastData == undefined ? (
-          <h1>Loading...</h1>
+        {pastData === undefined ? (
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontWeight: 500 
+            }}
+          >
+            Loading...
+          </Typography>
         ) : (
           <LineChart
             width={900}
@@ -107,26 +135,39 @@ function Graph({
               tickFormatter={dateFormatter}
               domain={[startDate, endDate]}
               ticks={monthTicks}
+              tick={{ 
+                fontFamily: "'Inter', -apple-system, sans-serif",
+                fontSize: 12,
+                fontWeight: 500 
+              }}
             >
               <Label
-                value={"Date (Months)"}
+                value="Date (Months)"
                 style={{
-                  fill: "black",
+                  fill: "#1a2027",
                   transform: "translate(0, 30px)",
-                  fontWeight: 400,
+                  fontFamily: "'Inter', -apple-system, sans-serif",
+                  fontSize: 13,
+                  fontWeight: 500
                 }}
               />
             </XAxis>
 
-            <YAxis dataKey="value">
+            <YAxis dataKey="value" tick={{ 
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: 12,
+              fontWeight: 500 
+            }}>
               <Label
-                value={mode == "0" ? "Transaction Volume" : "Cash Flow ($)"}
+                value={mode === "0" ? "Transaction Volume" : "Cash Flow ($)"}
                 style={{
-                  fill: "black",
+                  fill: "#1a2027",
                   rotate: "270deg",
                   textAnchor: "middle",
                   transform: "translate(-350px, -225px)",
-                  fontWeight: 400,
+                  fontFamily: "'Inter', -apple-system, sans-serif",
+                  fontSize: 13,
+                  fontWeight: 500
                 }}
                 position="outside"
               />
@@ -184,7 +225,11 @@ function Graph({
                 label={{
                   value: "Present",
                   position: "insideTopRight",
-                  offset: 10,
+                  style: {
+                    fontFamily: "'Inter', -apple-system, sans-serif",
+                    fontSize: 12,
+                    fontWeight: 500
+                  }
                 }}
                 stroke="gray"
               />
