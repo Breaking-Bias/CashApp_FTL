@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima.model import ARIMA, ARIMAResults
-from statsmodels.tsa.stattools import adfuller, acf, pacf
-import plotly.express as px
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.stattools import adfuller
 import plotly.graph_objects as go
 
 MAX_FORECAST_STEPS = 100
