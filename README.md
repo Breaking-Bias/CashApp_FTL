@@ -4,7 +4,7 @@ Bias Visualization & Prediction Tool (BVPT)
 
 Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)
 
-Backend hosted with DigitalOcean [here](http://134.122.38.138:8000/)
+Backend hosted with DigitalOcean [here](https://breakingbiasbigboss.zapto.org/)
 
 # Project Overview
 
