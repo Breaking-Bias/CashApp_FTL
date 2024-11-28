@@ -193,11 +193,12 @@ function DashboardPage() {
 
                 <h2>Prediction Size:</h2>
 
-                <Slider
-                    sliderValue={sliderValue}
-                    setSliderValue={setSliderValue}
-                    data-testid="slider"
-                />
+                <div data-testid="slider">
+                    <Slider
+                        sliderValue={sliderValue}
+                        setSliderValue={setSliderValue}
+                    />
+                </div>
 
                 <h2>Filters:</h2>
 
