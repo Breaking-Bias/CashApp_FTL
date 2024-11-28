@@ -24,8 +24,8 @@ import { GraphDescription } from "./components/ScreenReaderOnly";
 import { formatNumberForDisplay } from "../utils/numberUtils";
 import Navbar from "../components/NavBar";
 
-export const CYAN = "#00bbbb";
-export const PINK = "#ff4aa4";
+export const CYAN = "#0044bb";
+export const PINK = "#ee0000";
 
 function DashboardPage() {
   // const navigate = useNavigate();
@@ -104,7 +104,7 @@ function DashboardPage() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          bgcolor="#faf2f2"
+          bgcolor="white"
         >
           {modeGraphData == undefined ? (
             pastData == undefined ? (
