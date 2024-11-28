@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadDataset.css";
-import { Card } from '@mui/material';
-import Navbar from './components/NavBar';
+import { Card } from "@mui/material";
+import Navbar from "./components/NavBar";
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
@@ -12,7 +12,7 @@ function UploadDataset() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFile(event.target.files[0]);
-      setMessage("");  
+      setMessage("");
     }
   };
 
@@ -23,20 +23,23 @@ function UploadDataset() {
     }
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
-      const response = await fetch('https://breakingbiasbigboss.zapto.org/upload-dataset', {
-        method: 'POST',
-        body: formData,
-      });
-      
+      const response = await fetch(
+        `${process.env.VITE_SERVER_URL}/upload-dataset`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
       if (!response.ok) {
         setMessage("Failed to upload the file. Server returned error.");
         return;
       }
       const result = await response.json();
-    
+
       setMessage(result.message || "File uploaded successfully!");
     } catch (error) {
       setMessage("Error uploading file. Please try again.");
@@ -47,7 +50,7 @@ function UploadDataset() {
   return (
     <div className="main-class">
       <Navbar />
-      
+
       <Card
         className="border-control"
         sx={{
@@ -65,14 +68,16 @@ function UploadDataset() {
         >
           Upload Dataset
         </h1>
-        
+
         <div className="flex flex-col items-center gap-6 mb-8">
           {/* Label for file input */}
-          <label className="sr-only" htmlFor="file-upload">Choose a Dataset to Upload</label>
+          <label className="sr-only" htmlFor="file-upload">
+            Choose a Dataset to Upload
+          </label>
           <input
             type="file"
             onChange={handleFileChange}
-            className="w-full max-w-md p-2 border rounded"
+            className="p-2 border rounded w-full max-w-md"
             aria-label="Choose a file to upload"
             aria-describedby="file-upload-description"
           />
@@ -88,7 +93,7 @@ function UploadDataset() {
             Upload Dataset
           </button>
         </div>
-        
+
         <div className="nav-buttons-container">
           <button
             onClick={() => navigate("/")}
@@ -105,11 +110,12 @@ function UploadDataset() {
             View Results
           </button>
         </div>
-        
+
         <p
           className={`mt-4 text-center ${
             message.includes("successfully") ? "text-green-600" : "text-red-600"
           }`}
+          aria-live='polite'
         >
           {message}
         </p>
