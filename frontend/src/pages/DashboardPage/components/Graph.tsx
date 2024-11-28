@@ -83,8 +83,10 @@ function Graph({
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center">
-          <p style={{ color: CYAN, marginRight: "30px" }}>Biased Data</p>
-          <p style={{ color: PINK }}>Unbiased Data</p>
+          <p style={{ color: CYAN, marginRight: "30px", fontWeight: 700 }}>
+            Biased Data
+          </p>
+          <p style={{ color: PINK, fontWeight: 700 }}>Unbiased Data</p>
         </Box>
       </Box>
 
@@ -111,6 +113,7 @@ function Graph({
                 style={{
                   fill: "black",
                   transform: "translate(0, 30px)",
+                  fontWeight: 400,
                 }}
               />
             </XAxis>
@@ -123,6 +126,7 @@ function Graph({
                   rotate: "270deg",
                   textAnchor: "middle",
                   transform: "translate(-350px, -225px)",
+                  fontWeight: 400,
                 }}
                 position="outside"
               />

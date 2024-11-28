@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {ToggleButton, ToggleButtonGroup} from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 interface Props {
   mode: string;
@@ -9,30 +9,30 @@ interface Props {
 }
 
 function GraphTypeButtons({ mode, setMode }: Props) {
-    const handleChange = (
-        _event: React.MouseEvent<HTMLElement>,
-        newMode: string,
-    ) => {
-        setMode(newMode);
-    };
+  const handleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newMode: string
+  ) => {
+    setMode(newMode);
+  };
 
   return (
     <div>
-    <Box display="flex" justifyContent={"center"} sx={{p: 4}}>
-        <Typography variant="h4" component="h2" sx={{marginRight:2}}>
-            Graph Type:
+      <Box display="flex" justifyContent={"center"} sx={{ p: 4 }}>
+        <Typography variant="h4" component="h2" sx={{ marginRight: 2 }}>
+          Graph Type:
         </Typography>
         <ToggleButtonGroup
-            color="success"
-            value={mode}
-            exclusive
-            onChange={handleChange}
-            aria-label="Graph type"
+          value={mode}
+          exclusive
+          onChange={handleChange}
+          aria-label="Graph type"
+          style={{ backgroundColor: "white" }}
         >
-            <ToggleButton value="1">Cash Flow</ToggleButton>
-            <ToggleButton value="0">Trans. Volume</ToggleButton>
+          <ToggleButton value="1">Cash Flow</ToggleButton>
+          <ToggleButton value="0">Trans. Volume</ToggleButton>
         </ToggleButtonGroup>
-    </Box>
+      </Box>
     </div>
   );
 }
