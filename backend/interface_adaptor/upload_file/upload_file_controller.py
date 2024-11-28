@@ -14,7 +14,8 @@ class UploadFileController:
     def execute(self):
         self.files = request.files
         result = self.upload_file_interactor.upload_dataset(self.files)
-        self.filename = result.name_of_file
+        self.filename = self.upload_file_interactor.name_of_file
+        print(self.filename)
         return jsonify(result[0]), result[1]
 
     def get_datasets_from_interactor(self):
