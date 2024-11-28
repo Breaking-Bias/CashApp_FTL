@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom"; // Import NavLink for active link support
-import "./NavBar.css"; // Import the corresponding CSS file for styling
+import "./NavBar.css";
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -11,6 +11,11 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="header">
+      <img
+                alt="Logo"
+                src="/logo.png"
+                style={{ width: "60px", height: "auto", margin: 0 }}
+              />
       <p style={{ fontSize: 30, margin: 0 }}>
         <strong>Breaking Bias</strong>
       </p>
