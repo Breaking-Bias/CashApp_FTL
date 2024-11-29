@@ -2,6 +2,7 @@ from data_access.file_uploader import FileUploader
 
 
 class UploadFileInteractor:
+    """Interactor for the upload file use case."""
     name_of_file: str | None
 
     def __init__(self):
@@ -12,7 +13,8 @@ class UploadFileInteractor:
         """Endpoint to handle file upload."""
         # print('firstfile:', self.name_of_file)
         # Initialize FileUploader within the route
-        file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
+        file_uploader = FileUploader(upload_folder='data',
+                                     allowed_extensions={'csv', 'xlsx', 'pq'})
 
         if 'file' not in files:
             return {"message": "No file part"}, 400
@@ -24,13 +26,20 @@ class UploadFileInteractor:
             self.name_of_file = file_uploader.nameoffile
             # self.app.read_dataset = DataAccessObject(self.name_of_file).read_dataset()
             print(self.name_of_file)
-            return {"message": "File uploaded successfully", "file_path": file_path}, 200
+            return ({"message": "File uploaded successfully",
+                     "file_path": file_path}, 200)
         else:
-            return {"message": "Invalid file format. Only CSV and XLSX are allowed."}, 400
+            return (
+                ({"message":
+                  "Invalid file format. Only CSV and XLSX are allowed."}),
+                400
+            )
 
     @staticmethod
     def get_datasets_from_data_access():
-        file_uploader = FileUploader(upload_folder='data', allowed_extensions={'csv', 'xlsx', 'pq'})
+        """Get the requested dataset from the data access layer."""
+        file_uploader = FileUploader(upload_folder='data',
+                                     allowed_extensions={'csv', 'xlsx', 'pq'})
         try:
             datasets = file_uploader.list_datasets()
             # return jsonify({"datasets": datasets}), 200

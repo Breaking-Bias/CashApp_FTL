@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima.model import ARIMA, ARIMAResults
-from statsmodels.tsa.stattools import adfuller, acf, pacf
-import plotly.express as px
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.stattools import adfuller
 import plotly.graph_objects as go
 
 MAX_FORECAST_STEPS = 100
@@ -14,8 +13,10 @@ class Model:
     forecast_df: pd.DataFrame | None
 
     def __init__(self, training_data: pd.DataFrame):
-        """Only initialize self.data. forecast_df is left None.
-        Assume that the user only wants prediction data for less than 100 days."""
+        """
+        Only initialize self.data. forecast_df is left None.
+        Assume that the user only wants prediction data for less than 100 days.
+        """
         self.training_data = training_data
         # self.data.set_index('date', inplace=True)
         self.forecast_df = None
@@ -24,20 +25,30 @@ class Model:
         model = ARIMA(self.training_data, order=self._pdq())
         fitted_model = model.fit()
         forecast = fitted_model.get_forecast(steps=MAX_FORECAST_STEPS)
-        self.forecast_df = forecast.summary_frame(alpha=0.05)  # 95% confidence interval
+        # 95% confidence interval
+        self.forecast_df = forecast.summary_frame(alpha=0.05)
         return self
 
     def get_result(self, forecast_steps: int) -> pd.DataFrame:
         forecast_values = self.forecast_df['mean']
-        future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps+1, freq='D')
-        forecast_values = forecast_values[forecast_values.index.isin(future_dates)]
-        forecast_values = forecast_values.reset_index().rename(columns={'index': 'date'})
+        future_dates = pd.date_range(
+            start=self.training_data.index[-1] + pd.DateOffset(months=0),
+            periods=forecast_steps+1, freq='D'
+            )
+        forecast_values = forecast_values[(forecast_values
+                                           .index
+                                           .isin(future_dates))]
+        forecast_values = (forecast_values
+                           .reset_index()
+                           .rename(columns={'index': 'date'}))
 
         # Concatenate the last entry of training_data to forecast_values.
         last_entry = self.training_data.iloc[-1]  # Series
         last_entry.name = pd.Timestamp(last_entry.name)
-        last_entry = pd.DataFrame({'date': [last_entry.name], 'mean': [last_entry.iloc[0]]})
-        forecast_values = (pd.concat([forecast_values, last_entry], ignore_index=True)
+        last_entry = pd.DataFrame({'date': [last_entry.name],
+                                   'mean': [last_entry.iloc[0]]})
+        forecast_values = (pd.concat([forecast_values,
+                                      last_entry], ignore_index=True)
                            .sort_values(by='date').reset_index(drop=True))
 
         return forecast_values
@@ -63,8 +74,11 @@ class Model:
             return False
 
     def _determine_lag(values: np.ndarray) -> int:
-        """Return the number of lags to be included in the ARIMA model.
-        The point where ACF cuts off indicates the value of q, and the one for PACF indicates p."""
+        """
+        Return the number of lags to be included in the ARIMA model.
+        The point where ACF cuts off indicates the value of q, and
+        the one for PACF indicates p.
+        """
         for i in range(5):
             if float(values[i]) < 0:
                 return max(i - 1, 1)
@@ -97,7 +111,10 @@ class Model:
             mode='lines+markers', name='In-sample Forecast'
         ))
         # Plot the out-of-sample forecast
-        future_dates = pd.date_range(start=self.training_data.index[-1] + pd.DateOffset(months=0), periods=forecast_steps, freq='D')
+        future_dates = pd.date_range(
+            start=self.training_data.index[-1] + pd.DateOffset(months=0),
+            periods=forecast_steps, freq='D'
+            )
         fig.add_trace(go.Scatter(
             x=future_dates, y=self.forecast_df['mean'],
             mode='lines+markers', name='Out-of-sample Forecast'
@@ -121,10 +138,10 @@ class Model:
         )
         fig.show()
 
+
 if __name__ == '__main__':
     forecast_steps = 30
     original_data = pd.read_csv('../data/women_bias_data.csv')
     Model(original_data.copy()).visualize(forecast_steps)
     data_unbiased = original_data.copy()[original_data['Bias'] == 1]
     Model(data_unbiased).visualize(forecast_steps)
-
