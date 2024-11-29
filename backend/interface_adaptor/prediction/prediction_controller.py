@@ -1,17 +1,24 @@
 from use_case.prediction.prediction_interactor import PredictionInteractor
-from flask import Flask, jsonify, request
+from flask import jsonify, request
+
 
 class PredictionController:
+    """Controller for the prediction use case."""
     prediction_interactor: PredictionInteractor | None
 
     def __init__(self):
         self.prediction_interactor = None
 
     def execute(self, file_name):
+        """Executes the prediction use case via prediction_interactor"""
         filter_gender = request.get_json()['filtering_factor'][0]
         filter_race = request.get_json()['filtering_factor'][1]
         forecast_steps = request.get_json()['num_points']
-        self.prediction_interactor = PredictionInteractor(file_name, filter_gender, filter_race, forecast_steps)
+        self.prediction_interactor = (PredictionInteractor
+                                      (file_name,
+                                       filter_gender,
+                                       filter_race,
+                                       forecast_steps))
         result = self.prediction_interactor.make_prediction()
         return jsonify(result)
 
@@ -52,4 +59,3 @@ class PredictionController:
 #         Note that revenue_graph and frequency_graph are the formatted
 #         """
 #         return self.prediction_interactor.make_prediction()
-    
