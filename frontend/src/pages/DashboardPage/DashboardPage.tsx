@@ -12,8 +12,7 @@ import {
     OneModeGraphData,
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
-import {Button, Box, Tooltip} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { Box, Tooltip} from "@mui/material";
 import GraphTypeButtons from "./components/GraphTypeButtons";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal"
@@ -98,20 +97,12 @@ function DashboardPage() {
         <GraphTypeButtons mode={mode} setMode={setMode}></GraphTypeButtons>
         </span>
 
-                {/*add some padding*/}
-                {/* I know this is dumb */}
+              
                 <Box sx={{marginLeft: 50}}/>
 
                 <HelpModal open={open} setOpen={setOpen}/>
 
-                {/* <Button
-                    color="success"
-                    variant="contained"
-                    className="login-button"
-                    onClick={() => navigate("/upload-dataset")}
-                >
-                    Upload Dataset
-                </Button> */}
+               
             </header>
 
             <Box
@@ -193,10 +184,11 @@ function DashboardPage() {
 
                 <h2>Prediction Size:</h2>
 
-                <div data-testid="slider">
+                <div>
                     <Slider
                         sliderValue={sliderValue}
                         setSliderValue={setSliderValue}
+                        data-testid="slider"
                     />
                 </div>
 

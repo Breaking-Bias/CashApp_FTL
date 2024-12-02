@@ -33,9 +33,9 @@ function Graph({
 
       let end;
       if (predictedData) {
-        end = predictedData.data.slice(-1)[0].date.getTime();
+        end = new Date(predictedData.data.slice(-1)[0].date).getTime();
       } else {
-        end = pastData.data.slice(-1)[0].date.getTime();
+        end = new Date(pastData.data.slice(-1)[0].date).getTime();
       }
 
       return [start, end];

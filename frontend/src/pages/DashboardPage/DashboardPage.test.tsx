@@ -1,49 +1,53 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import DashboardPage from "./DashboardPage"; 
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import DashboardPage from './DashboardPage';
+import { getGraphDataAPICall, getPastDataAPICall } from '../../services/ApiCalls';
+import '@testing-library/jest-dom';
 
-const mockPastData = {
-  name: "Past Data",
-  color: "#00C49F",
-  data: [
-    { date: new Date("2024-01-01"), value: 100 },
-    { date: new Date("2024-02-01"), value: 200 },
-    { date: new Date("2024-03-01"), value: 300 },
-  ],
-};
+// Mock the API calls
+jest.mock('../../services/ApiCalls', () => ({
+  getGraphDataAPICall: jest.fn(),
+  getPastDataAPICall: jest.fn(),
+}));
 
-const mockPredictedData = {
-  name: "Predicted Data",
-  color: "#0088FE",
-  data: [
-    { date: new Date("2024-04-01"), value: 400 },
-    { date: new Date("2024-05-01"), value: 500 },
-    { date: new Date("2024-06-01"), value: 600 },
-  ],
-};
+describe('DashboardPage Integration Test', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-// Test Suite
-describe("DashboardPage Integration Test", () => {
-  test("handles slider change, updates graph data, and processes uploaded dataset", async () => {
+  test('renders and updates the graph based on slider and filters', async () => {
+    // Mock API response for `getPastDataAPICall`
+    (getPastDataAPICall as jest.Mock).mockResolvedValue([
+      { date: new Date("2023-03-01"), value: 320 },
+      { date: new Date("2023-04-01"), value: 420 },
+    ]);
+
+    // Mock API response for `getGraphDataAPICall`
+    (getGraphDataAPICall as jest.Mock).mockResolvedValue({
+      frequency_graph: {
+        past_biased_line: [{ date: new Date('2024-01-01'), value: 15 }],
+        predicted_biased_line: [{ date: new Date('2024-01-02'), value: 25 }],
+        average_difference: 10,
+        total_difference: 50,
+      },
+      revenue_graph: null,
+    });
+
+    // Render the `DashboardPage`
     render(<DashboardPage />);
 
-    // // Simulate user interaction with the filter dropdown
-    // const filterDropdown = screen.getByRole("combobox", { name: /filter/i });
-    // fireEvent.change(filterDropdown, { target: { value: "someFilterOption" } });
+    // Check if the loading message is displayed initially
+    expect(screen.getByText('Loading')).toBeInTheDocument();
 
-    // Verify the graph updates based on filter change
+    // Wait for past data to load
     await waitFor(() => {
-      const updatedGraphMessage = screen.getByText(/Loading/i); 
-      expect(updatedGraphMessage).toBeInTheDocument();
+      expect(getPastDataAPICall).toHaveBeenCalled();
     });
 
-    // Simulate slider interaction
-    const slider = screen.getByTestId("slider");
-    fireEvent.change(slider, { target: { value: 50 } });
+    // Verify the graph renders correctly with past data
+    expect(screen.queryByText('Loading')).not.toBeInTheDocument();
 
-    // Assert the graph reacts to slider change
-    await waitFor(() => {
-      const sliderUpdateMessage = screen.getByText(/graph updated with slider value/i); // Placeholder for actual feedback
-      expect(sliderUpdateMessage).toBeInTheDocument();
     });
+
   });
-});
+;

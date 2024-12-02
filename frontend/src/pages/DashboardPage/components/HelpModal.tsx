@@ -67,23 +67,19 @@ export default function HelpModal({open, setOpen}: Props) {
                                 component="h2" sx={style_subheading}>
                         Customizing Your Graph:
                     </Typography>
-                    <Typography id="actions" variant="body1">
-                        <div><strong>Filter</strong>: Customize data views
-                            using filters.
-                        </div>
-                        <div><strong>Prediction Size</strong>: Adjust the
-                            slider to define prediction size.
-                        </div>
+                    <Typography id="actions" variant="body1" component="div">
+                        <strong>Filter</strong>: Customize data views using filters.
+                        <br />
+                        <strong>Prediction Size</strong>: Adjust the slider to define prediction size.
                     </Typography>
                     <Typography id="actions" variant="h5" component="h2"
                                 sx={style_subheading}>
                         Actions:
                     </Typography>
-                    <Typography id="actions" variant="body1">
-                        <div>Click <strong>Make Forecast</strong> to visualize
-                            data.</div>
-                        <div>Click <strong>Export Graph</strong> to download a PDF
-                            version.</div>
+                    <Typography id="actions" variant="body1" component="div">
+                        Click <strong>Make Forecast</strong> to visualize data.
+                        <br />
+                        Click <strong>Export Graph</strong> to download a PDF version.
                     </Typography>
                 </Box>
             </Modal>
