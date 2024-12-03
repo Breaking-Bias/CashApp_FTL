@@ -4,6 +4,7 @@ import datetime
 from entity.graphing_data import GraphingData
 from use_case.interactor_helpers.graph_adapter import GraphAdapter
 
+
 # Sample data for testing
 def create_sample_data():
     data = {
@@ -12,15 +13,18 @@ def create_sample_data():
     }
     return pd.DataFrame(data)
 
+
 @pytest.fixture
 def sample_data():
     # Sample data to test
     return create_sample_data()
 
+
 @pytest.fixture
 def graphing_data(sample_data):
     # Wrap the sample data in GraphingData objects
     return GraphingData(sample_data)
+
 
 @pytest.fixture
 def graph_adapter(graphing_data):
@@ -32,12 +36,16 @@ def graph_adapter(graphing_data):
         revenue_predicted_unbiased_data=graphing_data
     )
 
+
 # Test for GraphingData class initialization and validation
 def test_graphing_data_initialization(graphing_data):
     # Ensure that data is initialized properly
     assert isinstance(graphing_data, GraphingData)
-    assert graphing_data.get_data().shape == (2, 2)  # Check if DataFrame has 2 rows and 2 columns
-    assert graphing_data.get_data().columns.tolist() == ["date", "revenue"]  # Ensure column names are correct
+    # Check if DataFrame has 2 rows and 2 columns
+    assert graphing_data.get_data().shape == (2, 2)
+    # Ensure column names are correct
+    assert graphing_data.get_data().columns.tolist() == ["date", "revenue"]
+
 
 def test_invalid_data_initialization():
     # Test invalid data: data with more than 2 columns
@@ -64,6 +72,7 @@ def test_invalid_data_initialization():
     })
     with pytest.raises(AssertionError):
         GraphingData(data)
+
 
 # # Test for GraphAdapter methods
 # def test_graph_adapter_methods(graph_adapter):
@@ -107,4 +116,3 @@ def test_graph_adapter_edge_cases():
     assert empty_graph_adapter.getPredictedUnbiasedLine() == []
     assert empty_graph_adapter.getPastBiasedLine() == []
     assert empty_graph_adapter.getPredictedBiasedLine() == []
-

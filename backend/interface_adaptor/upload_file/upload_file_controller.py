@@ -1,8 +1,9 @@
 from use_case.upload_file.upload_file_interactor import UploadFileInteractor
-from flask import Flask, jsonify, request
+from flask import jsonify, request
+
 
 class UploadFileController:
-    # files
+    """Controller for the upload file use case."""
     upload_file_interactor: UploadFileInteractor
     filename: str | None
 
@@ -12,6 +13,7 @@ class UploadFileController:
         self.filename = None
 
     def execute(self):
+        """Executes the upload file use case via upload_file_interactor"""
         self.files = request.files
         result = self.upload_file_interactor.upload_dataset(self.files)
         self.filename = self.upload_file_interactor.name_of_file
