@@ -32,14 +32,17 @@ def sample_data_unbiased():
         'revenue': [130.00, 155.03, 223.48, 301.11, 301.00]
     })
 
+
 # GraphingData Fixture
 @pytest.fixture
 def graphing_data_biased(sample_data_biased):
     return GraphingData(sample_data_biased)
 
+
 @pytest.fixture
 def graphing_data_unbiased(sample_data_unbiased):
     return GraphingData(sample_data_unbiased)
+
 
 # DifferenceCalculator Fixture
 @pytest.fixture

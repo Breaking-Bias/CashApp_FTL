@@ -3,17 +3,16 @@ import pandas as pd
 
 
 class Filter(ABC):
+    """Abstract class for filtering data"""
     filter_factor: str | int
 
     def __init__(self, filter_factor: str | int):
         self.filter_factor = filter_factor
 
-
     @abstractmethod
     def valid_filter(self) -> bool:
         """Abstract method to check if the filtering factor is valid."""
-        raise NotImplemented
-
+        raise NotImplementedError
 
     @abstractmethod
     def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
@@ -32,7 +31,6 @@ class GenderFilter(Filter):
         result = self.filter_factor in valid_genders
         return result
 
-
     def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
         """Filter data based on gender."""
         return data[data['Gender'] == self.filter_factor]
@@ -44,7 +42,6 @@ class RaceFilter(Filter):
         valid_races = ['Black', 'White', 'Asian', 'Hispanic', 'Mixed', 'Other']
         result = self.filter_factor in valid_races
         return result
-
 
     def apply_filter(self, data: pd.DataFrame) -> pd.DataFrame:
         """Filter data based on race."""
@@ -66,7 +63,7 @@ class FilterManager:
     def __init__(self, df_to_filter: pd.DataFrame, filters: list[Filter]):
         self._df = df_to_filter.copy()
         self.filters = filters
-    
+
     def apply_filters(self) -> pd.DataFrame:
         """
         Determines the appropriate filter(s) to use based on the filter_factors
@@ -75,6 +72,6 @@ class FilterManager:
         # Uses polymorphism to apply each filter
         for filter in self.filters:
             if filter.valid_filter():
-                self._df = filter.apply_filter(self._df) 
+                self._df = filter.apply_filter(self._df)
 
         return self._df

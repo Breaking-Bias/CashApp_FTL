@@ -1,57 +1,84 @@
-# import pytest
-# import pandas as pd
-# from filters import GenderFilter, RaceFilter, FilterManager
-#
-# # Sample DataFrame to test the filters
-# data = pd.DataFrame({
-#     'Age': [15, 22, 45, 70, 25],
-#     'Gender': ['Male', 'Female', 'Male', 'Female', 'Male'],
-#     'Race': ['White', 'Black', 'Asian', 'Hispanic', 'Mixed'],
-#     'State': ['CA', 'NY', 'TX', 'FL', 'CA']
-# })
-#
-# # Test Age filter
-# @pytest.mark.parametrize("filtering_factor, expected_output", [
-#     ('15', [15]),     # Should return records for Age 0-18
-#     ('25', [22, 25]), # Should return records for Age 18-35
-#     ('70', [70]),     # Should return records for Age 65+
-# ])
-# # def test_age_filter(filtering_factor, expected_output):
-# #     filter_obj = AgeFilter(data)
-# #     filtered_data = filter_obj.apply_filter(filtering_factor)
-# #     filtered_ages = filtered_data['Age'].tolist()
-# #     assert filtered_ages == expected_output
-#
-# # Test Gender filter
-# @pytest.mark.parametrize("filtering_factor, expected_output", [
-#     ('Male', [15, 45, 25]),     # Should return records where Gender is Male
-#     ('Female', [22, 70]),       # Should return records where Gender is Female
-# ])
-# def test_gender_filter(filtering_factor, expected_output):
-#     filter_obj = GenderFilter(data)
-#     filtered_data = filter_obj.apply_filter(filtering_factor)
-#     filtered_ages = filtered_data['Age'].tolist()
-#     assert filtered_ages == expected_output
-#
-# # Test Race filter
-# @pytest.mark.parametrize("filtering_factor, expected_output", [
-#     ('Asian', [45]),     # Should return records where Race is Asian
-#     ('Hispanic', [70]),  # Should return records where Race is Hispanic
-# ])
-# def test_race_filter(filtering_factor, expected_output):
-#     race_filter = RaceFilter(data)
-#     filtered_data = race_filter.apply_filter(filtering_factor)
-#     filtered_ages = filtered_data['Age'].tolist()
-#     assert filtered_ages == expected_output
-#
-# # Test State filter
-# # @pytest.mark.parametrize("filtering_factor, expected_output", [
-# #     ('CA', [15, 25]),   # Should return records where State is CA
-# #     ('NY', [22]),       # Should return records where State is NY
-# # ])
-#
-# # def test_state_filter(filtering_factor, expected_output):
-# #     filter_obj = StateFilter(data)
-# #     filtered_data = filter_obj.apply_filter(filtering_factor)
-# #     filtered_ages = filtered_data['Age'].tolist()
-# #     assert filtered_ages == expected_output
+import pytest
+import pandas as pd
+from entity.filters import FilterManager, GenderFilter, RaceFilter
+
+
+# Sample data for testing
+data = pd.DataFrame({
+    'Age': [15, 22, 25, 70, 35],
+    'Gender': ['Male', 'Female', 'Male', 'Female', 'Male'],
+    'Race': ['White', 'Black', 'Asian', 'Hispanic', 'Mixed'],
+    'State': ['CA', 'NY', 'TX', 'FL', 'CA']
+})
+
+
+# Test GenderFilter class
+def test_gender_filter_valid():
+    filter_obj = GenderFilter('Male')
+    assert filter_obj.valid_filter() is True
+    filtered_data = filter_obj.apply_filter(data)
+    expected_data = data[data['Gender'] == 'Male']
+    assert filtered_data.equals(expected_data)
+
+
+def test_gender_filter_invalid():
+    filter_obj = GenderFilter('Hello World')
+    assert filter_obj.valid_filter() is False
+
+
+# Test RaceFilter class
+def test_race_filter_valid():
+    filter_obj = RaceFilter('Black')
+    assert filter_obj.valid_filter() is True
+    filtered_data = filter_obj.apply_filter(data)
+    expected_data = data[data['Race'] == 'Black']
+    assert filtered_data.equals(expected_data)
+
+
+def test_race_filter_invalid():
+    filter_obj = RaceFilter('Wookie')
+    assert filter_obj.valid_filter() is False
+
+
+# Test FilterManager class
+def test_filter_manager_initialization():
+    filters = [GenderFilter('Male')]
+    filter_manager = FilterManager(data, filters)
+    assert filter_manager._df.equals(data)
+    assert filter_manager.filters == filters
+
+
+def test_apply_filters_single_valid_filter():
+    filters = [GenderFilter('Male')]
+    filter_manager = FilterManager(data, filters)
+    filtered_df = filter_manager.apply_filters()
+    expected_df = data[data['Gender'] == 'Male']
+    assert filtered_df.equals(expected_df)
+
+
+def test_apply_filters_multiple_valid_filters():
+    filters = [GenderFilter('Male'), RaceFilter('Black')]
+    filter_manager = FilterManager(data, filters)
+    filtered_df = filter_manager.apply_filters()
+    expected_df = data[(data['Gender'] == 'Male') &
+                       (data['Race'] == 'Black')]
+    assert filtered_df.equals(expected_df)
+
+
+def test_apply_filters_no_valid_filters():
+    filters = [GenderFilter('Hello World')]
+    filter_manager = FilterManager(data, filters)
+    filtered_df = filter_manager.apply_filters()
+    assert filtered_df.equals(data)
+
+
+def test_apply_filters_mixed_validity_filters():
+    filters = [GenderFilter('Male'), RaceFilter('Alien')]
+    filter_manager = FilterManager(data, filters)
+    filtered_df = filter_manager.apply_filters()
+    expected_df = data[data['Gender'] == 'Male']
+    assert filtered_df.equals(expected_df)
+
+
+if __name__ == "__main__":
+    pytest.main()
