@@ -45,13 +45,7 @@ const HomePage = (): JSX.Element => {
                 justifyContent: "center",
               }}
             >
-              <img
-                alt="Logo"
-                src="/breakingbiaslogo.png"
-                className="logo"
-                style={{ width: "60px", height: "auto", margin: 0 }}
-              />
-              <h1>Breaking Bias</h1>
+              <h1>Cash ML Bias Dashboard</h1>
             </div>
             <h2 className="subheading">Make Better Decisions.</h2>
             <Button
