@@ -78,7 +78,7 @@ backend/
 │       └── view_result_controller.py
 └── use_case/
     ├── interactor_helpers/
-    │   ├── data_factory.py
+    │   ├── data_creator.py
     │   ├── data_formatter.py
     │   ├── filter_interactor.py
     │   ├── graph_adapter.py
