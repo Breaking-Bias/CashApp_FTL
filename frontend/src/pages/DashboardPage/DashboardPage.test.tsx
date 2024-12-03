@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import DashboardPage from './DashboardPage';
 import { getGraphDataAPICall, getPastDataAPICall } from '../../services/ApiCalls';
 import '@testing-library/jest-dom';
