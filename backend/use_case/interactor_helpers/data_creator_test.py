@@ -1,7 +1,7 @@
 # import pytest
 # import pandas as pd
 #
-# from use_case.interactor_helpers.data_factory import DataFactory
+# from use_case.interactor_helpers.data_creator import DataCreator
 # from use_case.interactor_helpers.filter_interactor import FilterInteractor
 #
 #
@@ -24,4 +24,4 @@
 #     return sample_formatted_past_data
 #
 # def test_make_data_positive_step(sample_df):
-#     result = DataFactory._make_data(sample_df, 5)
+#     result = DataCreator._make_data(sample_df, 5)
