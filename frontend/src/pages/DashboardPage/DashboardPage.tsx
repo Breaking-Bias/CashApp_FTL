@@ -16,7 +16,6 @@ import {
 } from "../../types";
 import ExportGraphButton from "./components/ExportGraphButton";
 import { Box, Tooltip} from "@mui/material";
-import { Box, Tooltip } from "@mui/material";
 import GraphTypeButtons from "./components/GraphTypeButtons";
 import BigNumber from "./components/BigNumber";
 import HelpModal from "./components/HelpModal";
