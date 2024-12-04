@@ -9,6 +9,8 @@ import {
 } from "recharts";
 import { DataSeries } from "../../../types";
 import { CYAN, PINK } from "../DashboardPage";
+import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 
 // const dateFormatter = (date: Date) => new Date(date).toLocaleDateString();
 
@@ -73,16 +75,20 @@ function Graph({
 
   return (
     <div>
-      <span
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          fontWeight: "bold",
-        }}
-      >
-        <p style={{ color: CYAN, marginRight: "30px" }}>Biased Data</p>
-        <p style={{ color: PINK }}>Unbiased Data</p>
-      </span>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Box width="900px">
+          <Typography component="h1" variant="h4" align="center">
+            Transactions {mode == "0" ? "Transaction Volume" : "Cash Flow"} Over
+            Time
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <p style={{ color: CYAN, marginRight: "30px", fontWeight: 700 }}>
+            Biased Data
+          </p>
+          <p style={{ color: PINK, fontWeight: 700 }}>Unbiased Data</p>
+        </Box>
+      </Box>
 
       <div id="graph-canvas" data-testid="graph-canvas">
         {pastData == undefined ? (
@@ -103,22 +109,24 @@ function Graph({
               ticks={monthTicks}
             >
               <Label
-                value={"Time"}
+                value={"Date (Months)"}
                 style={{
                   fill: "black",
                   transform: "translate(0, 30px)",
+                  fontWeight: 400,
                 }}
               />
             </XAxis>
 
             <YAxis dataKey="value">
               <Label
-                value={mode == "0" ? "Number of Transactions" : "Cash Flow ($)"}
+                value={mode == "0" ? "Transaction Volume" : "Cash Flow ($)"}
                 style={{
                   fill: "black",
                   rotate: "270deg",
                   textAnchor: "middle",
                   transform: "translate(-350px, -225px)",
+                  fontWeight: 400,
                 }}
                 position="outside"
               />
