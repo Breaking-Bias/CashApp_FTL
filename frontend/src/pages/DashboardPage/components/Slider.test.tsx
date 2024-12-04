@@ -3,7 +3,6 @@ import Slider from "./Slider";
 
 describe("Slider Component", () => {
   const mockSetSliderValue = jest.fn();
-  let setSliderValueMock: jest.Mock;
 
   it("renders the slider in the document", () => {
     render(
@@ -17,7 +16,7 @@ describe("Slider Component", () => {
 
   it("calls setSliderValue when the slider is changed", () => {
     render(
-      <Slider sliderValue={30} setSliderValue={setSliderValueMock} />
+      <Slider sliderValue={30} setSliderValue={mockSetSliderValue} />
   );
   })
 })
