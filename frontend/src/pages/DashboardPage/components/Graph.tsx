@@ -35,9 +35,9 @@ function Graph({
 
       let end;
       if (predictedData) {
-        end = predictedData.data.slice(-1)[0].date.getTime();
+        end = new Date(predictedData.data.slice(-1)[0].date).getTime();
       } else {
-        end = pastData.data.slice(-1)[0].date.getTime();
+        end = new Date(pastData.data.slice(-1)[0].date).getTime();
       }
 
       return [start, end];
@@ -90,9 +90,9 @@ function Graph({
         </Box>
       </Box>
 
-      <div id="graph-canvas">
+      <div id="graph-canvas" data-testid="graph-canvas">
         {pastData == undefined ? (
-          <h1>Loading...</h1>
+          <h1 data-testid="loading-test-id">Loading...</h1>
         ) : (
           <LineChart
             width={900}

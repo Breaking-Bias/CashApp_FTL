@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadDataset.css";
 import { Card } from "@mui/material";
-import Navbar from "./components/NavBar";
+import Navbar from "../components/NavBar";
 
 function UploadDataset() {
   const [file, setFile] = useState<File | null>(null);
@@ -78,6 +78,7 @@ function UploadDataset() {
             type="file"
             onChange={handleFileChange}
             className="p-2 border rounded w-full max-w-md"
+            data-testid="test-file-input"
             aria-label="Choose a file to upload"
             aria-describedby="file-upload-description"
           />
@@ -89,6 +90,7 @@ function UploadDataset() {
             onClick={handleUpload}
             className="upload-button"
             aria-label="Upload Dataset"
+            data-testid="upload-dataset-button"
           >
             Upload Dataset
           </button>

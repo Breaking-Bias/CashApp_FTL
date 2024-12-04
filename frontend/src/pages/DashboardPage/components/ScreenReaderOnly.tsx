@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import { Alert, AlertTitle } from '@mui/material';
-import { GraphAnalysisService } from '../../../services/GraphAnalysisService'
+import React, { useEffect, useRef } from "react";
+import { Alert, AlertTitle } from "@mui/material";
+import { GraphAnalysisService } from "../../../services/GraphAnalysisService";
 import "./ScreenReaderOnly.css";
 
-//Created two interfaces, this satisfied the L in solid 
+//Created two interfaces, this satisfied the L in solid
 
 interface ModeGraphData {
   average_difference: number;
@@ -21,10 +21,10 @@ interface GraphDescriptionProps {
   filterRace: string;
 }
 // divided up the three components, ie the summary stats, trend analalysis (percentage logic) and details about the filters
-const SummaryStatistics: React.FC<{ 
-  metricType: string, 
-  averageDifference: number, 
-  totalDifference: number 
+const SummaryStatistics: React.FC<{
+  metricType: string;
+  averageDifference: number;
+  totalDifference: number;
 }> = ({ metricType, averageDifference, totalDifference }) => (
   <div
     id="summary-stats"
@@ -34,20 +34,26 @@ const SummaryStatistics: React.FC<{
   >
     <h3 id="summary-stats">Summary Statistics</h3>
     <p>
-      The average {metricType} difference is {averageDifference.toLocaleString()}.
-      The total {metricType} difference is {totalDifference.toLocaleString()}.
+      The average {metricType} difference is{" "}
+      {averageDifference.toLocaleString()}. The total {metricType} difference is{" "}
+      {totalDifference.toLocaleString()}.
     </p>
   </div>
 );
 
-const TrendAnalysis: React.FC<{ 
-  metricType: string, 
-  pastBiasedLine: Array<{ value: number }>, 
-  predictedBiasedLine: Array<{ value: number }>, 
-  predictedUnbiasedLine: Array<{ value: number }> 
-}> = ({ metricType, pastBiasedLine, predictedBiasedLine, predictedUnbiasedLine }) => {
+const TrendAnalysis: React.FC<{
+  metricType: string;
+  pastBiasedLine: Array<{ value: number }>;
+  predictedBiasedLine: Array<{ value: number }>;
+  predictedUnbiasedLine: Array<{ value: number }>;
+}> = ({
+  metricType,
+  pastBiasedLine,
+  predictedBiasedLine,
+  predictedUnbiasedLine,
+}) => {
   const percentChange = GraphAnalysisService.calculatePercentageChange(
-    predictedBiasedLine, 
+    predictedBiasedLine,
     predictedUnbiasedLine
   );
 
@@ -65,17 +71,21 @@ const TrendAnalysis: React.FC<{
         {pastBiasedLine.length > 0 &&
           `Historical ${metricType} data started at ${pastBiasedLine[0]?.value.toLocaleString()}. `}
         {predictedBiasedLine.length > 0 &&
-          `With current biases, ${metricType} are predicted to reach ${predictedBiasedLine[predictedBiasedLine.length - 1]?.value.toLocaleString()}. `}
+          `With current biases, ${metricType} are predicted to reach ${predictedBiasedLine[
+            predictedBiasedLine.length - 1
+          ]?.value.toLocaleString()}. `}
         {predictedUnbiasedLine.length > 0 &&
-          `Without biases, ${metricType} could reach ${predictedUnbiasedLine[predictedUnbiasedLine.length - 1]?.value.toLocaleString()}, representing a ${percentChange}% change.`}
+          `Without biases, ${metricType} could reach ${predictedUnbiasedLine[
+            predictedUnbiasedLine.length - 1
+          ]?.value.toLocaleString()}, representing a ${percentChange}% change.`}
       </p>
     </div>
   );
 };
 
-const AppliedFilters: React.FC<{ 
-  filterGender: string, 
-  filterRace: string 
+const AppliedFilters: React.FC<{
+  filterGender: string;
+  filterRace: string;
 }> = ({ filterGender, filterRace }) => (
   <div
     id="applied-filters"
@@ -85,7 +95,8 @@ const AppliedFilters: React.FC<{
   >
     <h3 id="applied-filters">Applied Filters</h3>
     <p>
-      Currently showing data {GraphAnalysisService.formatFilterDescription(filterGender, filterRace)}
+      Currently showing data{" "}
+      {GraphAnalysisService.formatFilterDescription(filterGender, filterRace)}
     </p>
   </div>
 );
@@ -93,10 +104,10 @@ export const GraphDescription: React.FC<GraphDescriptionProps> = ({
   modeGraphData,
   mode,
   filterGender,
-  filterRace
+  filterRace,
 }) => {
   const alertRef = useRef<HTMLDivElement>(null); //Just being careful
- 
+
   if (!modeGraphData) return null;
   const metricType = GraphAnalysisService.getMetricType(mode);
 
@@ -111,6 +122,7 @@ export const GraphDescription: React.FC<GraphDescriptionProps> = ({
       className="sr-only"
       role="region"
       aria-label="Graph Analysis Details"
+      data-testid="test-alert"
     >
       <Alert
         ref={alertRef}
@@ -120,25 +132,24 @@ export const GraphDescription: React.FC<GraphDescriptionProps> = ({
         aria-atomic="true"
         tabIndex={-1}
       >
-        <AlertTitle id="graph-description-title">Graph Analysis Overview</AlertTitle>
-        
-        <SummaryStatistics 
+        <AlertTitle id="graph-description-title">
+          Graph Analysis Overview
+        </AlertTitle>
+
+        <SummaryStatistics
           metricType={metricType}
           averageDifference={modeGraphData.average_difference}
           totalDifference={modeGraphData.total_difference}
         />
-        
+
         <TrendAnalysis
           metricType={metricType}
           pastBiasedLine={modeGraphData.past_biased_line}
           predictedBiasedLine={modeGraphData.predicted_biased_line}
           predictedUnbiasedLine={modeGraphData.predicted_unbiased_line}
         />
-        
-        <AppliedFilters
-          filterGender={filterGender}
-          filterRace={filterRace}
-        />
+
+        <AppliedFilters filterGender={filterGender} filterRace={filterRace} />
       </Alert>
     </div>
   );

@@ -31,8 +31,7 @@ jobs:
           npm install
           npm install --save-dev jest typescript ts-jest @types/jest jest-environment-jsdom
 
-      - name: Build TypeScript
-        run: npm run build
+
 
       - name: Run tests
         run: npm test
