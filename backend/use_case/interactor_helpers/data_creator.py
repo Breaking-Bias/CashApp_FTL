@@ -7,7 +7,7 @@ from entity.graphing_data import GraphingData
 # This import is only for type annotation purpose.
 
 
-class DataFactory:
+class DataCreator:
     """
     Responsible for creating the data for the prediction use case.
     Manages the filtering workflows and creating unbiased/biased data.

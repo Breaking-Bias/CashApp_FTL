@@ -2,7 +2,7 @@ import pandas as pd
 
 from data_access.data_access_object import DataAccessObject
 from use_case.interactor_helpers.graph_adapter import GraphAdapter
-from use_case.interactor_helpers.data_factory import DataFactory
+from use_case.interactor_helpers.data_creator import DataCreator
 
 TEST_FILE_NAME = 'women_bias_data.csv'
 
@@ -10,11 +10,11 @@ TEST_FILE_NAME = 'women_bias_data.csv'
 class ViewResultInteractor:
     """Interactor for the view result use case."""
     dataset: pd.DataFrame
-    data_factory: DataFactory
+    data_creator: DataCreator
 
     def __init__(self, file_name=TEST_FILE_NAME):
         self.dataset = DataAccessObject(file_name).read_dataset()
-        self.data_factory = DataFactory(self.dataset,
+        self.data_creator = DataCreator(self.dataset,
                                         "NoFilter",
                                         "NoFilter",
                                         0)
@@ -22,10 +22,10 @@ class ViewResultInteractor:
     def make_graph_only_past(self):
         """Collect data for the past graph only."""
         revenue_graph = GraphAdapter(
-            self.data_factory.revenue_past_data_biased
+            self.data_creator.revenue_past_data_biased
             )
         frequency_graph = GraphAdapter(
-            self.data_factory.frequency_past_data_biased
+            self.data_creator.frequency_past_data_biased
             )
         revenue_graph = {
             "past_biased_line": revenue_graph.getPastBiasedLine()

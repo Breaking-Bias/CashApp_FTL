@@ -1,6 +1,6 @@
 import pandas as pd
 from data_access.data_access_object import DataAccessObject
-from use_case.interactor_helpers.data_factory import DataFactory
+from use_case.interactor_helpers.data_creator import DataCreator
 from entity.difference_calculator import DifferenceCalculator
 from use_case.interactor_helpers.graph_adapter import GraphAdapter
 from entity.graphing_data import GraphingData
@@ -25,7 +25,7 @@ class PredictionInteractor:
                  filter_race: str,
                  forecast_steps: int):
         self.dataset = DataAccessObject(file_name).read_dataset()
-        data_factory = DataFactory(self.dataset,
+        data_creator = DataCreator(self.dataset,
                                    filter_gender,
                                    filter_race,
                                    forecast_steps)
@@ -34,13 +34,13 @@ class PredictionInteractor:
          self.revenue_past_data_biased,
          self.frequency_predicted_data_biased,
          self.revenue_predicted_data_biased) \
-            = data_factory.make_biased_data()
+            = data_creator.make_biased_data()
 
         (self.frequency_past_data_unbiased,
          self.revenue_past_data_unbiased,
          self.frequency_predicted_data_unbiased,
          self.revenue_predicted_data_unbiased) \
-            = data_factory.make_unbiased_data()
+            = data_creator.make_unbiased_data()
 
     def _calculate_difference(self) -> dict[str, int]:
         """Calculate difference between biased and unbiased data"""
