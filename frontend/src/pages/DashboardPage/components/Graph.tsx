@@ -78,8 +78,7 @@ function Graph({
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box width="900px">
           <Typography component="h1" variant="h4" align="center">
-            Transactions {mode == "0" ? "Transaction Volume" : "Cash Flow"} Over
-            Time
+            Transaction {mode == "0" ? "Volume" : "Cash Flow"} Over Time
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center">
