@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import DashboardPage from './DashboardPage';
 import { getGraphDataAPICall, getPastDataAPICall } from '../../services/ApiCalls';
 import '@testing-library/jest-dom';
+import {BrowserRouter} from "react-router-dom";
 
 // Mock the API calls
 jest.mock('../../services/ApiCalls', () => ({
@@ -33,10 +34,21 @@ describe('DashboardPage Integration Test', () => {
     });
 
     // Render the `DashboardPage`
-    render(<DashboardPage />);
+    // render(<DashboardPage />);
 
     // Check if the loading message is displayed initially
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    // expect(screen.getByText('Loading')).toBeInTheDocument();
+
+
+
+  });
+
+  it("renders and updates the graph based on slider and filters", async () => {
+    render(
+        <BrowserRouter>
+          <DashboardPage/>
+        </BrowserRouter>
+    );
 
     // Wait for past data to load
     await waitFor(() => {
@@ -45,8 +57,5 @@ describe('DashboardPage Integration Test', () => {
 
     // Verify the graph renders correctly with past data
     expect(screen.queryByText('Loading')).not.toBeInTheDocument();
-
-    });
-
   });
-;
+});

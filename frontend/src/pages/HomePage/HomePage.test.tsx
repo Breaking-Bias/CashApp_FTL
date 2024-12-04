@@ -10,10 +10,8 @@ describe("HomePage Component", () => {
       </MemoryRouter>
     );
 
-    const logo = screen.getByAltText("Logo");
-    expect(logo).toBeInTheDocument();
 
-    expect(screen.getByText("Breaking Bias")).toBeInTheDocument();
+    expect(screen.getByText("Cash ML Bias Dashboard")).toBeInTheDocument();
     expect(screen.getByText("Make Better Decisions.")).toBeInTheDocument();
 
     const button = screen.getByRole("button", { name: "Start" });

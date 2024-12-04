@@ -81,7 +81,7 @@ describe("Graph Component", () => {
     expect(screen.getByText("Unbiased Data")).toBeInTheDocument();
 
     // Check if the X-axis label "Time" is present
-    expect(screen.getByText("Time")).toBeInTheDocument();
+    expect(screen.getByText("Date (Months)")).toBeInTheDocument();
 
     // Check if the Y-axis label is correct based on mode
     expect(screen.getByText("Cash Flow ($)")).toBeInTheDocument();
