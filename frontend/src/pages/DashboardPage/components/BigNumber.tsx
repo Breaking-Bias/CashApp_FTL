@@ -32,6 +32,8 @@ export default function BigNumber({
                     <br/>
                     {revenueOrTransactions == "0" ? "transaction volume" : "cash-flow"}
                     &nbsp;incr.
+                    <br/>
+                    {averageOrTotal == "total" ? "over timeframe" : ""}
                 </p>
             </Box>
     );
