@@ -23,18 +23,14 @@ function GraphTypeButtons({ mode, setMode }: Props) {
           Graph Type:
         </Typography>
         <ToggleButtonGroup
-          color="success"
           value={mode}
           exclusive
           onChange={handleChange}
           aria-label="Graph type"
+          style={{ backgroundColor: "white" }}
         >
-          <ToggleButton value="1" data-testid="test-revenue-button">
-            Revenue
-          </ToggleButton>
-          <ToggleButton value="0" data-testid="test-frequency-button">
-            Frequency
-          </ToggleButton>
+          <ToggleButton value="1">Cash Flow</ToggleButton>
+          <ToggleButton value="0">Trans. Volume</ToggleButton>
         </ToggleButtonGroup>
       </Box>
     </div>

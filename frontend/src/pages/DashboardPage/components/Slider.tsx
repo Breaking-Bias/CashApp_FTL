@@ -26,7 +26,7 @@ function Slider({sliderValue, setSliderValue}: Props) {
             </span>}
                  enterDelay={500}
                  leaveDelay={200}
-        aria-hidden="true">
+        aria-hidden="false">
             <SliderMUI
                 data-testid="forecast-slider"
                 min={MIN_SLIDER_VAL}
