@@ -1,10 +1,12 @@
+This project was completed between September 2024 and December 2024. 
+
 # Breaking Bias x Cash App x FTL
 
 Bias Visualization & Prediction Tool
 
-Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)
+~~Frontend hosted with Netlify [here](https://superlative-entremet-ffedcc.netlify.app)~~
 
-Backend hosted with DigitalOcean [here](https://breakingbiasbigboss.zapto.org/)
+~~Backend hosted with DigitalOcean [here](https://breakingbiasbigboss.zapto.org/)~~
 
 # Project Overview
 
